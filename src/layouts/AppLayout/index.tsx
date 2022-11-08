@@ -1,9 +1,11 @@
+import MainLayout from 'layouts/MainLayout';
+import RouterContainer from 'routes';
 const App = () => {
   return (
-    <div>
-      <div>
-        리액트 프로젝트!
-      </div>
+    <div className="App">
+      <MainLayout className="right">
+        <RouterContainer />
+      </MainLayout>
     </div>
   );
 };
