@@ -5,10 +5,9 @@ import AsdieMenu from 'components/AsdieMenu';
 
 interface Props {
   children: ReactNode;
-  className: string;
 }
 
-const MainLayout: FC<Props> = ({ children }) => {
+const PageLayout: FC<Props> = ({ children }) => {
   const [showSideMenu, setShowSideMenu] = useState(false);
 
   const handleShowSideMenu = useCallback(() => {
@@ -43,4 +42,4 @@ const MainLayout: FC<Props> = ({ children }) => {
   );
 };
 
-export default MainLayout;
+export default PageLayout;

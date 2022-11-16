@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import AppLayout from "layouts/AppLayout";
+import AppLayout from "components/App";
 import { Global } from "@emotion/react";
 import { reset } from "styles/reset";
 import { BrowserRouter } from "react-router-dom";

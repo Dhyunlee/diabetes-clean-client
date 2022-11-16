@@ -22,6 +22,8 @@ export const reset = css`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'nexongoth';
+    line-height: 1.4;
   }
 
   html {
