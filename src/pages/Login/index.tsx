@@ -153,11 +153,13 @@ const Login = () => {
             >
               로그인
             </button>
+            <div className="auth-msg">
+              <span>
+                아직 회원이 아니신가요? &nbsp;
+                <Link to="/signup">회원가입</Link>하기
+              </span>
+            </div>
           </FrmBtnContainer>
-          <span>
-            아직 회원이 아니신가요? &nbsp;
-            <Link to="/signup">회원가입</Link>하기
-          </span>
         </form>
       </FormWrap>
     </Container>

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const Container = styled.div`
   width: 70%;
@@ -84,7 +84,7 @@ export const CheckBtn = styled.button<{ top?: string; isCheckEmail?: boolean }>`
   padding: 5px;
   margin: 0 0.3rem;
   position: relative;
-  top: ${props => props.top && props.top};
+  top: ${(props) => props.top && props.top};
   border: 1px solid #dcdcdc;
   width: 100px;
   height: 100%;
@@ -103,15 +103,14 @@ export const FrmBtnContainer = styled.div<{
   top?: string;
 }>`
   position: relative;
-  left: ${props => props.left || '15px'};
-  top: ${props => props.top || 0};
+  left: ${(props) => props.left || "15px"};
+  top: ${(props) => props.top || 0};
   width: calc(100% + 7px);
 
   & > button {
     border: 1px solid transparent;
     max-width: 42%;
-    height: 40px;
-    /* color: #dcdcdc; */
+    height: 35px;
     color: #fff;
     font-size: 18px;
     padding: 5px;
@@ -122,11 +121,17 @@ export const FrmBtnContainer = styled.div<{
       opacity: 0.8;
     }
 
-    &[type='submit'] {
-      background-color: #77afe4;
+    &[type="submit"] {
+      background-color: #514d4d;
     }
-    &[type='reset'] {
-      background-color: #c04e21;
+    &[type="reset"] {
+      background-color: #4f2323;
+    }
+  }
+  .auth-msg {
+    margin: 0.8rem 0.3rem;
+    a {
+      color: #70290d;
     }
   }
 `;
