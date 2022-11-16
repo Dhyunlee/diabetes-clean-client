@@ -275,16 +275,18 @@ const SignUp = () => {
             <button type="submit" style={{ width: "152px" }}>
               회원가입
             </button>
-          </FrmBtnContainer>
-          <span>
-            회원이 이신가요? &nbsp;
-            <Link to="/login">로그인</Link>하기
-          </span>
-          {isSignUp && (
-            <span style={{ color: "#880e4f" }}>
-              가입되었어요^^ 로그인해주세요!
+          <div className="auth-msg">
+            <span>
+              회원이 이신가요? &nbsp;
+              <Link to="/login">로그인</Link>하기
             </span>
-          )}
+            {isSignUp && (
+              <span style={{ color: "#880e4f" }}>
+                가입되었어요^^ 로그인해주세요!
+              </span>
+            )}
+          </div>
+          </FrmBtnContainer>
         </form>
       </FormWrap>
     </Container>
