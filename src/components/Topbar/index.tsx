@@ -12,11 +12,14 @@ interface Props {
 }
 
 const Topbar = ({ handleShowSideMenu }: Props) => {
+  const onShowSideMenu = () => {
+    handleShowSideMenu();
+  }
   return (
     <>
       <NavBarContainer>
         <LogoContainer>
-          <SidebarIcon onClick={handleShowSideMenu}>
+          <SidebarIcon onClick={onShowSideMenu}>
             <FaBars />
           </SidebarIcon>
           <h1>
