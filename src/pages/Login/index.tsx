@@ -88,7 +88,7 @@ const Login = () => {
                 style={{
                   width: "100%",
                 }}
-                placeholder="이메일"
+                placeholder="이메일을 입력해주세요"
                 onChange={onFormChange}
                 value={email}
               />
@@ -111,7 +111,7 @@ const Login = () => {
                 style={{
                   width: "100%",
                 }}
-                placeholder="비밀번호"
+                placeholder="비밀번호를 입력해주세요"
                 onChange={onFormChange}
                 value={password}
               />
@@ -140,7 +140,7 @@ const Login = () => {
                   password: "",
                 });
                 console.log(password);
-                navigate(-1);
+                navigate('/');
               }}
             >
               취소하기

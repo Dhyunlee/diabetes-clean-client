@@ -134,9 +134,7 @@ const SignUp = () => {
       <FormWrap>
         <form onSubmit={onSubmit}>
           <InputGroup>
-            <InputName htmlFor="email">
-              이메일<span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="email">이메일</InputName>
             <InputWrap>
               <input
                 type="email"
@@ -144,7 +142,7 @@ const SignUp = () => {
                 name="email"
                 required
                 disabled={isCheckEmail ? true : false}
-                placeholder="이메일"
+                placeholder="이메일을 입력해주세요"
                 autoComplete="off"
                 onChange={onFormChange}
                 onFocus={(e) =>
@@ -177,9 +175,7 @@ const SignUp = () => {
             </InputWrap>
           </InputGroup>
           <InputGroup>
-            <InputName htmlFor="pw">
-              비밀번호<span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="pw">비밀번호</InputName>
             <InputWrap>
               <input
                 type="password"
@@ -187,7 +183,7 @@ const SignUp = () => {
                 name="password"
                 required
                 className="input-width"
-                placeholder="비밀번호"
+                placeholder="비밀번호를 입력해주세요"
                 disabled={isCheckPw ? true : false}
                 onChange={onFormChange}
                 onBlur={isValidValue}
@@ -209,17 +205,14 @@ const SignUp = () => {
             </InputWrap>
           </InputGroup>
           <InputGroup>
-            <InputName htmlFor="passwordCheck">
-              비밀번호 확인
-              <span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="passwordCheck">비밀번호 확인</InputName>
             <InputWrap>
               <input
                 type="password"
                 id="passwordCheck"
                 name="passwordCheck"
                 required
-                placeholder="비밀번호 확인"
+                placeholder="비밀번호 확인해주세요"
                 disabled={isCheckPw ? true : false}
                 onChange={onFormChange}
                 value={passwordCheck}
@@ -235,9 +228,7 @@ const SignUp = () => {
             </InputWrap>
           </InputGroup>
           <InputGroup>
-            <InputName htmlFor="nickname">
-              닉네임<span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="nickname">닉네임</InputName>
             <InputWrap>
               <input
                 type="text"
@@ -245,7 +236,7 @@ const SignUp = () => {
                 id="nickname"
                 className="input-width"
                 name="nickname"
-                placeholder="닉네임"
+                placeholder="닉네임을 입력해주세요"
                 autoComplete="off"
                 onChange={onFormChange}
                 value={nickname}
@@ -267,7 +258,7 @@ const SignUp = () => {
                   nickname: "",
                 });
                 console.log(password);
-                navigate(-1);
+                navigate('/');
               }}
             >
               취소하기
@@ -275,17 +266,17 @@ const SignUp = () => {
             <button type="submit" style={{ width: "152px" }}>
               회원가입
             </button>
-          <div className="auth-msg">
-            <span>
-              회원이 이신가요? &nbsp;
-              <Link to="/login">로그인</Link>하기
-            </span>
-            {isSignUp && (
-              <span style={{ color: "#880e4f" }}>
-                가입되었어요^^ 로그인해주세요!
+            <div className="auth-msg">
+              <span>
+                회원이 이신가요? &nbsp;
+                <Link to="/login">로그인</Link>하기
               </span>
-            )}
-          </div>
+              {isSignUp && (
+                <span style={{ color: "#880e4f" }}>
+                  가입되었어요^^ 로그인해주세요!
+                </span>
+              )}
+            </div>
           </FrmBtnContainer>
         </form>
       </FormWrap>

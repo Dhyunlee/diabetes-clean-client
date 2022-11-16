@@ -1,21 +1,20 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-export const SideBar = styled.div`
+type TSideBar = {
+  isOpen: boolean
+}
+export const SideBar = styled.div<TSideBar>`
   width: 240px;
-  // height: calc(100vh - 55px);
   position: fixed;
+  display: block;
   background: #eee;
+  transform: ${props => props.isOpen ? 'translateX(0px)' : 'translateX(-300px)'};
+  transition: all .3s ease-in;
   box-shadow: 0px 2px 12px -3px rgb(0 0 0 / 52%);
   top: 0;
   bottom: 0;
   z-index: 2;
-  /*   
-    리액트에 애니메이션 달기 공부한 후 적용
-    일단은 정적으로 
-
-    ${(props: { isShowModal?: boolean }) => {
-    return props.isShowModal ? 'left: -240px' : 'left: 0';
-  }} */
 `;
 
 export const SideMenu = styled.div`
