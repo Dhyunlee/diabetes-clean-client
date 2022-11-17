@@ -31,11 +31,9 @@ export const CloseBtn = styled.button`
   top: 3px;
   right: 6px;
   cursor: pointer;
-
   &:active {
     margin-top: -2px;
   }
-
   span {
     display: inline-block;
     line-height: 15px;
@@ -58,7 +56,6 @@ export const AsideBar = styled.div`
 
 export const AsideMenu = styled.div`
   padding-top: 45px;
-
   ul {
     width: 241px;
   }
@@ -71,7 +68,6 @@ export const AsideMenu = styled.div`
     margin: 15px 0;
     cursor: pointer;
   }
-
   li:hover {
     color: #70290d;
     font-weight: bold;

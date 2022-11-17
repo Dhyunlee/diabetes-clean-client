@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ItemStyle } from '../MenuItem/styles';
+import { ItemStyle } from '../CardItem/styles';
 
 export const MenuList = styled.ul`
   display: flex;
