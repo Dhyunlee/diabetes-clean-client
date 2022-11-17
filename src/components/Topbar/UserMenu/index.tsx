@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { UserItem, MenuList, ProfileWrap } from "./styles";
 import { FcCollapse, FcExpand } from "react-icons/fc";
 import React, { useCallback, useState } from "react";
-import MenuItem from "../MenuItem";
+import CardItem from "../CardItem";
 import UserSubMenu from "../UserSubMenu";
 
 const UserMenu = () => {
@@ -38,14 +38,14 @@ const UserMenu = () => {
             <UserItem>
               <Link to="/newmemo">기록 하기</Link>
             </UserItem>
-            <MenuItem>
+            <CardItem>
               <ProfileWrap onClick={handleShowUserSubMenu}>
                 <img src={""} alt="profile" />
                 <span className="menuIcon">
                   {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
                 </span>
               </ProfileWrap>
-            </MenuItem>
+            </CardItem>
           </>
         )}
       </MenuList>

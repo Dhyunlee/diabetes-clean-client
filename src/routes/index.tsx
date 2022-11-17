@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 const RouterContainer = () => {
   return (
     <Routes>
-      <Route path="/" element={<Memo />} />
+      <Route path="/" index element={<Memo />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/memo" element={<Memo />} />
