@@ -1,8 +1,6 @@
-import PageLayout from 'layouts/PageLayout';
-
 const Memo = () => {
   return (
-    <PageLayout>Memo</PageLayout>
+    <div>memo</div>
   )
 }
 

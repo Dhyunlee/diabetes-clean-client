@@ -72,9 +72,7 @@ const Login = () => {
       <FormWrap>
         <form onSubmit={onSubmit}>
           <InputGroup>
-            <InputName htmlFor="email">
-              이메일<span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="email">이메일</InputName>
             <InputWrap
               style={{
                 width: "296px",
@@ -95,9 +93,7 @@ const Login = () => {
             </InputWrap>
           </InputGroup>
           <InputGroup>
-            <InputName htmlFor="pw">
-              비밀번호<span className="icon">*</span>
-            </InputName>
+            <InputName htmlFor="pw">비밀번호</InputName>
             <InputWrap
               style={{
                 width: "296px",
@@ -140,7 +136,7 @@ const Login = () => {
                   password: "",
                 });
                 console.log(password);
-                navigate('/');
+                navigate("/");
               }}
             >
               취소하기
