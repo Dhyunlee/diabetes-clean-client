@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
-// import './style.css';
-import Sidebar from "./Sidebar";
-import { Navbar, OverWrap } from "./styles";
+import Sidebar from "components/Sidebar";
 import UserMenu from './UserMenu';
+import { Navbar, OverWrap } from "./styles";
 
 function Topbar() {
   const [isOpen, setIsOpen] = useState(false);

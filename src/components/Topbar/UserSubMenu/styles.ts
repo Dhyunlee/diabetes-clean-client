@@ -10,7 +10,3 @@ export const MenuContainer = styled.ul`
   border-radius: 8px;
   box-shadow: 0 4px 23px -5px rgb(0 0 0 / 25%);
 `;
-
-export const MenuItem = styled.li`
-  
-`

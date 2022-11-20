@@ -1,6 +1,7 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import { menuItemData } from "./MenuItemData";
-import { NavContents } from "./styles";
+import { menuItemData } from "utils/menuItemData";
+import { NavContents } from "../styles";
 
 const MenuItem = () => {
   return (
@@ -16,4 +17,4 @@ const MenuItem = () => {
   );
 };
 
-export default MenuItem;
+export default React.memo(MenuItem);

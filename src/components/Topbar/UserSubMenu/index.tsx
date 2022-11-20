@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 
 import Menu from "components/Menu";
+import CardItem from "components/Topbar/CardItem";
 import { MenuContainer } from "./styles";
-import CardItem from "../CardItem";
 
 interface Props {
   showUserSubMenu: boolean;
