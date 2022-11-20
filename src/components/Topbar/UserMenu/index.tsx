@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { UserItem, MenuList, ProfileWrap } from "./styles";
-import { FcCollapse, FcExpand } from "react-icons/fc";
 import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
+import { FcCollapse, FcExpand } from "react-icons/fc";
 import CardItem from "../CardItem";
 import UserSubMenu from "../UserSubMenu";
+import { UserItem, MenuList, ProfileWrap } from "./styles";
 
 const UserMenu = () => {
   let userData:undefined;

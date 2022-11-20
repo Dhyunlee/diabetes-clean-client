@@ -1,39 +1,61 @@
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
-type TSideBar = {
-  isOpen: boolean
-}
-export const SideBar = styled.div<TSideBar>`
-  width: 240px;
+export const StyledNavMenu = styled.nav`
+  background-color: #eee;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
   position: fixed;
-  display: block;
-  background: #eee;
-  transform: ${props => props.isOpen ? 'translateX(0px)' : 'translateX(-300px)'};
-  transition: all .3s ease-in;
-  box-shadow: 0px 2px 12px -3px rgb(0 0 0 / 52%);
   top: 0;
-  bottom: 0;
-  z-index: 2;
+  left: -100%;
+  z-index: 98;
+  transition: 850ms;
+
+  &.active {
+    left: 0;
+    transition: 350ms;
+  }
+
+  & .nav-menu-items {
+    width: 100%;
+  }
 `;
 
-export const SideMenu = styled.div`
-  padding-top: 45px;
+export const NavbarToggle = styled.li`
+  background-color: #eee;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+  left: 0;
+  top: 0;
+`;
 
-  ul {
-    width: 241px;
+export const CloseBtn = styled.button`
+  width: 25px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  box-shadow: 0 0 0 0 rgb(0 0 0 / 10%), 0 2px 5px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  cursor: pointer;
+
+  &:active {
+    margin-top: -2px;
   }
-  li {
-    padding: 10px;
-    text-align: center;
+
+  span {
     width: 100%;
-    border: none;
-    box-shadow: 0px 2px 5px -3px rgb(0 0 0 / 52%);
-    margin: 15px 0;
-  }
-
-  li:hover {
-    color: #70290d;
-    font-weight: bold;
+    height: 100%;
+    display: inline-block;
+    padding: 0 5px;
+    font-size: 20px;
+    color: #2d2d2d;
   }
 `;

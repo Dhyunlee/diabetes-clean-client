@@ -1,45 +1,24 @@
-import { CloseBtn } from "components/Modal/styles";
-import { Link } from "react-router-dom";
-import { SideBar, SideMenu } from "./styles";
+import MenuItem from "components/Topbar/MenuItem/MenuItem";
+import { CloseBtn, NavbarToggle, StyledNavMenu } from "./styles";
 
-interface Props {
+interface IProps {
   isOpen: boolean;
-  handleShowSideMenu: () => void;
-  handleCloseMenu: () => void;
+  showCloseSidebar: () => void;
 }
 
-const Asidebar = ({ isOpen, handleCloseMenu }: Props) => {
-
-  const onCloseMenu = () => {
-    handleCloseMenu();
-  };
-
+const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
   return (
-    <SideBar isOpen={isOpen}>
-      <CloseBtn onClick={onCloseMenu}>
-        <span>&times;</span>
-      </CloseBtn>
-      <SideMenu>
-        <ul>
-          <li>
-            <Link to="/memo" onClick={onCloseMenu}>
-              기록
-            </Link>
-          </li>
-          <li>
-            <Link to="/story" onClick={onCloseMenu}>
-              스토리
-            </Link>
-          </li>
-          <li>
-            <Link to="/mypage" onClick={onCloseMenu}>
-              마이페이지
-            </Link>
-          </li>
-        </ul>
-      </SideMenu>
-    </SideBar>
+    <StyledNavMenu className={isOpen ? "nav-menu active" : "nav-menu"}>
+      <ul className="nav-menu-items" onClick={showCloseSidebar}>
+        <NavbarToggle className="navbar-toggle">
+          <CloseBtn onClick={showCloseSidebar}>
+            <span>&times;</span>
+          </CloseBtn>
+        </NavbarToggle>
+        <MenuItem />
+      </ul>
+    </StyledNavMenu>
   );
 };
 
-export default Asidebar;
+export default Sidebar;
