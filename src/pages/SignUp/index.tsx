@@ -1,8 +1,6 @@
-import axios from "axios";
-import { useCallback } from "react";
-
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { checkemailApi, postUserApi } from "utils/apis";
 
 import {
   CheckBtn,
@@ -35,10 +33,8 @@ const SignUp = () => {
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
-
   const [isSignUp, setIsSignUp] = useState(false);
-  const [isValidation, setIsValidation] = useState(false);
-
+  const [isSucessSignUp, setIsSucessSignUp] = useState(false);
   const { email, password, passwordCheck, nickname } = inputs;
 
   const isValidValue = (e: any) => {
@@ -69,24 +65,21 @@ const SignUp = () => {
     isFormValue.current = true;
   };
 
-  const onCheckEmail = useCallback(() => {
+  const onCheckEmail = async () => {
     if (isEmail) {
       setIsCheckEmail(false);
-      axios
-        .post("/api/auth/checkemail", { email })
-        .then((res) => {
-          alert(res.data.msg);
-          setIsCheckEmail(true);
-        })
-        .catch((err) => {
-          console.error(err);
-          alert(err.response?.data.msg);
-          setIsCheckEmail(false);
-        });
+      try {
+        const resResult = await checkemailApi(email);
+        alert(resResult.data.msg);
+        setIsCheckEmail(true);
+      } catch (error: any) {
+        alert(error.response.data.msg);
+        setIsCheckEmail(false);
+      }
     } else {
       alert("이메일을 입력해주세요!");
     }
-  }, [isEmail, email]);
+  };
 
   const checkPw = (p1: string, p2: string) => p1 === p2;
   const onClickCheckPw = (e: any) => {
@@ -107,22 +100,26 @@ const SignUp = () => {
     }
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
     const userInfo = {
       email,
       nickname,
       password,
     };
-
     if (isCheckEmail && isCheckPw && nickname) {
       console.log({ userInfo });
-
-      axios.post("/api/users", userInfo).then((res) => {
-        console.log(res.data);
-        setIsSignUp(res.data.data);
-        navigate("/", { replace: true });
-      });
+      try {
+        const resResult = await postUserApi(userInfo);
+        console.log(resResult);
+        setIsSucessSignUp(true);
+      } catch (err: any) {
+        if (err.status === 504) {
+          console.error("Network Error");
+          setIsSucessSignUp(false);
+        }
+        window.alert(err.data);
+      }
     }
   };
 
@@ -258,7 +255,7 @@ const SignUp = () => {
                   nickname: "",
                 });
                 console.log(password);
-                navigate('/');
+                navigate("/");
               }}
             >
               취소하기
@@ -271,8 +268,8 @@ const SignUp = () => {
                 회원이 이신가요? &nbsp;
                 <Link to="/login">로그인</Link>하기
               </span>
-              {isSignUp && (
-                <span style={{ color: "#880e4f" }}>
+              {isSucessSignUp && (
+                <span style={{ display: 'block', color: "#d63d17" }}>
                   가입되었어요^^ 로그인해주세요!
                 </span>
               )}
