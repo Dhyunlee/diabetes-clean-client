@@ -80,7 +80,7 @@ export const InputWrap = styled.div`
   }
 `;
 
-export const CheckBtn = styled.button<{ top?: string; isCheckEmail?: boolean }>`
+export const FormBtn = styled.button<{ top?: string }>`
   padding: 5px;
   margin: 0 0.3rem;
   position: relative;
@@ -123,6 +123,15 @@ export const FrmBtnContainer = styled.div<{
 
     &[type="submit"] {
       background-color: #514d4d;
+
+      &.not-allowed {
+        opacity: 0.1;
+        cursor: not-allowed;
+        &:active {
+          position: relative;
+          top: 0px;
+        }
+      }
     }
     &[type="reset"] {
       background-color: #4f2323;
