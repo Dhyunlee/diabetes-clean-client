@@ -47,12 +47,15 @@ const Login = () => {
 
     if (password && email) {
       axios
-        .post("/api/auth/login", userInfo)
+        .post("/api/v1/auth/login", userInfo, {
+          withCredentials: true
+        })
         .then((res) => {
+          console.log(res)
           navigate("/", { replace: true });
         })
         .catch((error) => {
-          console.log(error.response?.status);
+          console.log(error);
           setErrorMsg(error.response?.data.msg);
 
           setIsLogInError(error.response?.status === 401);
