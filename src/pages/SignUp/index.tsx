@@ -1,9 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi, postUserApi } from "utils/apis";
+import { checkValidation } from "utils/validation";
 
 import {
-  CheckBtn,
+  FormBtn,
   Container,
   FormWrap,
   InputGroup,
@@ -33,29 +34,22 @@ const SignUp = () => {
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const [isSucessSignUp, setIsSucessSignUp] = useState(false);
+
+  const [isCompleteState, setIsCompleteState] = useState(false);
+  const [isComplete, setIsComplete] = useState({
+    isCompleteEmail: false,
+    isCompletePw: false,
+    isCompleteNickname: false,
+  });
+
   const { email, password, passwordCheck, nickname } = inputs;
 
-  const isValidValue = (e: any) => {
-    const { name, value } = e.target;
-    const isValidProps = {
-      isValidEmail:
-        /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{3,6}(?:\.[a-z]{2})?)$/,
-      isPw: /(?=.*[a-zA-ZS])(?=.*?[#?!@$%^&*-]).{6,24}/,
-    };
-
-    switch (name) {
-      case "email":
-        setIsEmail(isValidProps["isValidEmail"].test(value));
-        break;
-      case "password":
-        setIsPw(isValidProps["isPw"].test(value.trim()));
-        break;
-      default:
-        return false;
-    }
-  };
+  // useEffect(() => console.log({ isComplete }), [isComplete]);
+  useEffect(() => {
+    const result = Object.values(isComplete).every(item => !!item);
+    setIsCompleteState(result);
+  }, [isComplete]);
 
   const onFormChange = (e: any) => {
     setInputs({
@@ -65,33 +59,56 @@ const SignUp = () => {
     isFormValue.current = true;
   };
 
-  const onCheckEmail = async () => {
+  const onClickCheckEmail = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     if (isEmail) {
-      setIsCheckEmail(false);
       try {
         const resResult = await checkemailApi(email);
         alert(resResult.data.msg);
         setIsCheckEmail(true);
+        setIsComplete({
+          ...isComplete,
+          isCompleteEmail: true,
+        });
       } catch (error: any) {
         alert(error.response.data.msg);
         setIsCheckEmail(false);
+        setIsComplete({
+          ...isComplete,
+          isCompleteEmail: false,
+        });
       }
     } else {
       alert("이메일을 입력해주세요!");
+      setIsComplete({
+        ...isComplete,
+        isCompleteEmail: false,
+      });
     }
   };
 
   const checkPw = (p1: string, p2: string) => p1 === p2;
-  const onClickCheckPw = (e: any) => {
+  const onClickCheckPw = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     let isCheck = password && checkPw(password, passwordCheck);
     console.log(isCheck);
     // console.log('유효성 o');
     if (isCheck) {
       alert("비밀번호가 일치합니다.");
       setIsCheckPw(true);
+      setIsComplete({
+        ...isComplete,
+        isCompletePw: true,
+      });
     } else {
       alert("비밀번호가 일치하지 않습니다.");
       setIsCheckPw(false);
+      setIsComplete({
+        ...isComplete,
+        isCompletePw: false,
+      });
       setInputs({
         ...inputs,
         password: "",
@@ -148,19 +165,19 @@ const SignUp = () => {
                     isEmail: true,
                   })
                 }
-                onBlur={isValidValue}
+                onBlur={(e) => setIsEmail(checkValidation(e))}
                 value={email}
               />
               <div className="buttonWrap">
-                <CheckBtn
+                <FormBtn
                   className={`${isCheckEmail && "not-allowed"}`}
                   top="0px"
                   type="button"
                   disabled={isCheckEmail ? true : false}
-                  onClick={onCheckEmail}
+                  onClick={onClickCheckEmail}
                 >
                   중복확인
-                </CheckBtn>
+                </FormBtn>
               </div>
               {isFocus.isEmail && (
                 <Valid className={`valid ${isEmail ? "success" : "error"}`}>
@@ -183,7 +200,7 @@ const SignUp = () => {
                 placeholder="비밀번호를 입력해주세요"
                 disabled={isCheckPw ? true : false}
                 onChange={onFormChange}
-                onBlur={isValidValue}
+                onBlur={(e) => setIsPw(checkValidation(e))}
                 onFocus={(e) =>
                   setIsFocus({
                     ...isFocus,
@@ -214,14 +231,15 @@ const SignUp = () => {
                 onChange={onFormChange}
                 value={passwordCheck}
               />
-              <CheckBtn
+              <FormBtn
+               className={`${isCheckPw && "not-allowed"}`}
                 top="0"
                 type="button"
                 onClick={onClickCheckPw}
                 disabled={isCheckPw ? true : false}
               >
                 비밀번호 확인
-              </CheckBtn>
+              </FormBtn>
             </InputWrap>
           </InputGroup>
           <InputGroup>
@@ -235,6 +253,17 @@ const SignUp = () => {
                 name="nickname"
                 placeholder="닉네임을 입력해주세요"
                 autoComplete="off"
+                onBlur={(e) =>
+                  String(e.target.value).length !== 0
+                    ? setIsComplete({
+                        ...isComplete,
+                        isCompleteNickname: true,
+                      })
+                    : setIsComplete({
+                        ...isComplete,
+                        isCompleteNickname: false,
+                      })
+                }
                 onChange={onFormChange}
                 value={nickname}
               />
@@ -260,7 +289,12 @@ const SignUp = () => {
             >
               취소하기
             </button>
-            <button type="submit" style={{ width: "152px" }}>
+            <button
+             className={`${isCompleteState ? '' : 'not-allowed'}`}
+              type="submit"
+              disabled={isCompleteState ? false : true}
+              style={{ width: "152px" }}
+            >
               회원가입
             </button>
             <div className="auth-msg">
@@ -269,7 +303,7 @@ const SignUp = () => {
                 <Link to="/login">로그인</Link>하기
               </span>
               {isSucessSignUp && (
-                <span style={{ display: 'block', color: "#d63d17" }}>
+                <span style={{ display: "block", color: "#d63d17" }}>
                   가입되었어요^^ 로그인해주세요!
                 </span>
               )}
