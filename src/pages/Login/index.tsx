@@ -1,8 +1,8 @@
-import axios from "axios";
 import React from "react";
 
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { logInApi } from "utils/apis";
 
 import {
   Container,
@@ -36,7 +36,7 @@ const Login = () => {
     [inputs]
   );
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg("");
     setIsLogInError(false);
@@ -46,20 +46,15 @@ const Login = () => {
     };
 
     if (password && email) {
-      axios
-        .post("/api/v1/auth/login", userInfo, {
-          withCredentials: true
-        })
-        .then((res) => {
-          console.log(res)
-          navigate("/", { replace: true });
-        })
-        .catch((error) => {
-          console.log(error);
-          setErrorMsg(error.response?.data.msg);
-
-          setIsLogInError(error.response?.status === 401);
-        });
+      try {
+        const resResult = await logInApi(userInfo);
+        console.log(resResult);
+      } catch (err: any) {
+        if (err.status === 504) {
+          console.error("Network Error");
+        }
+        window.alert(err.data)
+      }
     }
     setInputs({
       email: "",
