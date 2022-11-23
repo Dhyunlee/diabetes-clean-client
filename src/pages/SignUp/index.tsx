@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi, postUserApi } from "utils/apis";
 import { checkValidation } from "utils/validation";
@@ -155,7 +155,7 @@ const SignUp = () => {
                 id="email"
                 name="email"
                 required
-                disabled={isCheckEmail ? true : false}
+                disabled={isCheckEmail}
                 placeholder="이메일을 입력해주세요"
                 autoComplete="off"
                 onChange={onFormChange}
@@ -173,7 +173,7 @@ const SignUp = () => {
                   className={`${isCheckEmail && "not-allowed"}`}
                   top="0px"
                   type="button"
-                  disabled={isCheckEmail ? true : false}
+                  disabled={isCheckEmail}
                   onClick={onClickCheckEmail}
                 >
                   중복확인
@@ -198,7 +198,7 @@ const SignUp = () => {
                 required
                 className="input-width"
                 placeholder="비밀번호를 입력해주세요"
-                disabled={isCheckPw ? true : false}
+                disabled={isCheckPw}
                 onChange={onFormChange}
                 onBlur={(e) => setIsPw(checkValidation(e))}
                 onFocus={(e) =>
@@ -227,7 +227,7 @@ const SignUp = () => {
                 name="passwordCheck"
                 required
                 placeholder="비밀번호 확인해주세요"
-                disabled={isCheckPw ? true : false}
+                disabled={isCheckPw}
                 onChange={onFormChange}
                 value={passwordCheck}
               />
@@ -236,7 +236,7 @@ const SignUp = () => {
                 top="0"
                 type="button"
                 onClick={onClickCheckPw}
-                disabled={isCheckPw ? true : false}
+                disabled={isCheckPw}
               >
                 비밀번호 확인
               </FormBtn>
@@ -292,7 +292,7 @@ const SignUp = () => {
             <button
              className={`${isCompleteState ? '' : 'not-allowed'}`}
               type="submit"
-              disabled={isCompleteState ? false : true}
+              disabled={!isCompleteState}
               style={{ width: "152px" }}
             >
               회원가입
@@ -315,4 +315,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default React.memo(SignUp);
