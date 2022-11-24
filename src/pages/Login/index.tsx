@@ -50,10 +50,9 @@ const Login = () => {
         const resResult = await logInApi(userInfo);
         console.log(resResult);
       } catch (err: any) {
-        if (err.status === 504) {
-          console.error("Network Error");
-        }
-        window.alert(err.data)
+        console.error(err)
+        window.alert("Network Error\n잠시후 다시 시도해주세요");
+        return;
       }
     }
     setInputs({
