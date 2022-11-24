@@ -47,7 +47,7 @@ const SignUp = () => {
 
   // useEffect(() => console.log({ isComplete }), [isComplete]);
   useEffect(() => {
-    const result = Object.values(isComplete).every(item => !!item);
+    const result = Object.values(isComplete).every((item) => item === true);
     setIsCompleteState(result);
   }, [isComplete]);
 
@@ -72,12 +72,13 @@ const SignUp = () => {
           isCompleteEmail: true,
         });
       } catch (error: any) {
-        alert(error.response.data.msg);
+        window.alert("Network Error\n잠시후 다시 시도해주세요");
         setIsCheckEmail(false);
         setIsComplete({
           ...isComplete,
           isCompleteEmail: false,
         });
+        return;
       }
     } else {
       alert("이메일을 입력해주세요!");
@@ -131,11 +132,8 @@ const SignUp = () => {
         console.log(resResult);
         setIsSucessSignUp(true);
       } catch (err: any) {
-        if (err.status === 504) {
-          console.error("Network Error");
-          setIsSucessSignUp(false);
-        }
-        window.alert(err.data);
+        window.alert("Network Error\n잠시후 다시 시도해주세요");
+        return;
       }
     }
   };
@@ -232,7 +230,7 @@ const SignUp = () => {
                 value={passwordCheck}
               />
               <FormBtn
-               className={`${isCheckPw && "not-allowed"}`}
+                className={`${isCheckPw && "not-allowed"}`}
                 top="0"
                 type="button"
                 onClick={onClickCheckPw}
@@ -290,7 +288,7 @@ const SignUp = () => {
               취소하기
             </button>
             <button
-             className={`${isCompleteState ? '' : 'not-allowed'}`}
+              className={`${isCompleteState ? "" : "not-allowed"}`}
               type="submit"
               disabled={!isCompleteState}
               style={{ width: "152px" }}
