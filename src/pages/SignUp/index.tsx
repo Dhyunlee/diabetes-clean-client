@@ -94,8 +94,6 @@ const SignUp = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     let isCheck = password && checkPw(password, passwordCheck);
-    console.log(isCheck);
-    // console.log('유효성 o');
     if (isCheck) {
       alert("비밀번호가 일치합니다.");
       setIsCheckPw(true);
@@ -118,7 +116,7 @@ const SignUp = () => {
     }
   };
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userInfo = {
       email,
