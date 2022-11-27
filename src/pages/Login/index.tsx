@@ -1,8 +1,9 @@
 import React from "react";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logInApi } from "utils/apis";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { logInApi, userStateApi } from "utils/apis";
 
 import {
   Container,
@@ -13,9 +14,15 @@ import {
   FrmBtnContainer,
   Valid,
 } from "../SignUp/styles";
+import { IUser } from "typings/db";
+import { AxiosError } from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { data: userData, isLoading, isError } = useQuery<IUser>("user", userStateApi, {
+    cacheTime: (60 * 1000) * 3,
+  });
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -25,6 +32,13 @@ const Login = () => {
   const [isLogInError, setIsLogInError] = useState(false);
 
   const { email, password } = inputs;
+
+  useEffect(() => {
+    if (userData) {
+      navigate("/", {replace: false});
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   const onFormChange = useCallback(
     (e: any) => {
@@ -36,30 +50,44 @@ const Login = () => {
     [inputs]
   );
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const mutation = useMutation<
+    IUser,
+    AxiosError,
+    { email: string; password: string }
+  >("user", (data) => logInApi(data).then((response) => response.data), {
+    onMutate() {
+      setIsLogInError(false);
+    },
+    onSuccess() {
+      queryClient.refetchQueries("user");
+    },
+    onError(error: any) {
+      if(error.status === 401) {
+        setErrorMsg(error.data);
+        setIsLogInError(true)
+      }
+    },
+  });
+
+  const onSubmit =  useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMsg("");
-    setIsLogInError(false);
     const userInfo = {
       email,
       password,
     };
 
     if (password && email) {
-      try {
-        const resResult = await logInApi(userInfo);
-        console.log(resResult);
-      } catch (err: any) {
-        console.error(err)
-        window.alert("Network Error\n잠시후 다시 시도해주세요");
-        return;
-      }
+      mutation.mutate(userInfo);
     }
     setInputs({
       email: "",
       password: "",
     });
-  };
+  }, [email, mutation, password])
+
+  // if (isLoading) {
+  //   return <div>로딩중...</div>;
+  // }
 
   return (
     <Container>

@@ -11,8 +11,14 @@ const logInApi = async <T>(insertData: T) => {
     throw error.response;
   }
 };
-const logOutApi = async () => {};
-const userStateApi = async () => {};
+const userStateApi = async () => {
+  try {
+    const { data } = await axios.get("/api/v1/users");
+    return data;
+  } catch (error: any) {
+    throw error.response;
+  }
+};
 const getUserApi = async () => {};
 const postUserApi = async <T>(insertData: T) => {
   try {
@@ -41,7 +47,6 @@ const checkemailApi = async <T>(insertData: T) => {
 
 export {
   logInApi,
-  logOutApi,
   userStateApi,
   getUserApi,
   postUserApi,

@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { checkemailApi, postUserApi } from "utils/apis";
+import { checkemailApi, postUserApi, userStateApi } from "utils/apis";
 import { checkValidation } from "utils/validation";
+import { useMutation, useQuery } from "react-query";
 
 import {
   FormBtn,
@@ -13,8 +14,16 @@ import {
   Valid,
   FrmBtnContainer,
 } from "./styles";
+import { AxiosError } from "axios";
+import { IUser } from "typings/db";
 
 const SignUp = () => {
+  const { data: userData, isLoading, isError } = useQuery<IUser>("user", userStateApi, {
+    cacheTime: 60 * 1000 * 3,
+  });
+
+  console.log({ userData, isLoading, isError });
+
   const navigate = useNavigate();
 
   const isFormValue = useRef(false);
@@ -34,7 +43,9 @@ const SignUp = () => {
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
+
   const [isSucessSignUp, setIsSucessSignUp] = useState(false);
+  const [isErrorSignUp, setIsErrorSignUp] = useState("");
 
   const [isCompleteState, setIsCompleteState] = useState(false);
   const [isComplete, setIsComplete] = useState({
@@ -45,7 +56,14 @@ const SignUp = () => {
 
   const { email, password, passwordCheck, nickname } = inputs;
 
-  // useEffect(() => console.log({ isComplete }), [isComplete]);
+  useEffect(() => {
+    if (userData) {
+      navigate("/", {replace: false});
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
+
+
   useEffect(() => {
     const result = Object.values(isComplete).every((item) => item === true);
     setIsCompleteState(result);
@@ -116,25 +134,42 @@ const SignUp = () => {
     }
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userInfo = {
-      email,
-      nickname,
-      password,
-    };
-    if (isCheckEmail && isCheckPw && nickname) {
-      console.log({ userInfo });
-      try {
-        const resResult = await postUserApi(userInfo);
-        console.log(resResult);
+  const mutation = useMutation<IUser, AxiosError, { email: string; password: string; nickname: string }>(
+    'user',
+    (data) => postUserApi(data).then((response) => response.data),
+    {
+      onMutate() {
+        setIsErrorSignUp('');
+        setIsSucessSignUp(false);
+      },
+      onSuccess() {
         setIsSucessSignUp(true);
-      } catch (err: any) {
-        window.alert("Network Error\n잠시후 다시 시도해주세요");
-        return;
+      },
+      onError(error: any) {
+        setIsErrorSignUp(error.response?.data);
+      },
+    },
+  );
+
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const userInfo = {
+        email,
+        password,
+        nickname,
+      };
+      if (isCheckEmail && isCheckPw && nickname) {
+        console.log("서버로 회원가입하기");
+        mutation.mutate(userInfo);
       }
-    }
-  };
+    },
+    [email, isCheckEmail, isCheckPw, mutation, nickname, password]
+  );
+  
+  // if (isLoading) {
+  //   return <div>로딩중...</div>;
+  // }
 
   return (
     <Container>
