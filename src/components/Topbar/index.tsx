@@ -17,7 +17,7 @@ function Topbar() {
         <div className="menu-left">
           <div>
             <button className="menu-bars">
-              <FaIcons.FaBars onClick={showSidebar} />
+              <span onClick={showSidebar}><FaIcons.FaBars /></span>
             </button>
           </div>
           <div className="page-title">

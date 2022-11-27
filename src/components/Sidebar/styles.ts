@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const StyledNavMenu = styled.nav`
   background-color: #eee;
-  width: 250px;
+  width: 230px;
   height: 100vh;
   display: flex;
   justify-content: center;

@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Navbar = styled.div`
-  padding: 0 30px;
-  border-bottom: 1px solid #dfdfdf;
-  height: 80px;
+  padding: 8px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,14 +17,17 @@ export const Navbar = styled.div`
     padding: 5px 12px;
   }
   .menu-bars {
-    display: inline-block;
-    padding: 5px 12px;
-    font-size: 25px;
     background: none;
     border: none;
     outline: none;
     color: #70290d;
     cursor: pointer;
+    
+    &>span {
+      display: inline-block;
+      padding: 5px 12px;
+      font-size: 25px;
+    }
   }
   .page-title {
     position: relative;
@@ -53,7 +54,7 @@ export const NavContents = styled.li`
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 8px 0px 8px 16px;
+  padding: 5px 8px;
   list-style: none;
   height: 60px;
 
@@ -64,18 +65,16 @@ export const NavContents = styled.li`
     width: 95%;
     height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 0 16px;
+    border: 1px solid lightgray;
     border-radius: 4px;
 
     &:hover {
       color: #70290d;
       font-weight: 700;
       background-color: #e3d8d3;
-    }
-
-    span {
-      margin-left: 16px;
     }
   }
 `;
