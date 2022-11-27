@@ -4,9 +4,14 @@ import { FcCollapse, FcExpand } from "react-icons/fc";
 import CardItem from "../CardItem";
 import UserSubMenu from "../UserSubMenu";
 import { UserItem, MenuList, ProfileWrap } from "./styles";
+import { useQuery } from "react-query";
+import { userStateApi } from "utils/apis";
+import { IUser } from "typings/db";
 
 const UserMenu = () => {
-  let userData:undefined;
+  const { data: userData, isLoading } = useQuery<IUser>("user", userStateApi, {
+    cacheTime: 60 * 1000 * 3,
+  });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const handleShowUserSubMenu = useCallback(() => {
@@ -17,6 +22,7 @@ const UserMenu = () => {
     setShowUserSubMenu(false);
   }, []);
 
+  console.log(userData)
   if (!userData) {
     return (
       <>

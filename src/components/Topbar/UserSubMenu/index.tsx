@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useCallback } from "react";
 import axios from "axios";
 
 import Menu from "components/Menu";
 import CardItem from "components/Topbar/CardItem";
 import { MenuContainer } from "./styles";
+import { useQueryClient } from "react-query";
 
 interface Props {
   showUserSubMenu: boolean;
   handleCloseMenu: () => void;
 }
 const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
-  const handleLogOut = () => {
-    axios.get("/api/auth/logout").then((res) => {
-      localStorage.setItem("isLogin", "false");
-    });
+  const queryClient = useQueryClient();
 
+  const handleLogOut = useCallback(() => {
+    axios.get("/api/v1/auth/logout").then((res) => {
+      queryClient.setQueryData("user", () => null);
+    });
     handleCloseMenu();
-  };
+  }, [queryClient, handleCloseMenu]);
+
   return (
     <Menu showMenu={showUserSubMenu} onCloseModal={handleCloseMenu}>
       <MenuContainer>
