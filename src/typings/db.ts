@@ -2,4 +2,5 @@ export interface IUser {
     id: number,
     email: string,
     nickname: string,
+    imageSrc: string
 }
