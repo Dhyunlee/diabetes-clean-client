@@ -54,14 +54,13 @@ export const NavContents = styled.li`
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 5px 8px;
+  padding: 10px 8px;
   list-style: none;
   height: 60px;
 
   & > a {
     text-decoration: none;
     color: #000;
-    font-size: 18px;
     width: 95%;
     height: 100%;
     display: flex;
