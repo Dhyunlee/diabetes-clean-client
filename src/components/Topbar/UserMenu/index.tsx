@@ -5,6 +5,7 @@ import CardItem from "../CardItem";
 import UserSubMenu from "../UserSubMenu";
 import { UserItem, MenuList, ProfileWrap } from "./styles";
 import { useQuery } from "react-query";
+import gravatar from "gravatar";
 import { userStateApi } from "utils/apis";
 import { IUser } from "typings/db";
 
@@ -12,6 +13,7 @@ const UserMenu = () => {
   const { data: userData, isLoading } = useQuery<IUser>("user", userStateApi, {
     cacheTime: 60 * 1000 * 3,
   });
+  console.log(userData);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const handleShowUserSubMenu = useCallback(() => {
@@ -22,7 +24,7 @@ const UserMenu = () => {
     setShowUserSubMenu(false);
   }, []);
 
-  console.log(userData)
+  console.log(userData);
   if (!userData) {
     return (
       <>
@@ -46,7 +48,17 @@ const UserMenu = () => {
             </UserItem>
             <CardItem>
               <ProfileWrap onClick={handleShowUserSubMenu}>
-                <img src={""} alt="profile" />
+                <img
+                  src={
+                    userData?.imageSrc
+                      ? userData.imageSrc
+                      : gravatar.url(userData?.email, {
+                          s: "32px",
+                          d: "retro",
+                        })
+                  }
+                  alt="profile"
+                />
                 <span className="menuIcon">
                   {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
                 </span>

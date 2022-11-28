@@ -16,8 +16,8 @@ export const MenuList = styled.ul`
 `;
 
 export const ProfileWrap = styled.span`
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   position: relative;
   top: 0;
@@ -25,8 +25,10 @@ export const ProfileWrap = styled.span`
 
   img {
     position: absolute;
-    top: -16px;
-    left: 0;
+    top: -20px;
+    left: -7px;
+    border: 1px solid rgb(0 0 0 / 10%);
+    padding: 2px;
     border-radius: 50%;
     width: inherit;
     height: inherit;
