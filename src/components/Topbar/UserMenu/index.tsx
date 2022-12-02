@@ -13,7 +13,6 @@ const UserMenu = () => {
   const { data: userData, isLoading } = useQuery<IUser>("user", userStateApi, {
     cacheTime: 60 * 1000 * 3,
   });
-  console.log(userData);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const handleShowUserSubMenu = useCallback(() => {
@@ -24,7 +23,6 @@ const UserMenu = () => {
     setShowUserSubMenu(false);
   }, []);
 
-  console.log(userData);
   if (!userData) {
     return (
       <>

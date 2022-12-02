@@ -22,8 +22,6 @@ const SignUp = () => {
     cacheTime: 60 * 1000 * 3,
   });
 
-  console.log({ userData, isLoading, isError });
-
   const navigate = useNavigate();
 
   const isFormValue = useRef(false);
@@ -61,7 +59,7 @@ const SignUp = () => {
       navigate("/", {replace: false});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, []);
 
 
   useEffect(() => {

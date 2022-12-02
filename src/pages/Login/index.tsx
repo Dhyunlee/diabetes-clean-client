@@ -38,7 +38,7 @@ const Login = () => {
       navigate("/", {replace: false});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, []);
 
   const onFormChange = useCallback(
     (e: any) => {
