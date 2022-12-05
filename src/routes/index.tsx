@@ -4,6 +4,7 @@ import MyPage from "pages/Mypage";
 import NotFound from "pages/NotFound";
 import SignUp from "pages/SignUp";
 import Story from "pages/Story";
+import WriteMemo from "pages/WriteMemo";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 const RouterContainer = () => {
@@ -13,6 +14,7 @@ const RouterContainer = () => {
       <Route path="signup" element={<SignUp />} />
       <Route path="login" element={<Login />} />
       <Route path="memo/*" element={<Memo />} />
+      <Route path="newmemo" element={<WriteMemo/>} />
       <Route path="story" element={<Story />} />
       <Route path="mypage" element={<MyPage />} />
       <Route path="*" element={<NotFound />} />
