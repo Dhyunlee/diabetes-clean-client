@@ -58,7 +58,7 @@ export const MemoContents = styled.section`
   margin-top: 30px;
 
   .contents-container {
-    min-width: 85%;
+    min-width: 97%;
     margin: 0 auto;
     width: 260px;
   }

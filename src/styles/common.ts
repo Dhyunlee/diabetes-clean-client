@@ -10,8 +10,7 @@ export const Main = styled.main`
 `;
 
 export const Container = styled.div`
-  width: 30%;
-  min-width: 300px;
+  max-width: 480px;
   margin: 30px auto;
   padding: 10px;
 `;
