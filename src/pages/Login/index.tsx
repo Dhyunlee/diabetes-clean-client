@@ -20,8 +20,12 @@ import { AxiosError } from "axios";
 const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: userData, isLoading, isError } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: (60 * 1000) * 3,
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useQuery<IUser>("user", userStateApi, {
+    cacheTime: 60 * 1000 * 3,
   });
   const [inputs, setInputs] = useState({
     email: "",
@@ -35,10 +39,10 @@ const Login = () => {
 
   useEffect(() => {
     if (userData) {
-      navigate("/", {replace: false});
+      navigate("/", { replace: false });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   const onFormChange = useCallback(
     (e: any) => {
@@ -62,28 +66,31 @@ const Login = () => {
       queryClient.refetchQueries("user");
     },
     onError(error: any) {
-      if(error.status === 401) {
+      if (error.status === 401) {
         setErrorMsg(error.data);
-        setIsLogInError(true)
+        setIsLogInError(true);
       }
     },
   });
 
-  const onSubmit =  useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const userInfo = {
-      email,
-      password,
-    };
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const userInfo = {
+        email,
+        password,
+      };
 
-    if (password && email) {
-      mutation.mutate(userInfo);
-    }
-    setInputs({
-      email: "",
-      password: "",
-    });
-  }, [email, mutation, password])
+      if (password && email) {
+        mutation.mutate(userInfo);
+      }
+      setInputs({
+        email: "",
+        password: "",
+      });
+    },
+    [email, mutation, password]
+  );
 
   return (
     <Container>

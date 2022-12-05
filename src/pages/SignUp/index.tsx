@@ -59,7 +59,7 @@ const SignUp = () => {
       navigate("/", {replace: false});
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [userData]);
 
 
   useEffect(() => {
@@ -164,10 +164,6 @@ const SignUp = () => {
     },
     [email, isCheckEmail, isCheckPw, mutation, nickname, password]
   );
-  
-  // if (isLoading) {
-  //   return <div>로딩중...</div>;
-  // }
 
   return (
     <Container>
