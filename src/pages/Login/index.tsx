@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { logInApi, userStateApi } from "utils/apis";
+import { logInApi, getUserApi } from "utils/apis/userApis";
 
 import {
   Container,
@@ -20,12 +20,8 @@ import { AxiosError } from "axios";
 const Login = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const {
-    data: userData,
-    isLoading,
-    isError,
-  } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: 60 * 1000 * 3,
+  const { data: userData } = useQuery<IUser>("user", getUserApi, {
+    refetchOnWindowFocus: false,
   });
   const [inputs, setInputs] = useState({
     email: "",
@@ -33,7 +29,7 @@ const Login = () => {
   });
 
   const [errorMsg, setErrorMsg] = useState("");
-  const [isLogInError, setIsLogInError] = useState(false);
+  const [isSucessLogIn, setIsSucessLogIn] = useState(false);
 
   const { email, password } = inputs;
 
@@ -41,8 +37,7 @@ const Login = () => {
     if (userData) {
       navigate("/", { replace: false });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [navigate, userData]);
 
   const onFormChange = useCallback(
     (e: any) => {
@@ -60,7 +55,7 @@ const Login = () => {
     { email: string; password: string }
   >("user", (data) => logInApi(data).then((response) => response.data), {
     onMutate() {
-      setIsLogInError(false);
+      setIsSucessLogIn(false);
     },
     onSuccess() {
       queryClient.refetchQueries("user");
@@ -68,7 +63,10 @@ const Login = () => {
     onError(error: any) {
       if (error.status === 401) {
         setErrorMsg(error.data);
-        setIsLogInError(true);
+        setIsSucessLogIn(true);
+      } else if (error.status === 504) {
+        setErrorMsg("네트워크 오류, 잠시후 시도해주세요");
+        setIsSucessLogIn(true);
       }
     },
   });
@@ -140,7 +138,7 @@ const Login = () => {
                 value={password}
               />
             </InputWrap>
-            {isLogInError && (
+            {isSucessLogIn && (
               <Valid
                 className="error"
                 style={{ width: "100%", marginTop: 10, textAlign: "center" }}

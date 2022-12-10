@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { checkemailApi, postUserApi, userStateApi } from "utils/apis";
+import { checkemailApi, postUserApi, getUserApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/validation";
 import { useMutation, useQuery } from "react-query";
 
@@ -18,8 +18,8 @@ import { AxiosError } from "axios";
 import { IUser } from "typings/db";
 
 const SignUp = () => {
-  const { data: userData, isLoading, isError } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: 60 * 1000 * 3,
+  const { data: userData } = useQuery<IUser>("user", getUserApi, {
+    refetchOnWindowFocus: false,
   });
 
   const navigate = useNavigate();
@@ -41,9 +41,9 @@ const SignUp = () => {
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
-
   const [isSucessSignUp, setIsSucessSignUp] = useState(false);
-  const [isErrorSignUp, setIsErrorSignUp] = useState("");
+  const [ , ]  = useState(false);
+  const [ , ]  = useState(false);
 
   const [isCompleteState, setIsCompleteState] = useState(false);
   const [isComplete, setIsComplete] = useState({
@@ -56,10 +56,9 @@ const SignUp = () => {
 
   useEffect(() => {
     if (userData) {
-      navigate("/", {replace: false});
+      navigate("/", { replace: false });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [navigate, userData]);
 
 
   useEffect(() => {
@@ -88,7 +87,7 @@ const SignUp = () => {
           isCompleteEmail: true,
         });
       } catch (error: any) {
-        window.alert("Network Error\n잠시후 다시 시도해주세요");
+        alert("Network Error\n잠시후 다시 시도해주세요");
         setIsCheckEmail(false);
         setIsComplete({
           ...isComplete,
@@ -137,14 +136,17 @@ const SignUp = () => {
     (data) => postUserApi(data).then((response) => response.data),
     {
       onMutate() {
-        setIsErrorSignUp('');
         setIsSucessSignUp(false);
       },
       onSuccess() {
         setIsSucessSignUp(true);
       },
       onError(error: any) {
-        setIsErrorSignUp(error.response?.data);
+        if (error.status === 401) {
+          setIsSucessSignUp(error.data);
+        } else if (error.status === 504) {
+          setIsSucessSignUp(true);
+        }
       },
     },
   );
@@ -328,7 +330,7 @@ const SignUp = () => {
                 <Link to="/login">로그인</Link>하기
               </span>
               {isSucessSignUp && (
-                <span style={{ display: "block", color: "#d63d17" }}>
+                <span style={{ display: "block", color: "#39d46f" }}>
                   가입되었어요^^ 로그인해주세요!
                 </span>
               )}
