@@ -11,27 +11,6 @@ const logInApi = async <T>(insertData: T) => {
     throw error.response;
   }
 };
-const userStateApi = async () => {
-  try {
-    const { data } = await axios.get("/api/v1/users");
-    return data;
-  } catch (error: any) {
-    throw error.response;
-  }
-};
-const getUserApi = async () => {};
-const postUserApi = async <T>(insertData: T) => {
-  try {
-    const { data } = await axios.post("/api/v1/users", insertData, {
-      withCredentials: true,
-    });
-    return data;
-  } catch (error: any) {
-    throw error.response;
-  }
-};
-const updateUserApi = async () => {};
-const deleteUserApi = async () => {};
 const checkemailApi = async <T>(insertData: T) => {
   try {
     const res = await axios.post(
@@ -45,9 +24,31 @@ const checkemailApi = async <T>(insertData: T) => {
   }
 };
 
+const getUserApi = async () => {
+  try {
+    const { data } = await axios.get("/api/v1/users", {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error: any) {
+    throw error.response;
+  }
+};
+const postUserApi = async <T>(insertData: T) => {
+  try {
+    const { data } = await axios.post("/api/v1/users", insertData, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (error: any) {
+    throw error.response;
+  }
+};
+const updateUserApi = async () => {};
+const deleteUserApi = async () => {};
+
 export {
   logInApi,
-  userStateApi,
   getUserApi,
   postUserApi,
   updateUserApi,

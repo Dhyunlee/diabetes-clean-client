@@ -2,25 +2,41 @@ import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 import DateArea from "components/Memo/DateArea";
 import Submenu from "components/Memo/Submenu";
-import {Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
 import { IUser } from "typings/db";
-import { userStateApi } from "utils/apis";
+import { getUserApi } from "utils/apis/userApis";
 import { useEffect } from "react";
+import Diet from "components/Memo/Diet";
+import { getDiabetes } from "utils/apis/diabetesApis";
 
 const Memo = () => {
-  const { data: userData } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: 60 * 1000 * 3,
+  const { data: userData } = useQuery("user", getUserApi, {
+    refetchOnWindowFocus: false,
   });
+  const userId = userData?.email;
+
+  const { data: diabetesData } = useQuery(
+    ["diabetes", userId],
+    (userId) => getDiabetes(userId),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60 * 5,
+      retry: 2,
+      retryDelay: 10000,
+      enabled: !!userId,
+    }
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userData) {
+    if (userData === false) {
       navigate("/login", { replace: false });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [navigate, userData]);
+
+  // console.log(diabetesData)
 
   return (
     <Container>
@@ -35,7 +51,7 @@ const Memo = () => {
       <MemoContents className="memoContainer">
         <Routes>
           <Route path="diabetes" element={<Diabetes />} />
-          <Route path="diet" element={<>diet</>} />
+          <Route path="diet" element={<Diet />} />
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
       </MemoContents>

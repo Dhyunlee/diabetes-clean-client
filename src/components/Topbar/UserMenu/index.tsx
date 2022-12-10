@@ -6,12 +6,12 @@ import UserSubMenu from "../UserSubMenu";
 import { UserItem, MenuList, ProfileWrap } from "./styles";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
-import { userStateApi } from "utils/apis";
+import { getUserApi } from "utils/apis/userApis";
 import { IUser } from "typings/db";
 
 const UserMenu = () => {
-  const { data: userData, isLoading } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: 60 * 1000 * 3,
+  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {   
+    refetchOnWindowFocus: false,
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 

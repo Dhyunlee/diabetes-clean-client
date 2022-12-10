@@ -1,12 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "typings/db";
-import { userStateApi } from "utils/apis";
+import { getUserApi } from "utils/apis/userApis";
 
 const MyPage = () => {
-  const { data: userData, isLoading } = useQuery<IUser>("user", userStateApi, {
-    cacheTime: 60 * 1000 * 3,
+  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {
+    refetchOnWindowFocus: false,
   });
   const navigate = useNavigate();
 
@@ -22,4 +22,4 @@ const MyPage = () => {
   )
 }
 
-export default MyPage;
+export default React.memo(MyPage);
