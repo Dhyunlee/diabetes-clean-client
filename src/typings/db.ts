@@ -4,3 +4,11 @@ export interface IUser {
     nickname: string,
     imageSrc: string
 }
+
+export interface IDiabetes {
+    readonly  _id: string,
+    writer?: string,
+    GI: number,
+    slot: string,
+    createdAt: Date
+}
