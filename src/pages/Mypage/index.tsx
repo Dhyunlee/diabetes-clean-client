@@ -5,7 +5,7 @@ import { IUser } from "typings/db";
 import { getUserApi } from "utils/apis/userApis";
 
 const MyPage = () => {
-  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {
+  const { data: userData } = useQuery<IUser>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
   const navigate = useNavigate();

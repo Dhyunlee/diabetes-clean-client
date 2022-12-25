@@ -5,21 +5,20 @@ import Submenu from "components/Memo/Submenu";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
-import { IUser } from "typings/db";
 import { getUserApi } from "utils/apis/userApis";
 import { useEffect } from "react";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
-
+import { IDiabetes } from "typings/db";
 const Memo = () => {
-  const { data: userData } = useQuery("user", getUserApi, {
+  const { data: userData, error } = useQuery("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
-  const userId = userData?.email;
+  const userId = userData?._id;
 
-  const { data: diabetesData } = useQuery(
+  const { data: diabetesData, isError, isFetching } = useQuery<IDiabetes[]>(
     ["diabetes", userId],
-    (userId) => getDiabetes(userId),
+    () => getDiabetes(userId),
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
@@ -36,7 +35,9 @@ const Memo = () => {
     }
   }, [navigate, userData]);
 
-  // console.log(diabetesData)
+  if(isFetching) return <div>로딩중...</div>
+  if(isError) return <div>데이터를 가져오는 실패했어요</div>
+  if(error) window.alert("네트워크 오류\n잠시후 다시 시도해주세요")
 
   return (
     <Container>
@@ -50,7 +51,7 @@ const Memo = () => {
       </MemoHeader>
       <MemoContents className="memoContainer">
         <Routes>
-          <Route path="diabetes" element={<Diabetes />} />
+          <Route path="diabetes" element={<Diabetes diabetesData={diabetesData}/>} />
           <Route path="diet" element={<Diet />} />
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>

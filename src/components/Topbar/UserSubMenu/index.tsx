@@ -31,7 +31,7 @@ const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
           <button onClick={handleLogOut}>로그아웃</button>
         </CardItem>
         <CardItem>
-          <Link to={"/mypage"}>마이페이지</Link>
+          <Link onClick={handleCloseMenu} to={"/mypage"}>마이페이지</Link>
         </CardItem>
       </MenuContainer>
     </Menu>
