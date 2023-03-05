@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import axios from "axios";
 
-import Menu from "components/Menu";
-import CardItem from "components/Topbar/CardItem";
-import { MenuContainer } from "./styles";
+import Menu from "components/Base/Menu";
 import { useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
+import { MenuContainer } from "components/Base/Menu/styles";
+import CardItem from "../CardItem";
 
 interface Props {
   showUserSubMenu: boolean;

@@ -1,4 +1,4 @@
-import Topbar from "components/Topbar";
+import Topbar from "components/TopBar";
 import RouterContainer from "routes";
 import { Header, Main } from "styles/common";
 const App = () => {

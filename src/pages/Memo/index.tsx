@@ -1,5 +1,4 @@
 import { Container } from "styles/common";
-import { MemoContents, MemoHeader } from "./styles";
 import DateArea from "components/Memo/DateArea";
 import Submenu from "components/Memo/Submenu";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import { useEffect } from "react";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetes } from "typings/db";
+import { MemoContents, MemoHeader } from "./styles";
 const Memo = () => {
   const { data: userData, error } = useQuery("user", getUserApi, {
     refetchOnWindowFocus: false,

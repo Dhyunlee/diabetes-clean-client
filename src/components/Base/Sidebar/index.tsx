@@ -1,4 +1,4 @@
-import MenuItem from "components/Topbar/MenuItem";
+import MenuItem from "components/TopBar/MenuItem";
 import { CloseBtn, NavbarToggle, StyledNavMenu } from "./styles";
 
 interface IProps {

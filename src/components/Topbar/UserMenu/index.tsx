@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
-import CardItem from "../CardItem";
-import UserSubMenu from "../UserSubMenu";
-import { UserItem, MenuList, ProfileWrap } from "./styles";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
 import { getUserApi } from "utils/apis/userApis";
 import { IUser } from "typings/db";
+import { MenuList, ProfileWrap, UserItem } from "./styles";
+import CardItem from "../CardItem";
+import UserSubMenu from "../UserSubMenu";
 
 const UserMenu = () => {
   const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {   
