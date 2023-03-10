@@ -18,7 +18,7 @@ const Diabetes = ({ diabetesData }: IProps) => {
   return (
     <div className="contents-container">
       <ContentsList>
-        {diabetesData &&
+        {diabetesData && diabetesData?.length ? (
           diabetesData.map(({ _id, GI, createdAt, slot }) => (
             <ContentsItem key={_id}>
               <ContentsItemHeader className="contents-header">
@@ -36,7 +36,10 @@ const Diabetes = ({ diabetesData }: IProps) => {
                 </div>
               </ContentsItemBody>
             </ContentsItem>
-          ))}
+          ))
+        ) : (
+          <ContentsItem>기록한 내역이 없습니다.</ContentsItem>
+        )}
       </ContentsList>
     </div>
   );

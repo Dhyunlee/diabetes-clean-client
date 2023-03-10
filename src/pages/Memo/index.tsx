@@ -16,7 +16,7 @@ const Memo = () => {
   });
   const userId = userData?._id;
 
-  const { data: diabetesData, isError, isFetching } = useQuery<IDiabetes[]>(
+  const { data: diabetesData, isError, isLoading } = useQuery<IDiabetes[]>(
     ["diabetes", userId],
     () => getDiabetes(userId),
     {
@@ -35,7 +35,7 @@ const Memo = () => {
     }
   }, [navigate, userData]);
 
-  if(isFetching) return <div>로딩중...</div>
+  if(isLoading) return <div>당수치 내역을 불러오는중입니다.</div>
   if(isError) return <div>데이터를 가져오는 실패했어요</div>
   if(error) window.alert("네트워크 오류\n잠시후 다시 시도해주세요")
 
