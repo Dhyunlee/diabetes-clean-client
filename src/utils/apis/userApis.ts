@@ -1,9 +1,9 @@
-import axios from "axios";
+import api from "utils/axios";
 
 /* 유저 및 인증 */
 const logInApi = async <T>(insertData: T) => {
   try {
-    const { data } = await axios.post("/api/v1/auth/login", insertData, {
+    const { data } = await api.post("/api/v1/auth/login", insertData, {
       withCredentials: true,
     });
     return data;
@@ -13,7 +13,7 @@ const logInApi = async <T>(insertData: T) => {
 };
 const checkemailApi = async <T>(insertData: T) => {
   try {
-    const res = await axios.post(
+    const res = await api.post(
       "/api/v1/auth/checkemail",
       { email: insertData },
       { withCredentials: true }
@@ -26,7 +26,7 @@ const checkemailApi = async <T>(insertData: T) => {
 
 const getUserApi = async () => {
   try {
-    const { data } = await axios.get("/api/v1/users", {
+    const { data } = await api.get("/api/v1/users", {
       withCredentials: true,
     });
     return data;
@@ -36,7 +36,7 @@ const getUserApi = async () => {
 };
 const postUserApi = async <T>(insertData: T) => {
   try {
-    const { data } = await axios.post("/api/v1/users", insertData, {
+    const { data } = await api.post("/api/v1/users", insertData, {
       withCredentials: true,
     });
     return data;
