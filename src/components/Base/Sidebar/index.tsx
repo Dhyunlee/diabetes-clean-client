@@ -1,5 +1,6 @@
-import MenuItem from "components/TopBar/MenuItem";
+import LinkMenuItem from "components/TopBar/LinkMenuItem";
 import { CloseBtn, NavbarToggle, StyledNavMenu } from "./styles";
+import { menuItemData } from "utils/menuItemData";
 
 interface IProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
             <span>&times;</span>
           </CloseBtn>
         </NavbarToggle>
-        <MenuItem />
+        <LinkMenuItem menuItemData={menuItemData}/>
       </ul>
     </StyledNavMenu>
   );

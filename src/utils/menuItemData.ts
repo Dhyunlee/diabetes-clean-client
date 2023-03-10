@@ -16,3 +16,9 @@ export const menuItemData = [
     },
   ];
   
+
+  export interface IMenuItem {
+    title: string,
+    path?: string,
+    cName?: string
+  }
