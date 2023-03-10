@@ -6,11 +6,10 @@ import gravatar from "gravatar";
 import { getUserApi } from "utils/apis/userApis";
 import { IUser } from "typings/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
-import CardItem from "../CardItem";
 import UserSubMenu from "../UserSubMenu";
 
 const UserMenu = () => {
-  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {   
+  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
@@ -22,6 +21,10 @@ const UserMenu = () => {
   const handleCloseMenu = useCallback(() => {
     setShowUserSubMenu(false);
   }, []);
+
+  if (isLoading) {
+    return <div>유저 정보 불러오는중...</div>;
+  }
 
   if (!userData) {
     return (
@@ -38,38 +41,31 @@ const UserMenu = () => {
 
   return (
     <>
-      <MenuList>
-        {userData && (
-          <>
-            <UserItem>
-              <Link to="/newmemo">기록 하기</Link>
-            </UserItem>
-            <CardItem>
-              <ProfileWrap onClick={handleShowUserSubMenu}>
-                <img
-                  src={
-                    userData?.imageSrc
-                      ? userData.imageSrc
-                      : gravatar.url(userData?.email, {
-                          s: "32px",
-                          d: "retro",
-                        })
-                  }
-                  alt="profile"
-                />
-                <span className="menuIcon">
-                  {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
-                </span>
-              </ProfileWrap>
-            </CardItem>
-          </>
-        )}
-      </MenuList>
+      {userData && (
+        <MenuList>
+          <UserItem>
+            <Link to="/newmemo">기록 하기</Link>
+          </UserItem>
+          <UserItem>
+            <ProfileWrap onClick={handleShowUserSubMenu}>
+              <img
+                src={
+                  userData?.imageSrc
+                    ? userData.imageSrc
+                    : gravatar.url(userData?.email, {
+                        s: "32px",
+                        d: "retro",
+                      })
+                }
+                alt="profile"
+              />
+              <span className="menuIcon">{showUserSubMenu ? <FcCollapse /> : <FcExpand />}</span>
+            </ProfileWrap>
+          </UserItem>
+        </MenuList>
+      )}
       {showUserSubMenu && (
-        <UserSubMenu
-          showUserSubMenu={showUserSubMenu}
-          handleCloseMenu={handleCloseMenu}
-        />
+        <UserSubMenu showUserSubMenu={showUserSubMenu} handleCloseMenu={handleCloseMenu} />
       )}
     </>
   );
