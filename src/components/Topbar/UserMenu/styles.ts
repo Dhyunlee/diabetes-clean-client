@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import { ItemStyle } from '../CardItem/styles';
+import styled from "@emotion/styled";
+import { Li } from "../UserSubMenu/styles";
 
 export const MenuList = styled.ul`
   display: flex;
@@ -41,16 +41,7 @@ export const ProfileWrap = styled.span`
   }
 `;
 
-export const UserItem = styled(ItemStyle)`
-  border: 1px solid #c9c7c7;
-  border-radius: 10px;
-  margin-left: 0.7em;
-  padding: 0 0.5em;
-
-  &:hover {
-    border: 1px solid #626161;
-  }
-
+export const UserItem = styled(Li)`
   a {
     display: inline-block;
     border: none;

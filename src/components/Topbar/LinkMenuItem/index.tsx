@@ -1,14 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { menuItemData } from "utils/menuItemData";
 import { NavContents } from "../styles";
 
-const MenuItem = () => {
+interface ILinkMenuItem {
+  title?: string,
+  path?: string,
+  cName?: string
+}
+
+interface IProps {
+  menuItemData: ILinkMenuItem[]
+}
+
+const LinkMenuItem = ({menuItemData}: IProps) => {
   return (
     <>
       {menuItemData.map((item, index) => (
         <NavContents key={index} className={item.cName}>
-          <Link to={item.path}>
+          <Link to={item.path as string}>
             <span>{item.title}</span>
           </Link>
         </NavContents>
@@ -17,4 +26,4 @@ const MenuItem = () => {
   );
 };
 
-export default React.memo(MenuItem);
+export default React.memo(LinkMenuItem);
