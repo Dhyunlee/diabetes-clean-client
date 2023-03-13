@@ -8,7 +8,7 @@ const logInApi = async <T>(insertData: T) => {
     });
     return data;
   } catch (error: any) {
-    throw error.response;
+    throw error.message;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {
@@ -20,7 +20,7 @@ const checkemailApi = async <T>(insertData: T) => {
     );
     return res;
   } catch (error: any) {
-    throw error;
+    throw error.message;
   }
 };
 
@@ -29,9 +29,10 @@ const getUserApi = async () => {
     const { data } = await api.get("/api/v1/users", {
       withCredentials: true,
     });
+    console.log({data})
     return data;
   } catch (error: any) {
-    throw error.response;
+    throw error.message;
   }
 };
 const postUserApi = async <T>(insertData: T) => {
@@ -41,7 +42,7 @@ const postUserApi = async <T>(insertData: T) => {
     });
     return data;
   } catch (error: any) {
-    throw error.response;
+    throw error.message;
   }
 };
 const updateUserApi = async () => {};
