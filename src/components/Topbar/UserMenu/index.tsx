@@ -7,12 +7,14 @@ import { getUserApi } from "utils/apis/userApis";
 import { IUser } from "typings/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
 import UserSubMenu from "../UserSubMenu";
+import { getCookie } from "utils/apis/cookie";
 
 const UserMenu = () => {
   const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
+  const token = getCookie("token");
 
   const handleShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
@@ -22,53 +24,56 @@ const UserMenu = () => {
     setShowUserSubMenu(false);
   }, []);
 
-  if (isLoading) {
-    return <div>유저 정보 불러오는중...</div>;
-  }
-
-  if (!userData) {
-    return (
-      <>
-        <UserItem>
-          <Link to="/login">로그인</Link>
-        </UserItem>
-        <UserItem>
-          <Link to="/signup">회원가입</Link>
-        </UserItem>
-      </>
-    );
-  }
-
-  return (
-    <>
-      {userData && (
-        <MenuList>
+  const renderMenu = (token: string) => {
+    if (!token) {
+      return (
+        <>
           <UserItem>
-            <Link to="/newmemo">기록 하기</Link>
+            <Link to="/login">로그인</Link>
           </UserItem>
           <UserItem>
-            <ProfileWrap onClick={handleShowUserSubMenu}>
-              <img
-                src={
-                  userData?.imageSrc
-                    ? userData.imageSrc
-                    : gravatar.url(userData?.email, {
-                        s: "32px",
-                        d: "retro",
-                      })
-                }
-                alt="profile"
-              />
-              <span className="menuIcon">{showUserSubMenu ? <FcCollapse /> : <FcExpand />}</span>
-            </ProfileWrap>
+            <Link to="/signup">회원가입</Link>
           </UserItem>
-        </MenuList>
-      )}
-      {showUserSubMenu && (
-        <UserSubMenu showUserSubMenu={showUserSubMenu} handleCloseMenu={handleCloseMenu} />
-      )}
-    </>
-  );
+        </>
+      );
+    } else {
+      return (
+        <>
+          <MenuList>
+            <UserItem>
+              <Link to="/newmemo">기록 하기</Link>
+            </UserItem>
+            <UserItem>
+              {userData && (
+                <ProfileWrap onClick={handleShowUserSubMenu}>
+                  <img
+                    src={
+                      userData?.imageSrc
+                        ? userData.imageSrc
+                        : gravatar.url(userData?.email, {
+                            s: "32px",
+                            d: "retro",
+                          })
+                    }
+                    alt="profile"
+                  />
+                  <span className="menuIcon">
+                    {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
+                  </span>
+                </ProfileWrap>
+              )}
+            </UserItem>
+          </MenuList>
+
+          {showUserSubMenu && (
+            <UserSubMenu showUserSubMenu={showUserSubMenu} handleCloseMenu={handleCloseMenu} />
+          )}
+        </>
+      );
+    }
+  };
+
+  return <>{renderMenu(token)}</>;
 };
 
 export default React.memo(UserMenu);
