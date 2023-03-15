@@ -8,7 +8,8 @@ const logInApi = async <T>(insertData: T) => {
     });
     return data;
   } catch (error: any) {
-    throw error.message;
+    console.log(error)
+    throw error.response;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {

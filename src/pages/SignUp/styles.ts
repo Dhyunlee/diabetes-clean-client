@@ -147,7 +147,7 @@ export const FrmBtnContainer = styled.div<{
 // 유효성
 export const Valid = styled.p`
   position: absolute;
-  bottom: -20px;
+  bottom: -30px;
   font-size: 13px;
   font-weight: 600;
 

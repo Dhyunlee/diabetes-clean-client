@@ -49,13 +49,12 @@ const Login = () => {
     },
     [inputs]
   );
-
   const mutation = useMutation<IAuthResponse, AxiosError, { email: string; password: string }>(
     "user",
     (data) => logInApi(data).then((res) => res),
     {
       onMutate() {
-        setIsSucessLogIn(false);
+        setIsSucessLogIn(true);
       },
       onSuccess(data) {
         if (data) {
@@ -66,10 +65,10 @@ const Login = () => {
       onError(error: any) {
         if (error.status === 401) {
           setErrorMsg(error.data);
-          setIsSucessLogIn(true);
+          setIsSucessLogIn(false);
         } else if (error.status === 504) {
           setErrorMsg("네트워크 오류, 잠시후 시도해주세요");
-          setIsSucessLogIn(true);
+          setIsSucessLogIn(false);
         }
       },
     }
@@ -142,7 +141,7 @@ const Login = () => {
                 value={password}
               />
             </InputWrap>
-            {isSucessLogIn && (
+            {!isSucessLogIn && (
               <Valid
                 className="error"
                 style={{ width: "100%", marginTop: 10, textAlign: "center" }}
