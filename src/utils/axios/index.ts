@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "utils/apis/cookie";
 const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const api = axios.create({
@@ -9,8 +10,13 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config: any) => {
+  const token = getCookie("token");
+
   return {
     ...config,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 });
 

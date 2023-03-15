@@ -14,8 +14,9 @@ import {
   FrmBtnContainer,
   Valid,
 } from "../SignUp/styles";
-import { IUser } from "typings/db";
+import { IAuthResponse, IUser } from "typings/db";
 import { AxiosError } from "axios";
+import { setCookie } from "utils/apis/cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,27 +50,30 @@ const Login = () => {
     [inputs]
   );
 
-  const mutation = useMutation<
-    IUser,
-    AxiosError,
-    { email: string; password: string }
-  >("user", (data) => logInApi(data).then((response) => response.data), {
-    onMutate() {
-      setIsSucessLogIn(false);
-    },
-    onSuccess() {
-      queryClient.refetchQueries("user");
-    },
-    onError(error: any) {
-      if (error.status === 401) {
-        setErrorMsg(error.data);
-        setIsSucessLogIn(true);
-      } else if (error.status === 504) {
-        setErrorMsg("네트워크 오류, 잠시후 시도해주세요");
-        setIsSucessLogIn(true);
-      }
-    },
-  });
+  const mutation = useMutation<IAuthResponse, AxiosError, { email: string; password: string }>(
+    "user",
+    (data) => logInApi(data).then((res) => res),
+    {
+      onMutate() {
+        setIsSucessLogIn(false);
+      },
+      onSuccess(data) {
+        if (data) {
+          setCookie("token", data.token);
+        }
+        queryClient.refetchQueries("user");
+      },
+      onError(error: any) {
+        if (error.status === 401) {
+          setErrorMsg(error.data);
+          setIsSucessLogIn(true);
+        } else if (error.status === 504) {
+          setErrorMsg("네트워크 오류, 잠시후 시도해주세요");
+          setIsSucessLogIn(true);
+        }
+      },
+    }
+  );
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {

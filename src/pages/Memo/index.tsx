@@ -10,7 +10,9 @@ import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetes } from "typings/db";
 import { MemoContents, MemoHeader } from "./styles";
+import { getCookie } from "utils/apis/cookie";
 const Memo = () => {
+  const token = getCookie('token');
   const { data: userData, error } = useQuery("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
@@ -30,10 +32,10 @@ const Memo = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData === false) {
+    if (!token) {
       navigate("/login", { replace: false });
     }
-  }, [navigate, userData]);
+  }, [navigate, token, userData]);
 
   if(isLoading) return <div>당수치 내역을 불러오는중입니다.</div>
   if(isError) return <div>데이터를 가져오는 실패했어요</div>
