@@ -1,6 +1,6 @@
 import LinkMenuItem from "components/TopBar/LinkMenuItem";
 import { CloseBtn, NavbarToggle, StyledNavMenu } from "./styles";
-import { menuItemData } from "utils/menuItemData";
+import { menuItemData } from "libs/menuItemData";
 
 interface IProps {
   isOpen: boolean;

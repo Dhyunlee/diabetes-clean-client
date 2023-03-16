@@ -4,10 +4,10 @@ import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
 import { getUserApi } from "utils/apis/userApis";
-import { IUser } from "typings/db";
+import { IUser } from "models/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
 import UserSubMenu from "../UserSubMenu";
-import { getCookie } from "utils/apis/cookie";
+import { getCookie } from "utils/functions/cookie";
 
 const UserMenu = () => {
   const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {

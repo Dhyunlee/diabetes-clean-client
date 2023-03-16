@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi, postUserApi, getUserApi } from "utils/apis/userApis";
-import { checkValidation } from "utils/validation";
+import { checkValidation } from "utils/functions/validation";
 import { useMutation, useQuery } from "react-query";
 
 import {
@@ -15,7 +15,7 @@ import {
   FrmBtnContainer,
 } from "./styles";
 import { AxiosError } from "axios";
-import { IUser } from "typings/db";
+import { IUser } from "models/db";
 
 const SignUp = () => {
   const { data: userData } = useQuery<IUser>("user", getUserApi, {

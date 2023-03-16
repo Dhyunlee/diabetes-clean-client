@@ -8,9 +8,9 @@ import { getUserApi } from "utils/apis/userApis";
 import { useEffect } from "react";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetes } from "typings/db";
+import { IDiabetes } from "models/db";
 import { MemoContents, MemoHeader } from "./styles";
-import { getCookie } from "utils/apis/cookie";
+import { getCookie } from "utils/functions/cookie";
 const Memo = () => {
   const token = getCookie('token');
   const { data: userData, error } = useQuery("user", getUserApi, {

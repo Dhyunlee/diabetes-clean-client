@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "typings/db";
+import { IUser } from "models/db";
 import { getUserApi } from "utils/apis/userApis";
 
 const MyPage = () => {

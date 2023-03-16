@@ -14,9 +14,9 @@ import {
   FrmBtnContainer,
   Valid,
 } from "../SignUp/styles";
-import { IAuthResponse, IUser } from "typings/db";
+import { IAuthResponse, IUser } from "models/db";
 import { AxiosError } from "axios";
-import { setCookie } from "utils/apis/cookie";
+import { setCookie } from "utils/functions/cookie";
 
 const Login = () => {
   const navigate = useNavigate();

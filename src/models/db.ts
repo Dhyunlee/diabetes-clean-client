@@ -16,4 +16,5 @@ export interface IDiabetes {
   GI: number;
   slot: string;
   createdAt: Date;
+  createdTime: string;
 }
