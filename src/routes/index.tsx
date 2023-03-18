@@ -1,17 +1,20 @@
 import { ROUTER_PATH } from "constants/router_path";
 import Login from "pages/Login";
 import Memo from "pages/Memo";
-import MyPage from "pages/Mypage";
+import MyPage from "pages/My";
 import NotFound from "pages/NotFound";
 import SignUp from "pages/SignUp";
 import Story from "pages/Story";
 import WriteMemo from "pages/WriteMemo";
 
 import { Navigate, Route, Routes } from "react-router-dom";
+import { getCookie } from "utils/functions/cookie";
 
 const RouterContainer = () => {
+  const token = getCookie("token");
+  console.log({token})
   const { INDEX, LOGIN, SIGNUP, MEMO, MEMO_DIABETES, SAVE_MEMO, MYPAGE, STORY } = ROUTER_PATH;
-
+  
   return (
     <Routes>
       <Route path={INDEX} index element={<Navigate replace to={MEMO_DIABETES} />} />
