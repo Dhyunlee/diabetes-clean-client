@@ -15,10 +15,10 @@ import {
   FrmBtnContainer,
 } from "./styles";
 import { AxiosError } from "axios";
-import { IUser } from "models/db";
+import { IAuthRequest, IAuthResponse, IUserResponse } from "models/db";
 
 const SignUp = () => {
-  const { data: userData } = useQuery<IUser>("user", getUserApi, {
+  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
 
@@ -42,8 +42,8 @@ const SignUp = () => {
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
   const [isSucessSignUp, setIsSucessSignUp] = useState(false);
-  const [ , ]  = useState(false);
-  const [ , ]  = useState(false);
+  const [,] = useState(false);
+  const [,] = useState(false);
 
   const [isCompleteState, setIsCompleteState] = useState(false);
   const [isComplete, setIsComplete] = useState({
@@ -60,7 +60,6 @@ const SignUp = () => {
     }
   }, [navigate, userData]);
 
-
   useEffect(() => {
     const result = Object.values(isComplete).every((item) => item === true);
     setIsCompleteState(result);
@@ -74,25 +73,34 @@ const SignUp = () => {
     isFormValue.current = true;
   };
 
-  const onClickCheckEmail = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const onClickCheckEmail = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (isEmail) {
       try {
-        const resResult = await checkemailApi(email);
-        alert(resResult.data.msg);
+        const res = await checkemailApi<string>(email);
+        console.log(res);
+        alert(res.msg);
         setIsCheckEmail(true);
         setIsComplete({
           ...isComplete,
           isCompleteEmail: true,
         });
       } catch (error: any) {
-        alert("Network Error\n잠시후 다시 시도해주세요");
-        setIsCheckEmail(false);
-        setIsComplete({
-          ...isComplete,
-          isCompleteEmail: false,
-        });
+        if (error.status === 409) {
+          console.log(409)
+          alert(error.data.msg);
+          setIsCheckEmail(false);
+          setIsComplete({
+            ...isComplete,
+            isCompleteEmail: false,
+          });
+        } else {
+          alert("서버 오류, 잠시후 시도해주세요");
+          setIsCheckEmail(false);
+          setIsComplete({
+            ...isComplete,
+            isCompleteEmail: false,
+          });
+        }
         return;
       }
     } else {
@@ -105,9 +113,7 @@ const SignUp = () => {
   };
 
   const checkPw = (p1: string, p2: string) => p1 === p2;
-  const onClickCheckPw = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const onClickCheckPw = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     let isCheck = password && checkPw(password, passwordCheck);
     if (isCheck) {
       alert("비밀번호가 일치합니다.");
@@ -131,25 +137,25 @@ const SignUp = () => {
     }
   };
 
-  const mutation = useMutation<IUser, AxiosError, { email: string; password: string; nickname: string }>(
-    'user',
-    (data) => postUserApi(data).then((response) => response.data),
-    {
-      onMutate() {
-        setIsSucessSignUp(false);
-      },
-      onSuccess() {
-        setIsSucessSignUp(true);
-      },
-      onError(error: any) {
-        if (error.status === 401) {
-          setIsSucessSignUp(error.data);
-        } else if (error.status === 504) {
-          setIsSucessSignUp(true);
-        }
-      },
+  const mutation = useMutation<
+    IAuthResponse,
+    AxiosError,
+    { email: string; password: string; nickname: string }
+  >("user", (data) => postUserApi<IAuthRequest>(data), {
+    onMutate() {
+      setIsSucessSignUp(false);
     },
-  );
+    onSuccess() {
+      setIsSucessSignUp(true);
+    },
+    onError(error: any) {
+      if (error.status === 401) {
+        setIsSucessSignUp(error.data);
+      } else if (error.status === 504) {
+        setIsSucessSignUp(true);
+      }
+    },
+  });
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -160,7 +166,7 @@ const SignUp = () => {
         nickname,
       };
       if (isCheckEmail && isCheckPw && nickname) {
-        console.log("서버로 회원가입하기");
+        console.log("회원가입하기");
         mutation.mutate(userInfo);
       }
     },
@@ -208,9 +214,7 @@ const SignUp = () => {
               </div>
               {isFocus.isEmail && (
                 <Valid className={`valid ${isEmail ? "success" : "error"}`}>
-                  {isEmail
-                    ? "이메일 형식이 올바릅니다."
-                    : "이메일 형식이 올바르지 않습니다."}
+                  {isEmail ? "이메일 형식이 올바릅니다." : "이메일 형식이 올바르지 않습니다."}
                 </Valid>
               )}
             </InputWrap>

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { logInApi, getUserApi } from "utils/apis/userApis";
+// import { useCookies } from "react-cookie";
 
 import {
   Container,
@@ -14,14 +15,18 @@ import {
   FrmBtnContainer,
   Valid,
 } from "../SignUp/styles";
-import { IAuthResponse, IUser } from "models/db";
+import { IUserResponse, IAuthResponse } from "models/db";
 import { AxiosError } from "axios";
 import { setCookie } from "utils/functions/cookie";
+import dayjs from "dayjs";
+
+const expires = dayjs().add(1, "day");
 
 const Login = () => {
+  // const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: userData } = useQuery<IUser>("user", getUserApi, {
+  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
   const [inputs, setInputs] = useState({
@@ -51,23 +56,27 @@ const Login = () => {
   );
   const mutation = useMutation<IAuthResponse, AxiosError, { email: string; password: string }>(
     "user",
-    (data) => logInApi(data).then((res) => res),
+    () => logInApi(inputs),
     {
       onMutate() {
         setIsSucessLogIn(true);
       },
       onSuccess(data) {
         if (data) {
-          setCookie("token", data.token);
+          setCookie("token", data.token, {
+            path: '/',
+            expires: new Date(dayjs().add(3, "day").format()), //3일
+          });
         }
         queryClient.refetchQueries("user");
       },
       onError(error: any) {
+        console.log({login: error})
         if (error.status === 401) {
-          setErrorMsg(error.data);
+          setErrorMsg(error.data.msg);
           setIsSucessLogIn(false);
-        } else if (error.status === 504) {
-          setErrorMsg("네트워크 오류, 잠시후 시도해주세요");
+        } else if (error.status === 500) {
+          setErrorMsg("서버 오류, 잠시후 시도해주세요");
           setIsSucessLogIn(false);
         }
       },

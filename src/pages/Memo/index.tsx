@@ -1,3 +1,4 @@
+import { useEffect  } from "react";
 import { Container } from "styles/common";
 import DateArea from "components/Memo/DateArea";
 import Submenu from "components/Memo/Submenu";
@@ -5,42 +6,33 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
 import { getUserApi } from "utils/apis/userApis";
-import { useEffect } from "react";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetes } from "models/db";
+import { IDiabetesResponse, IUserResponse } from "models/db";
 import { MemoContents, MemoHeader } from "./styles";
-import { getCookie } from "utils/functions/cookie";
 const Memo = () => {
-  const token = getCookie('token');
-  const { data: userData, error } = useQuery("user", getUserApi, {
+  const navigate = useNavigate();
+  const { data: userData, error } = useQuery<IUserResponse>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
-  const userId = userData?._id;
-
-  const { data: diabetesData, isError, isLoading } = useQuery<IDiabetes[]>(
-    ["diabetes", userId],
-    () => getDiabetes(userId),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 5,
-      retry: 2,
-      retryDelay: 10000,
-      enabled: !!userId,
-    }
-  );
-  const navigate = useNavigate();
+  const userId: string | null = userData?.userInfo._id || null;
+  const {
+    data: diabetesData,
+    isError,
+    isLoading,
+  } = useQuery<IDiabetesResponse>(["diabetes", userId], () => getDiabetes(userId), {
+    retry: 2,
+    enabled: !!userId,
+  });
 
   useEffect(() => {
-    if (!token) {
+    if (!userData) {
       navigate("/login", { replace: false });
     }
-  }, [navigate, token, userData]);
+  }, [navigate, userData]);
 
-  if(isLoading) return <div>당수치 내역을 불러오는중입니다.</div>
-  if(isError) return <div>데이터를 가져오는 실패했어요</div>
-  if(error) window.alert("네트워크 오류\n잠시후 다시 시도해주세요")
-
+  if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
+  if (isError) return <div>데이터를 가져오는 실패했어요</div>;
   return (
     <Container>
       <MemoHeader>
@@ -53,7 +45,7 @@ const Memo = () => {
       </MemoHeader>
       <MemoContents className="memoContainer">
         <Routes>
-          <Route path="diabetes" element={<Diabetes diabetesData={diabetesData}/>} />
+          <Route path="diabetes" element={<Diabetes diabetesInfo={diabetesData?.diabetesInfo} />} />
           <Route path="diet" element={<Diet />} />
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>

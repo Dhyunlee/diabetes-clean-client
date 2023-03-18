@@ -8,20 +8,20 @@ const logInApi = async <T>(insertData: T) => {
     });
     return data;
   } catch (error: any) {
-    console.log(error)
+    console.log(error);
     throw error.response;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {
   try {
-    const res = await api.post(
+    const { data } = await api.post(
       "/api/v1/auth/checkemail",
       { email: insertData },
       { withCredentials: true }
     );
-    return res;
+    return data;
   } catch (error: any) {
-    throw error.message;
+    throw error.response;
   }
 };
 
@@ -32,7 +32,8 @@ const getUserApi = async () => {
     });
     return data;
   } catch (error: any) {
-    throw error.message;
+    console.log(error.response.data);
+    throw error.response;
   }
 };
 const postUserApi = async <T>(insertData: T) => {
@@ -40,19 +41,14 @@ const postUserApi = async <T>(insertData: T) => {
     const { data } = await api.post("/api/v1/users", insertData, {
       withCredentials: true,
     });
+    console.log({postUser: data})
     return data;
   } catch (error: any) {
-    throw error.message;
+    throw error.response;
   }
 };
+
 const updateUserApi = async () => {};
 const deleteUserApi = async () => {};
 
-export {
-  logInApi,
-  getUserApi,
-  postUserApi,
-  updateUserApi,
-  deleteUserApi,
-  checkemailApi,
-};
+export { logInApi, getUserApi, postUserApi, updateUserApi, deleteUserApi, checkemailApi };

@@ -4,17 +4,15 @@ import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
 import { getUserApi } from "utils/apis/userApis";
-import { IUser } from "models/db";
+import { IUserResponse } from "models/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
 import UserSubMenu from "../UserSubMenu";
 import { getCookie } from "utils/functions/cookie";
 
 const UserMenu = () => {
-  const { data: userData, isLoading } = useQuery<IUser>("user", getUserApi, {
-    refetchOnWindowFocus: false,
-  });
-  const [showUserSubMenu, setShowUserSubMenu] = useState(false);
   const token = getCookie("token");
+  const { data: userData, error, isError, isLoading } = useQuery<IUserResponse>("user", getUserApi);
+  const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const handleShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
@@ -23,7 +21,6 @@ const UserMenu = () => {
   const handleCloseMenu = useCallback(() => {
     setShowUserSubMenu(false);
   }, []);
-
   const renderMenu = (token: string) => {
     if (!token) {
       return (
@@ -48,9 +45,9 @@ const UserMenu = () => {
                 <ProfileWrap onClick={handleShowUserSubMenu}>
                   <img
                     src={
-                      userData?.imageSrc
-                        ? userData.imageSrc
-                        : gravatar.url(userData?.email, {
+                      userData?.userInfo?.imageSrc
+                        ? userData?.userInfo?.imageSrc
+                        : gravatar.url(userData?.userInfo.email, {
                             s: "32px",
                             d: "retro",
                           })

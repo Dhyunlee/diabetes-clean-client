@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "models/db";
+import { IUserResponse } from "models/db";
 import { getUserApi } from "utils/apis/userApis";
 
 const MyPage = () => {
-  const { data: userData } = useQuery<IUser>("user", getUserApi, {
+  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
     refetchOnWindowFocus: false,
   });
   const navigate = useNavigate();

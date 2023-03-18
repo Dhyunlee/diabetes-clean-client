@@ -1,20 +1,37 @@
-export interface IUser {
-  readonly _id: string;
+export interface IAuthRequest {
   email: string;
-  nickname: string;
-  imageSrc: string;
+  password: string;
 }
 
 export interface IAuthResponse {
-  ok: boolean;
+  isOk: boolean;
   token: string;
 }
 
-export interface IDiabetes {
+export interface IUserInfo {
+  readonly _id: string;
+  createdAt: string;
+  email: string;
+  followers: [];
+  followings: [];
+  imageSrc: string;
+  nickname: string;
+  updatedAt: string;
+}
+
+export interface IUserResponse {
+  isOk: boolean;
+  userInfo: IUserInfo;
+}
+
+export interface IDiabetesInfo {
   readonly _id: string;
   writer?: string;
   GI: number;
   slot: string;
   createdAt: Date;
-  createdTime: string;
+}
+export interface IDiabetesResponse {
+  isOk: boolean;
+  diabetesInfo: IDiabetesInfo[];
 }

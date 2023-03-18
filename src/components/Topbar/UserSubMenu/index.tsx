@@ -17,11 +17,11 @@ const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", {withCredentials: true}).then((res) => {
       queryClient.setQueryData("user", false);
+      navigate("/login", { replace: true });
     });
 
     handleCloseMenu();
     
-    navigate("/login", { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
