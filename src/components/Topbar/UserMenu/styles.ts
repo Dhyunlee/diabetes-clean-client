@@ -16,13 +16,23 @@ export const MenuList = styled.ul`
 `;
 
 export const ProfileWrap = styled.span`
-  width: 40px;
-  height: 40px;
   cursor: pointer;
   position: relative;
   top: 0;
   left: 0;
 
+  .menuIcon {
+    position: absolute;
+    top: -12px;
+    left: 38px;
+  }
+`;
+
+export const Avatar = styled.span`
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  
   img {
     position: absolute;
     top: -20px;
@@ -32,12 +42,6 @@ export const ProfileWrap = styled.span`
     border-radius: 50%;
     width: inherit;
     height: inherit;
-  }
-
-  .menuIcon {
-    position: absolute;
-    top: -12px;
-    left: 38px;
   }
 `;
 

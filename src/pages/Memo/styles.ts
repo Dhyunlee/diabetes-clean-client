@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 
 export const MemoHeader = styled.header`
   .memo-title {
@@ -56,6 +56,8 @@ export const DateAreaContainer = styled.div`
 // -- [ MemoContents ] --
 export const MemoContents = styled.section`
   margin-top: 30px;
+  height: 500px;
+  overflow-y: auto;
 
   .contents-container {
     min-width: 97%;

@@ -1,7 +1,9 @@
+import Feed from "components/Story/Feed";
+
 const Story = () => {
   return (
-    <div>Story</div>
+    <Feed />
   )
-}
+};
 
 export default Story;
