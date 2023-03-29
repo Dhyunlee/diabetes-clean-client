@@ -13,7 +13,7 @@ export const MenuContainer = styled.ul`
 
 export const Li = styled.li`
   font-size: 15px;
-  padding: 0.2em 1.2em;
+  padding: 0.2em 0.5em;
   position: relative;
   top: 0;
   left: 0;
