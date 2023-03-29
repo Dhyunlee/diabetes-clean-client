@@ -4,19 +4,24 @@ import dayjs from "dayjs";
 import ko from "dayjs/locale/ko";
 dayjs.locale(ko);
 
-const DateArea = () => {
+interface IProps {
+  currentDate: string;
+  increamentDate: () => void;
+  decreamentDate: () => void;
+}
+const DateArea = ({ currentDate, increamentDate, decreamentDate }: IProps) => {
   return (
     <DateAreaContainer>
       <div className="btn-wrap">
-        <button className="dateCtrlBtn">
+        <button className="dateCtrlBtn" onClick={decreamentDate}>
           <AiOutlineArrowLeft />
         </button>
       </div>
       <div className="dateText-wrap">
-        <span className="dateText">{dayjs().format("MM월 DD일")}</span>
+        <span className="dateText">{currentDate}</span>
       </div>
       <div className="btn-wrap">
-        <button className="dateCtrlBtn">
+        <button className="dateCtrlBtn" onClick={increamentDate}>
           <AiOutlineArrowRight />
         </button>
       </div>

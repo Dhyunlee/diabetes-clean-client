@@ -1,4 +1,4 @@
-import { useEffect  } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "styles/common";
 import DateArea from "components/Memo/DateArea";
 import Submenu from "components/Memo/Submenu";
@@ -8,22 +8,35 @@ import { useQuery } from "react-query";
 import { getUserApi } from "utils/apis/userApis";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetesResponse, IUserResponse } from "models/db";
+import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
 import { MemoContents, MemoHeader } from "./styles";
+import dayjs from "dayjs";
 const Memo = () => {
   const navigate = useNavigate();
-  const { data: userData, error } = useQuery<IUserResponse>("user", getUserApi, {
-    refetchOnWindowFocus: false,
-  });
+  const [curDate, setCurDate] = useState(dayjs());
+  const [today] = useState(dayjs().format("YYYY-MM"));
+  const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
+
+  const { data: userData, error } = useQuery<IUserResponse>(
+    "user",
+    getUserApi,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   const userId: string | null = userData?.userInfo._id || null;
   const {
     data: diabetesData,
     isError,
     isLoading,
-  } = useQuery<IDiabetesResponse>(["diabetes", userId], () => getDiabetes(userId), {
-    retry: 2,
-    enabled: !!userId,
-  });
+  } = useQuery<IDiabetesResponse>(
+    ["diabetes", userId],
+    () => getDiabetes(userId),
+    {
+      retry: 2,
+      enabled: !!userId,
+    }
+  );
 
   useEffect(() => {
     if (!userData) {
@@ -31,8 +44,44 @@ const Memo = () => {
     }
   }, [navigate, userData]);
 
+  useEffect(() => {
+    const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
+    const endOfDate = dayjs(curDate).endOf("month").format("YYYYMMDD");
+
+    // eslint-disable-next-line array-callback-return
+    const thisMonthDate = diabetesData?.diabetesInfo.filter((item) => {
+      const fomattedCreatedAt = dayjs(item.createdAt).format("YYYY-MM-DD");
+      const date = parseInt(fomattedCreatedAt.split("-").join(""), 10);
+      if (Number(startOfDate) <= date && date <= Number(endOfDate)) {
+        return item;
+      }
+    });
+    if (thisMonthDate) {
+      setProcessData(thisMonthDate);
+    }
+  }, [curDate, diabetesData?.diabetesInfo]);
+
+  const currentDate = `${curDate.year()}년 ${
+    curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
+  }월`;
+
+  const increamentDate = () => {
+    const today_ = Number(today.split("-").join(""));
+    const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
+    if (today_ <= curDate_) {
+      alert("이번달까지만 조회 가능합니다.");
+      return;
+    }
+    setCurDate(curDate.add(1, "month"));
+  };
+
+  const decreamentDate = () => {
+    setCurDate(curDate.subtract(1, "month"));
+  };
+
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
   if (isError) return <div>데이터를 가져오는 실패했어요</div>;
+
   return (
     <Container>
       <MemoHeader>
@@ -40,12 +89,19 @@ const Memo = () => {
           <span>기록 내역</span>
         </div>
         <Submenu />
-        <DateArea />
+        <DateArea
+          currentDate={currentDate}
+          increamentDate={increamentDate}
+          decreamentDate={decreamentDate}
+        />
         <br />
       </MemoHeader>
       <MemoContents className="memoContainer">
         <Routes>
-          <Route path="diabetes" element={<Diabetes diabetesInfo={diabetesData?.diabetesInfo} />} />
+          <Route
+            path="diabetes"
+            element={<Diabetes diabetesInfo={processData} />}
+          />
           <Route path="diet" element={<Diet />} />
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
