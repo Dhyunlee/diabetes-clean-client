@@ -8,6 +8,7 @@ import { IUserResponse } from "models/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
 import UserSubMenu from "../UserSubMenu";
 import { getCookie } from "utils/functions/cookie";
+import Avatar from "components/Base/Avatar";
 
 const UserMenu = () => {
   const token = getCookie("token");
@@ -43,8 +44,10 @@ const UserMenu = () => {
             <UserItem>
               {userData && (
                 <ProfileWrap onClick={handleShowUserSubMenu}>
-                  <img
-                    src={
+                  <Avatar
+                    size={32}
+                    imgName="profile-img"
+                    imgUrl={
                       userData?.userInfo?.imageSrc
                         ? userData?.userInfo?.imageSrc
                         : gravatar.url(userData?.userInfo.email, {
@@ -52,7 +55,6 @@ const UserMenu = () => {
                             d: "retro",
                           })
                     }
-                    alt="profile"
                   />
                   <span className="menuIcon">
                     {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
