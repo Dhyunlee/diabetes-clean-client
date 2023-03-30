@@ -15,25 +15,25 @@ const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
   const navigate = useNavigate();
 
   const handleLogOut = useCallback(() => {
-    api.get("/api/v1/auth/logout", {withCredentials: true}).then((res) => {
+    api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
       queryClient.setQueryData("user", false);
       navigate("/login", { replace: true });
     });
 
     handleCloseMenu();
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Menu showMenu={showUserSubMenu} onCloseModal={handleCloseMenu}>
       <MenuContainer className="user-sub-menu">
-        <Li>
+        <Li onClick={() => navigate("/mypage")}>
           <Link onClick={handleCloseMenu} to={"/mypage"}>
             마이페이지
           </Link>
         </Li>
-        <Li>
+        <Li onClick={handleLogOut}>
           <button onClick={handleLogOut}>로그아웃</button>
         </Li>
       </MenuContainer>

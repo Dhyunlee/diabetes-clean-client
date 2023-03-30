@@ -1,7 +1,8 @@
+import { palette } from 'libs/palette';
 import styled from "@emotion/styled";
 
 export const Navbar = styled.div`
-  padding: 8px 30px;
+  padding: 0 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,10 +21,10 @@ export const Navbar = styled.div`
     background: none;
     border: none;
     outline: none;
-    color: #70290d;
+    color: ${({ theme }) => theme.bgColor.main};
     cursor: pointer;
-    
-    &>span {
+
+    & > span {
       display: inline-block;
       padding: 5px 12px;
       font-size: 25px;
@@ -36,7 +37,7 @@ export const Navbar = styled.div`
     height: 100%;
     font-size: 20px;
     line-height: 40px;
-    color: #70290d;
+    color: ${({ theme }) => theme.bgColor.main};
     font-weight: 600;
   }
 `;
@@ -59,8 +60,6 @@ export const NavContents = styled.li`
   height: 60px;
 
   & > a {
-    text-decoration: none;
-    color: #000;
     width: 95%;
     height: 100%;
     display: flex;
@@ -71,9 +70,8 @@ export const NavContents = styled.li`
     border-radius: 4px;
 
     &:hover {
-      color: #70290d;
       font-weight: 700;
-      background-color: #e3d8d3;
+      background-color: ${palette.gray[1]};
     }
   }
 `;

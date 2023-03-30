@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { palette } from "libs/palette";
 
 export const reset = css`
   /* @font-face {
@@ -47,7 +48,7 @@ export const reset = css`
   body {
     font-size: 1rem;
     color: #000;
-    background-color: #f8f9fa;
+    background-color: ${palette.gray[0]};
   }
 
   a {

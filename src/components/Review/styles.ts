@@ -1,3 +1,4 @@
+import { palette } from 'libs/palette';
 import styled from "@emotion/styled";
 
 export const ReviewContainer = styled.div`
@@ -10,7 +11,7 @@ export const ReviewContainer = styled.div`
   .review_item {
     cursor: pointer;
     &:hover {
-      color: #868e96;
+      color: ${palette.gray[3]};
     }
   }
 
@@ -20,8 +21,8 @@ export const ReviewContainer = styled.div`
     .likes-icon {
       font-size: 20px;
       position: relative;
+      top: 5px;
       left: 2px;
-      top: 3px;
       padding-right: 5px;
     }
     .count {

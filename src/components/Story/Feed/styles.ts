@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 import { Container } from "styles/common";
 
 
@@ -15,5 +16,5 @@ export const Contour = styled.div`
   // 구분선(Contour)
   width: 100%;
   height: 1px;
-  background-color: #e9ecef;
+  background-color: ${palette.gray[1]};
 `;

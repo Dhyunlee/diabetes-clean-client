@@ -75,7 +75,7 @@ export const ContentsList = styled.div`
 export const ContentsItem = styled.div`
   padding: 15px;
   margin-top: 20px;
-  box-shadow: 0px 0px 12px -3px rgb(0 0 0 / 20%);
+  box-shadow: ${({theme}) => theme.boxShadow.middle};
   cursor: pointer;
 `;
 

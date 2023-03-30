@@ -53,6 +53,10 @@ export const UserItem = styled(Li)`
     font-size: 14px;
     cursor: pointer;
   }
+
+  &:hover {
+    background-color: transparent;
+  }
 `;
 
 // 서브 메뉴

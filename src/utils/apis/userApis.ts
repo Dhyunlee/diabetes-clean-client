@@ -30,7 +30,6 @@ const getUserApi = async () => {
     const { data } = await api.get("/api/v1/users", {
       withCredentials: true,
     });
-    console.log(data)
     return data;
   } catch (error: any) {
     console.log(error.response);

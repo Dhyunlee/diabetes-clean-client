@@ -22,7 +22,7 @@ export const SubMenuBtn = styled.button<IStyleProps>`
   position: absolute;
   left: 50%;
   bottom: 0px;
-  color: white;
+  color: #fff;
   border-radius: 50%;
   border: none;
   outline: none;

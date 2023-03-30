@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const Header = styled.header`
-  box-shadow: 0px 2px 13px -1px rgb(0 0 0 / 10%);
+  box-shadow: ${({theme}) => theme.boxShadow.light};
 `;
 
 export const Main = styled.main`

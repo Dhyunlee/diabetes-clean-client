@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 export const StyledNavMenu = styled.nav`
-  background-color: #eee;
+  background-color: #fff;
   width: 230px;
   height: 100vh;
   display: flex;
@@ -23,7 +23,6 @@ export const StyledNavMenu = styled.nav`
 `;
 
 export const NavbarToggle = styled.li`
-  background-color: #eee;
   width: 100%;
   height: 80px;
   display: flex;

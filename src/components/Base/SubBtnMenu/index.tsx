@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { MdAdd } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Li } from "components/TopBar/UserSubMenu/styles";
 import { SubMenu, SubMenuBtn, SubMenuBtnContainer } from "./styles";
 
@@ -14,6 +14,7 @@ interface IProps {
 }
 
 const SubButtonMenu = ({ menuItems }: IProps) => {
+  const navigate = useNavigate()
   const [changePos, setChangePost] = useState(false);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
   const handleCloseMenu = useCallback(() => {

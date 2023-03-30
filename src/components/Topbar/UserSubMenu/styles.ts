@@ -1,27 +1,32 @@
 import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 
 export const MenuContainer = styled.ul`
-  padding: 5px 10px;
   text-align: center;
   position: fixed;
   top: 70px;
   right: 10px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 23px -5px rgb(0 0 0 / 25%);
+  box-shadow: ${({theme}) => theme.boxShadow.thick};
 `;
 
 export const Li = styled.li`
   font-size: 15px;
-  padding: 0.2em 0.5em;
+  padding: 8px;
   position: relative;
   top: 0;
   left: 0;
+  cursor: pointer;
 
-  button {
+  a, button {
     font-size: inherit;
     border: none;
+    border-radius: 4px;
     background: transparent;
     cursor: pointer;
+  }
+  &:hover {
+    background-color: ${palette.gray[1]};
   }
 `;
