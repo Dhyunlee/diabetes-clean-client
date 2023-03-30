@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 
 export const ContentsInfoInterface = styled.div`
   width: 100%;
@@ -21,7 +22,7 @@ export const ContentsInfoInterface = styled.div`
       cursor: pointer;
 
       &:hover {
-        color: #868e96;
+        color: ${palette.gray[3]}// #868e96;
       }
     }
   }

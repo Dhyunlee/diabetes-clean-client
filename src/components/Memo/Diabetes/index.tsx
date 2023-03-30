@@ -20,8 +20,6 @@ const Diabetes = ({ diabetesInfo }: IProps) => {
         {diabetesInfo?.length ? (
           diabetesInfo.map(({ _id, GI, slot, createdAt }) => {
             const iconData = timeIcons.find(({ itemIcons_desc }) => slot?.includes(itemIcons_desc));
-            // console.log({a:createdAt, b:dayjs(createdAt).format('HH:mm')})
-            // console.log(dayjs().toDate())
             return (
               <ContentsItem key={_id}>
                 <ContentsItemHeader className="contents-header">

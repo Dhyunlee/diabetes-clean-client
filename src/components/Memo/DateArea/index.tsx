@@ -9,6 +9,7 @@ interface IProps {
   increamentDate: () => void;
   decreamentDate: () => void;
 }
+
 const DateArea = ({ currentDate, increamentDate, decreamentDate }: IProps) => {
   return (
     <DateAreaContainer>

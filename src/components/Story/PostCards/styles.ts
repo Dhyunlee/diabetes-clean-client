@@ -2,19 +2,17 @@ import styled from "@emotion/styled";
 
 export const PostCardContainer = styled.div`
   width: 100%;
-  padding: 2.3rem 1.2rem;
+  height: calc(100vh - 132px);
+  padding: 0 1.2rem;
   border-radius: 5px;
   color: #343a40;
-  &:after {
-    content: "";
-    width: 12px;
-    height: 2px;
-    background-color: red;
-  }
+  overflow: auto;
 `;
 
 export const PostCardWrap = styled.div`
-  margin: 30px 0;
+  &:nth-of-type(2) {
+    margin: 20px 0;
+  }
   padding: 20px 15px;
   background-color: #fff;
   border-radius: 5px;
@@ -54,9 +52,7 @@ export const PostContents = styled.section`
   padding-top: 10px;
 `;
 
-export const PostContentsBlock = styled.div`
-
-`;
+export const PostContentsBlock = styled.div``;
 
 export const ReviewBlock = styled.div`
   padding-top: 8px;

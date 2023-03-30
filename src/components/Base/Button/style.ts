@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 
 export const ButtonInterface = styled.button`
   width: 80px;
@@ -9,7 +10,7 @@ export const ButtonInterface = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #f8f9fa;
+    background-color: ${palette.gray[0]};
   }
   &:active {
     transform: translateY(3px);

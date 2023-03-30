@@ -13,7 +13,6 @@ export const AvatarStyle = styled.span<IStyleProps>`
   cursor: pointer;
   
   img {
-    position: absolute;
     border: 1px solid rgb(0 0 0 / 10%);
     padding: 2px;
     border-radius: 50%;
