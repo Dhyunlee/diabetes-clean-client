@@ -9,7 +9,7 @@ const logInApi = async <T>(insertData: T) => {
     return data;
   } catch (error: any) {
     console.log(error);
-    throw error.response;
+    throw error;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {
