@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { logInApi, getUserApi } from "utils/apis/userApis";
+import { useMutation, useQueryClient } from "react-query";
+import { logInApi } from "utils/apis/userApis";
 // import { useCookies } from "react-cookie";
 
 import {
@@ -17,18 +17,12 @@ import {
 } from "../SignUp/styles";
 import { IUserResponse, IAuthResponse } from "models/db";
 import { AxiosError } from "axios";
-import { setCookie } from "utils/functions/cookie";
-import dayjs from "dayjs";
-
-const expires = dayjs().add(1, "day");
+import useStorage from "utils/functions/useStorage";
 
 const Login = () => {
-  // const [cookies, setCookie] = useCookies();
+  const { setStorage } = useStorage;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
-    refetchOnWindowFocus: false,
-  });
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -39,12 +33,6 @@ const Login = () => {
 
   const { email, password } = inputs;
 
-  useEffect(() => {
-    if (userData) {
-      navigate("/", { replace: false });
-    }
-  }, [navigate, userData]);
-
   const onFormChange = useCallback(
     (e: any) => {
       setInputs({
@@ -54,34 +42,32 @@ const Login = () => {
     },
     [inputs]
   );
-  const mutation = useMutation<IAuthResponse, AxiosError, { email: string; password: string }>(
-    "user",
-    () => logInApi(inputs),
-    {
-      onMutate() {
-        setIsSucessLogIn(true);
-      },
-      onSuccess(data) {
-        if (data) {
-          setCookie("token", data.token, {
-            path: '/',
-            expires: new Date(dayjs().add(3, "day").format()), //3일
-          });
-        }
-        queryClient.refetchQueries("user");
-      },
-      onError(error: any) {
-        console.log({login: error})
-        if (error.status === 401) {
-          setErrorMsg(error.data.msg);
-          setIsSucessLogIn(false);
-        } else if (error.status === 500) {
-          setErrorMsg("서버 오류, 잠시후 시도해주세요");
-          setIsSucessLogIn(false);
-        }
-      },
-    }
-  );
+  const mutation = useMutation<
+    IAuthResponse,
+    AxiosError,
+    { email: string; password: string }
+  >("user", () => logInApi(inputs), {
+    onMutate() {
+      setIsSucessLogIn(true);
+    },
+    onSuccess(data) {
+      if (data) {
+        setStorage("accessToken", data.accessToken);
+        navigate('/')
+      }
+      queryClient.refetchQueries("user");
+    },
+    onError(error: any) {
+      console.log({ login: error });
+      if (error.status === 401) {
+        setErrorMsg(error.data.msg);
+        setIsSucessLogIn(false);
+      } else if (error.status === 500) {
+        setErrorMsg("서버 오류, 잠시후 시도해주세요");
+        setIsSucessLogIn(false);
+      }
+    },
+  });
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {

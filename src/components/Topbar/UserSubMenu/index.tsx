@@ -5,6 +5,7 @@ import { useQueryClient } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { Li, MenuContainer } from "./styles";
 import api from "utils/axios";
+import useStorage from "utils/functions/useStorage";
 
 interface Props {
   showUserSubMenu: boolean;
@@ -13,9 +14,11 @@ interface Props {
 const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const {removeStorage} = useStorage;
 
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
+      removeStorage('accessToken')
       queryClient.setQueryData("user", false);
       navigate("/login", { replace: true });
     });

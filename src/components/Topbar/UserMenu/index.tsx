@@ -7,14 +7,18 @@ import { getUserApi } from "utils/apis/userApis";
 import { IUserResponse } from "models/db";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
 import UserSubMenu from "../UserSubMenu";
-import { getCookie } from "utils/functions/cookie";
+import useStorage from "utils/functions/useStorage";
 import Avatar from "components/Base/Avatar";
 
 const UserMenu = () => {
-  const token = getCookie("token");
-  const { data: userData, error, isError, isLoading } = useQuery<IUserResponse>("user", getUserApi);
+  const token = useStorage.getStorage("accessToken");
+  const {
+    data: userData,
+    error,
+    isError,
+    isLoading,
+  } = useQuery<IUserResponse>("user", getUserApi);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
-
   const handleShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);
@@ -22,7 +26,8 @@ const UserMenu = () => {
   const handleCloseMenu = useCallback(() => {
     setShowUserSubMenu(false);
   }, []);
-  const renderMenu = (token: string) => {
+
+  const renderMenu = (token: string | null) => {
     if (!token) {
       return (
         <>
@@ -50,7 +55,7 @@ const UserMenu = () => {
                     imgUrl={
                       userData?.userInfo?.imageSrc
                         ? userData?.userInfo?.imageSrc
-                        : gravatar.url(userData?.userInfo.email, {
+                        : gravatar.url(userData?.userInfo?.email, {
                             s: "32px",
                             d: "retro",
                           })
@@ -65,7 +70,10 @@ const UserMenu = () => {
           </MenuList>
 
           {showUserSubMenu && (
-            <UserSubMenu showUserSubMenu={showUserSubMenu} handleCloseMenu={handleCloseMenu} />
+            <UserSubMenu
+              showUserSubMenu={showUserSubMenu}
+              handleCloseMenu={handleCloseMenu}
+            />
           )}
         </>
       );
