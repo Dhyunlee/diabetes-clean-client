@@ -1,4 +1,5 @@
 import api from "utils/axios";
+import useStorage from "utils/functions/useStorage";
 
 /* 유저 및 인증 */
 const logInApi = async <T>(insertData: T) => {
@@ -9,7 +10,7 @@ const logInApi = async <T>(insertData: T) => {
     return data;
   } catch (error: any) {
     console.log(error);
-    throw error.response;
+    throw error;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {
@@ -26,15 +27,19 @@ const checkemailApi = async <T>(insertData: T) => {
 };
 
 const getUserApi = async () => {
+  const { removeStorage } = useStorage;
   try {
     const { data } = await api.get("/api/v1/users", {
       withCredentials: true,
     });
-    console.log(data)
     return data;
   } catch (error: any) {
-    console.log(error.response);
-    throw error
+    if (error.status === 403) {
+      console.log("403");
+      window.location.href = "/login";
+      removeStorage("accessToken");
+    }
+    throw error;
   }
 };
 const postUserApi = async <T>(insertData: T) => {
@@ -51,4 +56,11 @@ const postUserApi = async <T>(insertData: T) => {
 const updateUserApi = async () => {};
 const deleteUserApi = async () => {};
 
-export { logInApi, getUserApi, postUserApi, updateUserApi, deleteUserApi, checkemailApi };
+export {
+  logInApi,
+  getUserApi,
+  postUserApi,
+  updateUserApi,
+  deleteUserApi,
+  checkemailApi,
+};
