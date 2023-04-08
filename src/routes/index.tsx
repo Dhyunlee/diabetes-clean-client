@@ -1,36 +1,42 @@
+import { Navigate, Route, Routes } from "react-router-dom";
 import { ROUTER_PATH } from "constants/router_path";
 import Login from "pages/Login";
-import Memo from "pages/Memo";
-import MyPage from "pages/My";
-import MyFeed from "pages/MyFeed";
 import NotFound from "pages/NotFound";
 import SignUp from "pages/SignUp";
 import Story from "pages/Story";
-import WriteContents from "pages/WriteContents";
-import WriteMemo from "pages/WriteMemo";
+import Memo from "pages/Memo";
+import PrivateRoutes from "./PrivateRoutes";
+import My from "pages/My";
+import useStorage from "utils/functions/useStorage";
 
-import { Navigate, Route, Routes } from "react-router-dom";
-import { getCookie } from "utils/functions/cookie";
+const { INDEX, LOGIN, SIGNUP, MEMO, MEMO_DIABETES, STORY, MYPAGE } =
+  ROUTER_PATH;
+const PublicRouter = () => {
+  const token = useStorage.getStorage("accessToken") || false;
 
-const RouterContainer = () => {
-  const token = getCookie("token");
-  console.log({token})
-  const { INDEX, LOGIN, SIGNUP, MEMO, MEMO_DIABETES, SAVE_MEMO, MYPAGE, SAVE_CONTENTS,STORY, MY_FEED } = ROUTER_PATH;
-  
   return (
     <Routes>
-      <Route path={INDEX} index element={<Navigate replace to={MEMO_DIABETES} />} />
-      <Route path={SIGNUP} element={<SignUp />} />
-      <Route path={LOGIN} element={<Login />} />
-      <Route path={SAVE_MEMO} element={<WriteMemo />} />
-      <Route path={MEMO} element={<Memo />} />
-      <Route path={SAVE_CONTENTS} element={<WriteContents />} />
+      <Route element={<PrivateRoutes />}>
+        <Route
+          path={INDEX}
+          index
+          element={<Navigate replace to={MEMO_DIABETES} />}
+        />
+        <Route path={MEMO} element={<Memo />} />
+        <Route path={MYPAGE} element={<My />} />
+      </Route>
+      <Route
+        path={LOGIN}
+        element={<Login />}
+      />
+      <Route
+        path={SIGNUP}
+        element={<SignUp />}
+      />
       <Route path={STORY} element={<Story />} />
-      <Route path={MY_FEED} element={<MyFeed />} />
-      <Route path={MYPAGE} element={<MyPage />} />
       <Route path={"*"} element={<NotFound />} />
     </Routes>
   );
 };
 
-export default RouterContainer;
+export default PublicRouter;
