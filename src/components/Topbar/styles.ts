@@ -2,7 +2,7 @@ import { palette } from 'libs/palette';
 import styled from "@emotion/styled";
 
 export const Navbar = styled.div`
-  padding: 0 30px;
+  padding: 5px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;

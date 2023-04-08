@@ -28,7 +28,7 @@ export const ReviewContainer = styled.div`
     .count {
       padding-left: 3px;
       position: absolute;
-      top: 0;
+      top: -2px;
       right: -8px;
     }
   }

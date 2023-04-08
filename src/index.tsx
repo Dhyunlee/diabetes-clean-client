@@ -5,7 +5,7 @@ import { reset } from "styles/reset";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { palette, theme } from "libs/palette";
+import { theme } from "libs/palette";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
