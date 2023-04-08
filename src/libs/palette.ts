@@ -55,7 +55,7 @@ export const palette = {
   ],
 };
 export const theme = {
-  // box-shadow: 0px 0px 12px -3px rgb(0 0 0 / 20%);
+  // 자주 사용할 배경
   bgColor: {
     main: '#70290d',
     sub: "#fff",
@@ -65,11 +65,12 @@ export const theme = {
     danger: palette.orange[6],
     conceled:  '#4f2323',
   },
-  //자주 사용할 색상
+  // 자주 사용할 색상
   colors: {
     darkGray: palette.gray[5],
     lightGray: palette.gray[0],
   },
+  // 자주 사용할 박스 그림자
   boxShadow: {
     thick: '0 4px 23px -5px rgb(0 0 0 / 25%)',
     middle: '0px 0px 12px -3px rgb(0 0 0 / 20%)',

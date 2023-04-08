@@ -16,7 +16,6 @@ const Memo = () => {
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-
   const { data: userData, error } = useQuery<IUserResponse>(
     "user",
     getUserApi,
@@ -24,7 +23,7 @@ const Memo = () => {
       refetchOnWindowFocus: false,
     }
   );
-  const userId: string | null = userData?.userInfo._id || null;
+  const userId = userData?.userInfo?._id || null;
   const {
     data: diabetesData,
     isError,
@@ -37,12 +36,6 @@ const Memo = () => {
       enabled: !!userId,
     }
   );
-
-  useEffect(() => {
-    if (!userData) {
-      navigate("/login", { replace: false });
-    }
-  }, [navigate, userData]);
 
   useEffect(() => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");

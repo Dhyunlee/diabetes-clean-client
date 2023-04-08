@@ -5,7 +5,7 @@ export interface IAuthRequest {
 
 export interface IAuthResponse {
   isOk: boolean;
-  token: string;
+  accessToken: string;
 }
 
 export interface IUserInfo {

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { checkemailApi, postUserApi, getUserApi } from "utils/apis/userApis";
+import { checkemailApi, postUserApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 
 import {
   FormBtn,
@@ -15,13 +15,9 @@ import {
   FrmBtnContainer,
 } from "./styles";
 import { AxiosError } from "axios";
-import { IAuthRequest, IAuthResponse, IUserResponse } from "models/db";
+import { IAuthRequest, IAuthResponse } from "models/db";
 
 const SignUp = () => {
-  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
-    refetchOnWindowFocus: false,
-  });
-
   const navigate = useNavigate();
 
   const isFormValue = useRef(false);
@@ -53,12 +49,6 @@ const SignUp = () => {
   });
 
   const { email, password, passwordCheck, nickname } = inputs;
-
-  useEffect(() => {
-    if (userData) {
-      navigate("/", { replace: false });
-    }
-  }, [navigate, userData]);
 
   useEffect(() => {
     const result = Object.values(isComplete).every((item) => item === true);

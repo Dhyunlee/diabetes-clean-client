@@ -30,10 +30,11 @@ const getUserApi = async () => {
     const { data } = await api.get("/api/v1/users", {
       withCredentials: true,
     });
+    console.log(data)
     return data;
   } catch (error: any) {
     console.log(error.response);
-    throw error.response;
+    throw error
   }
 };
 const postUserApi = async <T>(insertData: T) => {
@@ -41,7 +42,6 @@ const postUserApi = async <T>(insertData: T) => {
     const { data } = await api.post("/api/v1/users", insertData, {
       withCredentials: true,
     });
-    console.log({postUser: data})
     return data;
   } catch (error: any) {
     throw error.response;
