@@ -5,18 +5,6 @@ import { IUserResponse } from "models/db";
 import { getUserApi } from "utils/apis/userApis";
 
 const MyPage = () => {
-  const { data: userData } = useQuery<IUserResponse>("user", getUserApi, {
-    refetchOnWindowFocus: false,
-  });
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!userData) {
-      navigate("/login", { replace: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
-
   return (
     <div>MyPage</div>
   )
