@@ -24,13 +24,22 @@ export interface IUserResponse {
   userInfo: IUserInfo;
 }
 
+export interface iDiabetesRequest {
+  writer: string;
+  sugar_level: number;
+  slot: string;
+  note: string;
+  createdAt: string;
+}
+
 export interface IDiabetesInfo {
   readonly _id: string;
   writer?: string;
-  GI: number;
+  sugar_level: number;
   slot: string;
   createdAt: Date;
 }
+
 export interface IDiabetesResponse {
   isOk: boolean;
   diabetesInfo: IDiabetesInfo[];
