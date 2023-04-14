@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container } from "styles/common";
-import DateArea from "components/Memo/DateArea";
-import Submenu from "components/Memo/Submenu";
+import DateArea from "components/Memo/Base/DateArea";
+import Submenu from "components/Memo/Base/Submenu";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
