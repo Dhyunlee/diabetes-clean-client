@@ -1,7 +1,7 @@
-const WriteMemo = () => {
-  return (
-    <div>WriteMemo</div>
-  )
-}
+import EditMemo from "components/EditMemo";
 
-export default WriteMemo
+const WriteMemo = () => {
+  return <EditMemo />;
+};
+
+export default WriteMemo;
