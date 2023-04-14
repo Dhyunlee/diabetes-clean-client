@@ -1,11 +1,12 @@
 import ReactDOM from "react-dom/client";
 import AppLayout from "components/App";
 import { Global, ThemeProvider } from "@emotion/react";
-import { reset } from "styles/reset";
 import { BrowserRouter } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { theme } from "libs/palette";
+import { reset } from "styles/reset";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
@@ -23,14 +24,15 @@ const queryClient = new QueryClient({
 root.render(
   <>
     <Global styles={reset} />
-
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ThemeProvider theme={theme}>
-          <AppLayout />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <ThemeProvider theme={theme}>
+            <AppLayout />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </RecoilRoot>
   </>
 );

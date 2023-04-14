@@ -1,16 +1,22 @@
-import React, { useCallback, useState } from "react";
+import React, { useState,useEffect,useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
+import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
-import { getUserApi } from "utils/apis/userApis";
 import { IUserResponse } from "models/db";
-import { MenuList, ProfileWrap, UserItem } from "./styles";
-import UserSubMenu from "../UserSubMenu";
-import useStorage from "utils/functions/useStorage";
+import UserSubMenu from "components/TopBar/UserSubMenu";
 import Avatar from "components/Base/Avatar";
+import { getUserApi } from "utils/apis/userApis";
+import useStorage from "utils/functions/useStorage";
+import { userState } from "store/userState";
+import { ROUTER_PATH } from "constants/router_path";
+import { MenuList, ProfileWrap, UserItem } from "./styles";
 
 const UserMenu = () => {
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES} =
+  ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
   const {
     data: userData,
@@ -27,15 +33,22 @@ const UserMenu = () => {
     setShowUserSubMenu(false);
   }, []);
 
+  useEffect(() => {
+    console.log(userData)
+    if(userData) {
+      setUserInfo(userData.userInfo)
+    }
+  }, [setUserInfo, userData])
+
   const renderMenu = (token: string | null) => {
     if (!token) {
       return (
         <>
           <UserItem>
-            <Link to="/login">로그인</Link>
+            <Link to={LOGIN}>로그인</Link>
           </UserItem>
           <UserItem>
-            <Link to="/signup">회원가입</Link>
+            <Link to={SIGNUP}>회원가입</Link>
           </UserItem>
         </>
       );
@@ -44,7 +57,7 @@ const UserMenu = () => {
         <>
           <MenuList>
             <UserItem>
-              <Link to="/newmemo">기록 하기</Link>
+              <Link to={SAVE_MEMO_DIABETES}>기록 하기</Link>
             </UserItem>
             <UserItem>
               {userData && (

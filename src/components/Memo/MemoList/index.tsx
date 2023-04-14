@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react";
+import {useRecoilValue} from 'recoil';
 import { Container } from "styles/common";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
-import { getUserApi } from "utils/apis/userApis";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
-import { MemoContents, MemoHeader } from "./styles";
+import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 import dayjs from "dayjs";
-const Memo = () => {
-  const navigate = useNavigate();
+import { MemoContents, MemoHeader } from "./styles";
+import { userState } from "store/userState";
+
+const MemoList = () => {
+  const {_id: userId} = useRecoilValue(userState)
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-  const { data: userData, error } = useQuery<IUserResponse>(
-    "user",
-    getUserApi,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
-  const userId = userData?.userInfo?._id || null;
+
   const {
     data: diabetesData,
     isError,
@@ -89,18 +84,17 @@ const Memo = () => {
         />
         <br />
       </MemoHeader>
-      <MemoContents className="memoContainer">
+      <MemoContents>
         <Routes>
           <Route
             path="diabetes"
             element={<Diabetes diabetesInfo={processData} />}
           />
           <Route path="diet" element={<Diet />} />
-          <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
       </MemoContents>
     </Container>
   );
 };
 
-export default Memo;
+export default MemoList;

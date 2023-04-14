@@ -18,7 +18,7 @@ const CommentForm = () => {
     <CommentsFormContainer>
       <form onSubmit={onSubmit}>
         <div className="inputWrap">
-          <Input type={"text"} text={comment} onChange={onChange} placeholder={"댓글 추가"} />
+          <Input type={"text"} value={comment} onChange={onChange} placeholder={"댓글 추가"} />
         </div>
         <div className="btnCtrl">
           <Button text={"댓글 추가"} type={"submit"} />

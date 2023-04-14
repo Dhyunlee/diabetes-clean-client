@@ -8,12 +8,13 @@ import Memo from "pages/Memo";
 import PrivateRoutes from "./PrivateRoutes";
 import My from "pages/My";
 import useStorage from "utils/functions/useStorage";
+import WriteMemo from "pages/WriteMemo";
+import FormDiabetes from "components/EditMemo/FormDiabetes";
+import FormDiet from "components/EditMemo/FormDiet";
 
-const { INDEX, LOGIN, SIGNUP, MEMO, MEMO_DIABETES, STORY, MYPAGE } =
+const { INDEX, LOGIN, SIGNUP, SAVE_MEMO, MEMO, MEMO_DIABETES, STORY, MYPAGE } =
   ROUTER_PATH;
 const PublicRouter = () => {
-  const token = useStorage.getStorage("accessToken") || false;
-
   return (
     <Routes>
       <Route element={<PrivateRoutes />}>
@@ -23,6 +24,10 @@ const PublicRouter = () => {
           element={<Navigate replace to={MEMO_DIABETES} />}
         />
         <Route path={MEMO} element={<Memo />} />
+        <Route path={SAVE_MEMO} element={<WriteMemo />}>
+          <Route path="diabetes" element={<FormDiabetes />} />
+          <Route path="diet" element={<FormDiet />} />
+        </Route>
         <Route path={MYPAGE} element={<My />} />
       </Route>
       <Route

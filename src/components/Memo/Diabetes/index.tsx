@@ -4,7 +4,7 @@ import {
   ContentsItemBody,
   ContentsItemHeader,
   ContentsList,
-} from "pages/Memo/styles";
+} from "components/Memo/MemoList/styles";
 import { timeIcons } from "libs/time-icons";
 import { IDiabetesInfo } from "models/db";
 
@@ -18,7 +18,7 @@ const Diabetes = ({ diabetesInfo }: IProps) => {
     <div className="contents-container">
       <ContentsList>
         {diabetesInfo?.length ? (
-          diabetesInfo.map(({ _id, GI, slot, createdAt }) => {
+          diabetesInfo.map(({ _id, sugar_level, slot, createdAt }) => {
             const iconData = timeIcons.find(({ itemIcons_desc }) => slot?.includes(itemIcons_desc));
             return (
               <ContentsItem key={_id}>
@@ -34,7 +34,7 @@ const Diabetes = ({ diabetesInfo }: IProps) => {
                     <div className="item item-title">{slot}</div>
                   </div>
                   <div className="cnt-item content_body-inner">
-                    <div>{GI}mg/dl</div>
+                    <div>{sugar_level}mg/dl</div>
                   </div>
                 </ContentsItemBody>
               </ContentsItem>
