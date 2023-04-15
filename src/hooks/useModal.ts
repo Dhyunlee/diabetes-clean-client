@@ -1,21 +1,18 @@
 import { useRecoilState } from "recoil";
-import { useCallback } from "react";
-import { modalState } from "store/modalState";
+import { IModalState, modalState } from "store/modalState";
 
 export const useModal = () => {
   const [modalStatus, setModalStatus] = useRecoilState(modalState);
 
-  const closeModal = useCallback(() => {
-      setModalStatus({
-        isOpen: false,
-      });
-  }, [setModalStatus]);
+  const openModal = ({type, isOpen, data}: IModalState) => {
+     setModalStatus({type, isOpen, data});  
+  }
 
-  const openModal = useCallback(() => {
-    setModalStatus({
-      isOpen: true,
-    });
-  }, [setModalStatus]);
+  const closeModal = () => {
+    // setTimeout(() => {
+      setModalStatus({type: null, isOpen: false});
+    // }, 250)
+  }
 
   return { modalStatus, closeModal, openModal };
 };

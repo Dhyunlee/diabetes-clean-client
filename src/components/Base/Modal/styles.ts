@@ -33,7 +33,7 @@ export const slideDown = keyframes`
  }
 `;
 
-export const ModalWrap = styled.div<{disappear: boolean}>`
+export const ModalWrap = styled.div<{ disappear: boolean }>`
   width: 100%;
   position: fixed;
   left: 0;
@@ -41,46 +41,40 @@ export const ModalWrap = styled.div<{disappear: boolean}>`
   top: 0;
   bottom: 0;
   display: flex;
+  justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  //--- animation: test
   transition: opacity 0.3s ease-in-out;
+  
+  //--- animation: test
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
 
-  ${(props) => {
-    return props.disappear && css`
-      animation-name: ${fadeOut};
-    `
+  ${({disappear}) => {
+    console.log({disappear})
+    return (
+      disappear &&
+      css`
+        animation-name: ${fadeOut};
+      `
+    );
   }}
 `;
 
-export const ModalContainer = styled.div<{disappear: boolean}>`
+export const ModalContainer = styled.div<{ disappear: boolean }>`
   width: auto;
+  position: relative;
   padding: 10px 50px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   border: 1px solid gray;
   border-radius: 5px;
   background: #fff;
-
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out; /* 첨에 빨랐다가 느려지는 효과 */
-  animation-name: ${slideUp};
   animation-fill-mode: forwards; /* 애니메이션이 끝난 상태를 유지 */
-
-  ${(props) => {
-    return props.disappear && css`
-      animation-name: ${slideDown};
-    `
-  }}
-`;
-
+  `;
+  // animation-name: ${slideUp};
 export const CloseBtn = styled.button`
   width: 25px;
   height: 25px;

@@ -10,9 +10,14 @@ const App = () => {
   const modalValue = useRecoilValue(modalState);
   const { openModal } = useModal();
   const [isOpenModal, setOpenModal] = useState(false);
+
   useEffect(() => {
-    console.log(modalValue)
-  }, [modalValue])
+    const $body = document.body;
+    // 모달 활성시 스크롤 방지
+    $body.style.overflow = modalValue.isOpen ? "hidden" : "auto";
+
+    setOpenModal(modalValue.isOpen);
+  }, [isOpenModal, modalValue]);
   return (
     <div className="app-wrap">
       <Header>
@@ -21,22 +26,16 @@ const App = () => {
       <Main>
         <RouterContainer />
       </Main>
-      <button
-        onClick={() => {
-          setOpenModal(true);
-          openModal();
-        }}
-      >
-        모달창
-      </button>
 
       {/* 모달 컴포넌트 만드는 예시 */}
       {isOpenModal && (
-          <div>
-            <Modal>
-              <div>모달이다.</div>
-            </Modal>
-          </div>
+        <Modal isOpenModal={modalValue.isOpen}>
+          <div>{modalValue.data?.createdAt}</div>
+          <div>{modalValue.data?._id}</div>
+          <div>{modalValue.data?.slot}</div>
+          <div>{modalValue.data?.sugar_level}</div>
+          <div>{modalValue.data?.writer}</div>
+        </Modal>
       )}
     </div>
   );

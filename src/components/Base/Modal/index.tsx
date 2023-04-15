@@ -13,15 +13,17 @@ import { useModal } from "hooks/useModal";
 
 interface IModal {
   children: React.ReactNode;
+  isOpenModal: boolean;
 }
 
 const Modal: FunctionComponent<IModal> = ({
+  isOpenModal,
   children
 }) => {
-  const { modalStatus, closeModal } = useModal();
+  const { closeModal } = useModal();
   const domRef = useRef<Element | null>();
   const [isMountedModal, setIsMountedModal] = useState(false);
-  const [localVisible, setLocalVisible] = useState(modalStatus.isOpen);
+  const [localVisible, setLocalVisible] = useState(isOpenModal);
   const [animate, setAnimate] = useState(false);
 
   const stopPropagation = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -41,36 +43,30 @@ const Modal: FunctionComponent<IModal> = ({
 
   useEffect(() => {
     let t: any;
-
-    const $body = document.body;
-    // 모달 활성시 스크롤 방지
-    $body.style.overflow = localVisible ? "hidden" : "auto"; 
-
-    if (localVisible || !modalStatus.isOpen) {
+    if (localVisible && !isOpenModal) {
       setAnimate(true);
       t = setTimeout(() => setAnimate(false), 250);
     }
-    setLocalVisible(modalStatus.isOpen);
-
-
+    setLocalVisible(isOpenModal);
+    console.log({isOpenModal})
     return () => {
       clearTimeout(t);
     };
-  }, [modalStatus.isOpen, localVisible]);
+  }, [localVisible, isOpenModal]);
 
+  if (!localVisible && !animate) return null;
+  
   const renderLayout = (element: ReactNode) => {
     if (domRef.current && isMountedModal) {
       return createPortal(element, domRef.current);
     }
   };
 
-  if (!localVisible && !animate) return null;
-
   return (
     <>
       {renderLayout(
-        <ModalWrap disappear={!localVisible} onClick={closeModal}>
-          <ModalContainer disappear={!localVisible} onClick={stopPropagation}>
+        <ModalWrap disappear={!isOpenModal} onClick={closeModal}>
+          <ModalContainer disappear={!isOpenModal} onClick={stopPropagation}>
             <CloseBtn onClick={closeModal}>
               <span>&times;</span>
             </CloseBtn>

@@ -37,7 +37,7 @@ export interface IDiabetesInfo {
   writer?: string;
   sugar_level: number;
   slot: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface IDiabetesResponse {
