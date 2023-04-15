@@ -1,6 +1,39 @@
+import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const ModalWrap = styled.div`
+export const fadeIn = keyframes`
+ from {
+    opacity: 0;
+} to {
+    opacity: 1;
+ }
+`;
+
+export const fadeOut = keyframes`
+ from {
+    opacity: 1;
+} to {
+    opacity: 0;
+ }
+`;
+
+export const slideUp = keyframes`
+ from {
+    transform: translateY(200px);
+} to {
+    transform: translateY(0px);
+ }
+`;
+
+export const slideDown = keyframes`
+ from {
+    transform: translateY(0px);
+ } to {
+    transform: translateY(200px);
+ }
+`;
+
+export const ModalWrap = styled.div<{disappear: boolean}>`
   width: 100%;
   position: fixed;
   left: 0;
@@ -9,11 +42,23 @@ export const ModalWrap = styled.div`
   bottom: 0;
   display: flex;
   align-items: center;
+  background: rgba(0, 0, 0, 0.5);
   justify-content: center;
-  z-index: 111;
+  //--- animation: test
+  transition: opacity 0.3s ease-in-out;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+
+  ${(props) => {
+    return props.disappear && css`
+      animation-name: ${fadeOut};
+    `
+  }}
 `;
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{disappear: boolean}>`
   width: auto;
   padding: 10px 50px;
   position: absolute;
@@ -23,6 +68,17 @@ export const ModalContainer = styled.div`
   border: 1px solid gray;
   border-radius: 5px;
   background: #fff;
+
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out; /* 첨에 빨랐다가 느려지는 효과 */
+  animation-name: ${slideUp};
+  animation-fill-mode: forwards; /* 애니메이션이 끝난 상태를 유지 */
+
+  ${(props) => {
+    return props.disappear && css`
+      animation-name: ${slideDown};
+    `
+  }}
 `;
 
 export const CloseBtn = styled.button`
@@ -48,19 +104,6 @@ export const CloseBtn = styled.button`
     padding: 0 5px;
     font-size: 20px;
     color: #2d2d2d;
-  }
-`;
-
-export const ModalTitle = styled.header`
-  padding: 20px 30px;
-  text-align: center;
-  font-size: 20px;
-
-  &::after {
-    content: "";
-    width: 100%;
-    height: 1px;
-    background: gray;
   }
 `;
 
