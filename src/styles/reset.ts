@@ -38,9 +38,6 @@ export const reset = css`
     border-radius: 25px;
   }
 
-  height: 500px;
-  overflow-y: auto;
-
   html {
     font-size: 16px;
   }

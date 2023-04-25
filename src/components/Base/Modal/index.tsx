@@ -16,10 +16,7 @@ interface IModal {
   isOpenModal: boolean;
 }
 
-const Modal: FunctionComponent<IModal> = ({
-  isOpenModal,
-  children
-}) => {
+const Modal: FunctionComponent<IModal> = ({ isOpenModal, children }) => {
   const { closeModal } = useModal();
   const domRef = useRef<Element | null>();
   const [isMountedModal, setIsMountedModal] = useState(false);
@@ -48,14 +45,13 @@ const Modal: FunctionComponent<IModal> = ({
       t = setTimeout(() => setAnimate(false), 250);
     }
     setLocalVisible(isOpenModal);
-    console.log({isOpenModal})
     return () => {
       clearTimeout(t);
     };
   }, [localVisible, isOpenModal]);
 
   if (!localVisible && !animate) return null;
-  
+
   const renderLayout = (element: ReactNode) => {
     if (domRef.current && isMountedModal) {
       return createPortal(element, domRef.current);
@@ -67,8 +63,8 @@ const Modal: FunctionComponent<IModal> = ({
       {renderLayout(
         <ModalWrap disappear={!isOpenModal} onClick={closeModal}>
           <ModalContainer disappear={!isOpenModal} onClick={stopPropagation}>
-            <CloseBtn onClick={closeModal}>
-              <span>&times;</span>
+            <CloseBtn>
+              <span onClick={closeModal}>&times;</span>
             </CloseBtn>
             {children}
           </ModalContainer>

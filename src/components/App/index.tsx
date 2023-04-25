@@ -6,6 +6,7 @@ import { useModal } from "hooks/useModal";
 import { Header, Main } from "styles/common";
 import { useRecoilValue } from "recoil";
 import { modalState } from "store/modalState";
+import MemoDetailModal from "components/Memo/MemoDetailModal";
 const App = () => {
   const modalValue = useRecoilValue(modalState);
   const { openModal } = useModal();
@@ -26,17 +27,7 @@ const App = () => {
       <Main>
         <RouterContainer />
       </Main>
-
-      {/* 모달 컴포넌트 만드는 예시 */}
-      {isOpenModal && (
-        <Modal isOpenModal={modalValue.isOpen}>
-          <div>{modalValue.data?.createdAt}</div>
-          <div>{modalValue.data?._id}</div>
-          <div>{modalValue.data?.slot}</div>
-          <div>{modalValue.data?.sugar_level}</div>
-          <div>{modalValue.data?.writer}</div>
-        </Modal>
-      )}
+      {isOpenModal && <MemoDetailModal isOpenModal={modalValue.isOpen} />}
     </div>
   );
 };

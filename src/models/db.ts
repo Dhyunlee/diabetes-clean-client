@@ -38,6 +38,7 @@ export interface IDiabetesInfo {
   sugar_level: number;
   slot: string;
   createdAt: string;
+  note?: string;
 }
 
 export interface IDiabetesResponse {

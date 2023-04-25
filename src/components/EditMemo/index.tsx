@@ -1,6 +1,4 @@
 import {
-  MemoContents,
-  MemoHeader,
   SubmenuContainer,
 } from "components/Memo/MemoList/styles";
 import { NavLink, Outlet } from "react-router-dom";

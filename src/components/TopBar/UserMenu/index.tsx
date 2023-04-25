@@ -34,7 +34,6 @@ const UserMenu = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userData)
     if(userData) {
       setUserInfo(userData.userInfo)
     }

@@ -6,12 +6,12 @@ import Submenu from "components/Memo/Base/Submenu";
 import { Route, Routes } from "react-router-dom";
 import Diabetes from "components/Memo/Diabetes";
 import { useQuery } from "react-query";
+import dayjs from "dayjs";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetesInfo, IDiabetesResponse } from "models/db";
-import dayjs from "dayjs";
-import { MemoContents, MemoHeader } from "./styles";
 import { userState } from "store/userState";
+import { MemoContents, MemoHeader } from "./styles";
 
 const MemoList = () => {
   const {_id: userId} = useRecoilValue(userState)

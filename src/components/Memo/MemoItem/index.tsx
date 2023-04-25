@@ -1,15 +1,15 @@
+import { useModal } from "hooks/useModal";
+import { timeIcons } from "libs/time-icons";
+import { IDiabetesInfo } from "models/db";
+import dayjs from "dayjs";
 import {
   ContentsItem,
   ContentsItemBody,
   ContentsItemHeader,
 } from "components/Memo/MemoList/styles";
-import { timeIcons } from "libs/time-icons";
-import { IDiabetesInfo } from "models/db";
-import dayjs from "dayjs";
-import { useModal } from "hooks/useModal";
 dayjs.locale("ko");
 
-const MemoItem = ({ _id, sugar_level, slot, createdAt }: IDiabetesInfo) => {
+const MemoItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {
   const { openModal } = useModal();
 
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
@@ -23,7 +23,7 @@ const MemoItem = ({ _id, sugar_level, slot, createdAt }: IDiabetesInfo) => {
         openModal({
           type: _id,
           isOpen: true,
-          data: { _id, sugar_level, slot, createdAt },
+          data: { _id, sugar_level, slot, createdAt, note },
         });
       }}
     >
