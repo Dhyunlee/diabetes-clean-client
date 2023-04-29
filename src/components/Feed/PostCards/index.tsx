@@ -8,15 +8,15 @@ import {
   ReviewBlock,
 } from "./styles";
 import Review from "components/Review";
-import { Contour } from "../Feed/styles";
 import ContentsInfo from "components/Base/ContentsInfo";
 import PostContent from "../PostContent";
+import { Contour } from "../styles";
 const PostCards = () => {
   const fakePostData = [
     {
       id: 1,
       writer: {
-        userName: "sugarclean1",
+        userName: "이동현",
         imgUrl: "https://avatars.githubusercontent.com/u/58792751?s=40&v=4",
       },
       imgUrl: "/images/fishing-boat-6273132_960_720.jpg",
@@ -26,7 +26,7 @@ const PostCards = () => {
     {
       id: 2,
       writer: {
-        userName: "John mabee",
+        userName: "JohnMabee",
         imgUrl: "https://mui.com/static/images/avatar/1.jpg",
       },
       imgUrl:
@@ -55,7 +55,6 @@ const PostCards = () => {
       content: "당수치 잘 관리하셔야돼요! 응원합니다.",
     },
   ];
-
   return (
     <PostCardContainer className="post">
       {fakePostData.length > 0 ? (
@@ -66,7 +65,7 @@ const PostCards = () => {
                 <ContentsInfo
                   userName={writer.userName}
                   imgUrl={writer.imgUrl}
-                  link={"/mypage"}
+                  link={`/profile/${writer.userName}`}
                 />
               </PostHeaderBlock>
             </PostHeader>

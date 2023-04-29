@@ -7,10 +7,10 @@ import Story from "pages/Story";
 import Memo from "pages/Memo";
 import PrivateRoutes from "./PrivateRoutes";
 import My from "pages/My";
-import useStorage from "utils/functions/useStorage";
 import WriteMemo from "pages/WriteMemo";
 import FormDiabetes from "components/EditMemo/FormDiabetes";
 import FormDiet from "components/EditMemo/FormDiet";
+import MyFeed from "pages/MyFeed";
 
 const { INDEX, LOGIN, SIGNUP, SAVE_MEMO, MEMO, MEMO_DIABETES, STORY, MYPAGE } =
   ROUTER_PATH;
@@ -39,6 +39,7 @@ const PublicRouter = () => {
         element={<SignUp />}
       />
       <Route path={STORY} element={<Story />} />
+      <Route path={'/profile/:write'} element={<MyFeed />}/>
       <Route path={"*"} element={<NotFound />} />
     </Routes>
   );

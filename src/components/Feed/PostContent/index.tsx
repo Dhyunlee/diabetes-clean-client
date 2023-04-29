@@ -11,7 +11,7 @@ const PostContent = ({ imgUrl, imgName, content }: Iprops) => {
   return (
     <PostContentInterface>
       <div className="img-wrap">
-        <img src={imgUrl} alt={imgName ?? ""} />
+        <img src={imgUrl} alt={imgName || ""} />
       </div>
       <div className="content-wrap">
         <p>{content}</p>
