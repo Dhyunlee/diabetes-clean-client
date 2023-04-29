@@ -23,8 +23,8 @@ const SubMenu = ({ showSubMenu, setShowSubMenu, onCloseMenu }: Props) => {
   }, []);
 
   useEffect(() => {
-    const onClickOutSide = (e: any) => {
-      if (showSubMenu && !MenuRef.current?.contains(e.target)) {
+    const onClickOutSide = (e: globalThis.MouseEvent) => {
+      if (showSubMenu && !MenuRef.current?.contains(e.target as HTMLElement)) {
         setShowSubMenu(false);
       }
     };
@@ -34,7 +34,6 @@ const SubMenu = ({ showSubMenu, setShowSubMenu, onCloseMenu }: Props) => {
     };
   }, [setShowSubMenu, showSubMenu]);
 
-  console.log(showSubMenu);
   if (!showSubMenu) return null;
 
   return (
