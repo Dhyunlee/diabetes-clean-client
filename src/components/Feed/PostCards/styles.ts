@@ -20,40 +20,55 @@ export const PostCardWrap = styled.div`
 
 // post-header
 export const PostHeader = styled.header`
-  width: 35%;
+  position: relative;
+  width: 100%;
 `;
 
 export const PostHeaderBlock = styled.div`
-  width: 100%;
+  width: 35%;
   display: flex;
   border-radius: 5px;
+`;
 
-  .img {
-    flex: 1;
-  }
-  .info {
-    flex: 3;
+export const Icons = styled.div`
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+
+  & span {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    border-radius: 50%;
+    padding: 0;
     display: flex;
-    flex-direction: column;
-    font-weight: 200;
-    font-size: 15px;
-    .user_name {
-      cursor: pointer;
-
-      &:hover {
-        color: #868e96;
-      }
+    justify-content: center;
+    align-items: center;
+    &:active {
+      opacity: 0.3;
     }
+    &:hover {
+      background-color: #f1f3f5;
+    }
+  }
+
+  .submenu {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;
 
 // post-contents
-export const PostContents = styled.section`
+export const PostBody = styled.section`
+  position: relative;
   padding-top: 10px;
 `;
 
-export const PostContentsBlock = styled.div``;
+export const PostBodyBlock = styled.div`
+  padding: 0 5px;
+`;
 
 export const ReviewBlock = styled.div`
-  padding-top: 8px;
+  padding-top: 25px;
 `;

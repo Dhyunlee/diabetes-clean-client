@@ -21,7 +21,6 @@ export const MenuWrap = styled.div`
 
 export const MenuContainer = styled.div`
   width: auto;
-  padding: 10px 50px;
   border-radius: 5px;
 `;
 
