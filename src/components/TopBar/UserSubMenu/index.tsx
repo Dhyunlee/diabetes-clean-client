@@ -29,7 +29,7 @@ const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
   }, []);
 
   return (
-    <Menu showMenu={showUserSubMenu} onCloseModal={handleCloseMenu}>
+    <Menu showMenu={showUserSubMenu} handleCloseMenu={handleCloseMenu}>
       <MenuContainer className="user-sub-menu">
         <Li onClick={() => navigate("/mypage")}>
           <Link onClick={handleCloseMenu} to={"/mypage"}>

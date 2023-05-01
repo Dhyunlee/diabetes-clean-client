@@ -4,11 +4,11 @@ import { MenuWrap, MenuContainer } from './styles';
 interface Props {
   children: ReactNode;
   showMenu: boolean;
-  onCloseModal: () => void;
+  handleCloseMenu: () => void;
   onClick?: () => void;
 }
 
-const Menu: FC<Props> = ({ showMenu, children, onCloseModal }) => {
+const Menu: FC<Props> = ({ showMenu, children, handleCloseMenu }) => {
   const stopPropagation = useCallback((e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }, []);
@@ -16,7 +16,7 @@ const Menu: FC<Props> = ({ showMenu, children, onCloseModal }) => {
   if (!showMenu) return null;
 
   return (
-    <MenuWrap onClick={onCloseModal}>
+    <MenuWrap onClick={handleCloseMenu}>
       <MenuContainer onClick={stopPropagation}>{children}</MenuContainer>
     </MenuWrap>
   );

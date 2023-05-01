@@ -25,6 +25,7 @@ const UserMenu = () => {
     isLoading,
   } = useQuery<IUserResponse>("user", getUserApi);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
+  
   const handleShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);

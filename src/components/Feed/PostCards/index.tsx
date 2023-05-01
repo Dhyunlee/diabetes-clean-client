@@ -1,20 +1,14 @@
-import Review from "components/Review";
-import ContentsInfo from "components/Base/ContentsInfo";
-import PostContent from "../PostContent";
-import { FiMoreHorizontal } from "react-icons/fi";
-import { Contour } from "../styles";
-import { useState, useCallback} from "react";
-import SubMenu from "../SubMenu";
+// import Review from "components/Review";
+// import ContentsInfo from "components/Base/ContentsInfo";
+// import PostContent from "../PostContent";
+// import { FiMoreHorizontal } from "react-icons/fi";
+// import { Contour } from "../styles";
+// import SubMenu from "../SubMenu";
 import {
   PostCardContainer,
-  PostCardWrap,
-  PostBody,
-  PostBodyBlock,
-  PostHeader,
-  PostHeaderBlock,
-  ReviewBlock,
-  Icons,
 } from "./styles";
+import { useState, useCallback} from "react";
+import PostItem from "../PostItems";
 
 const fakePostData = [
   {
@@ -61,55 +55,11 @@ const fakeCommentData = [
 ];
 
 const PostCards = () => {
-  const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
-
-  const onCloseMenu = useCallback(() => {
-    setShowSubMenu(false);
-  }, []);
-
-
   return (
     <PostCardContainer className="post">
       {fakePostData.length > 0 ? (
-        fakePostData.map(({ id, writer, content, imgName, imgUrl }) => (
-          <PostCardWrap key={id}>
-            <PostHeader>
-              <PostHeaderBlock>
-                <ContentsInfo
-                  userName={writer.userName}
-                  imgUrl={writer.imgUrl}
-                  link={`/profile/${writer.userName}`}
-                />
-                <Icons
-                  onClick={() => {
-                    setShowSubMenu((prev) => !prev);
-                  }}
-                >
-                  <span>
-                    <FiMoreHorizontal />
-                  </span>
-                </Icons>
-                <SubMenu
-                  setShowSubMenu={setShowSubMenu}
-                  showSubMenu={showSubMenu}
-                  onCloseMenu={onCloseMenu}
-                />
-              </PostHeaderBlock>
-            </PostHeader>
-            <PostBody>
-              <PostBodyBlock className="nn">
-                <PostContent
-                  content={content}
-                  imgName={imgName}
-                  imgUrl={imgUrl}
-                />
-              </PostBodyBlock>
-              <Contour />
-              <ReviewBlock>
-                <Review />
-              </ReviewBlock>
-            </PostBody>
-          </PostCardWrap>
+        fakePostData.map((postData) => (
+          <PostItem key={postData.id} {...postData}/>
         ))
       ) : (
         <div>업로드한 포스팅이 없습니다.</div>
