@@ -8,12 +8,12 @@ interface Props {
 }
 
 const Menu = ({ children, showSubMenu, onCloseMenu }: Props) => {
-  const MenuRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const onClickOutSide = (e: globalThis.MouseEvent) => {
       console.log(e.target)
-      if (showSubMenu && !MenuRef.current?.contains(e.target as HTMLElement)) {
+      if (showSubMenu && !menuRef.current?.contains(e.target as HTMLElement)) {
         onCloseMenu();
       }
     };
@@ -27,8 +27,8 @@ const Menu = ({ children, showSubMenu, onCloseMenu }: Props) => {
 
   return (
     <>
-      <SubMenuWrap ref={MenuRef}>
-        <SubMenuContainer onMouseDown={e => e.preventDefault()}>{children}</SubMenuContainer>
+      <SubMenuWrap ref={menuRef}>
+        <SubMenuContainer>{children}</SubMenuContainer>
       </SubMenuWrap>
     </>
   );

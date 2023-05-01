@@ -11,13 +11,13 @@ interface IProps {
   };
 }
 const PostHeader = ({ writer }: IProps) => {
-  const [showSubMenu, setShowMenu] = useState<boolean>(false);
+  const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
   const onToggleMenu = useCallback(() => {
-    setShowMenu((prev) => !prev);
+    setShowSubMenu((prev) => !prev);
   }, []);
 
   const onCloseMenu = useCallback(() => {
-    setShowMenu(false);
+    setShowSubMenu(false);
   }, []);
 
   return (
@@ -35,7 +35,18 @@ const PostHeader = ({ writer }: IProps) => {
         </Icons>
 
         {showSubMenu &&(
-          <SubMenu showSubMenu={showSubMenu} onCloseMenu={onCloseMenu}/>
+          <SubMenu menuItem={[
+            {
+              id: 1,
+              path: "/mypage",
+              targetName: "게시글 수정",
+            },
+            {
+              id: 2,
+              path: null,
+              targetName: "게시글 삭제",
+            },
+          ]} showSubMenu={showSubMenu} onCloseMenu={onCloseMenu}/>
         )}
       </PostHeaderBlock>
     </div>
