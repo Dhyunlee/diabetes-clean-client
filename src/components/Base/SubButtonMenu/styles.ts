@@ -73,7 +73,7 @@ const BtnTextAnimationDown = keyframes`
   }
 `;
 
-export const SubMenu = styled.ul<{open?: boolean}>`
+export const SubBtnMenu = styled.ul<{open?: boolean}>`
   position: absolute;
   top: -41px;
   right: 40px;

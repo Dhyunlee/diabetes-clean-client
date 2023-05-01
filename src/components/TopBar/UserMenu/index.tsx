@@ -1,22 +1,22 @@
-import React, { useState,useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
-import UserSubMenu from "components/TopBar/UserSubMenu";
+// import UserSubMenu from "components/TopBar/UserSubMenu";
 import Avatar from "components/Base/Avatar";
 import { getUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
+import UserSubMenu from "../UserSubMenu";
 
 const UserMenu = () => {
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES} =
-  ROUTER_PATH;
+  const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES } = ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
   const {
     data: userData,
@@ -25,20 +25,20 @@ const UserMenu = () => {
     isLoading,
   } = useQuery<IUserResponse>("user", getUserApi);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
-  
+
   const handleShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);
 
-  const handleCloseMenu = useCallback(() => {
+  const onCloseMenu = useCallback(() => {
     setShowUserSubMenu(false);
   }, []);
 
   useEffect(() => {
-    if(userData) {
-      setUserInfo(userData.userInfo)
+    if (userData) {
+      setUserInfo(userData.userInfo);
     }
-  }, [setUserInfo, userData])
+  }, [setUserInfo, userData]);
 
   const renderMenu = (token: string | null) => {
     if (!token) {
@@ -81,13 +81,10 @@ const UserMenu = () => {
               )}
             </UserItem>
           </MenuList>
-
-          {showUserSubMenu && (
-            <UserSubMenu
-              showUserSubMenu={showUserSubMenu}
-              handleCloseMenu={handleCloseMenu}
-            />
-          )}
+          <UserSubMenu
+            showSubMenu={showUserSubMenu}
+            onCloseMenu={onCloseMenu}
+          />
         </>
       );
     }
