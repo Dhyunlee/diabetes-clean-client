@@ -1,27 +1,34 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 
-export const MenuWrap = styled.div`
+export const SubMenuWrap = styled.div<{posX?: number; posY?: number}>`
+  position: absolute;
+  top: ${(props => props.posY || 40)}px;
+  right: ${(props => props.posX || 5)}px;
+  z-index: 2;
+  background: #fff;
+`;
+
+export const SubMenuContainer = styled.div`
   width: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 0;
+  border-radius: 5px;
+  box-shadow: ${({ theme }) => theme.boxShadow.middle};
 
-  &.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+  .menu-list {
+    padding: 8px;
+    width: 100%;
+    cursor: pointer;
+    border-bottom: 1px solid ${palette.gray[1]};
+    a,
+    button {
+      font-size: inherit;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: ${palette.gray[1]};
+    }
   }
 `;
-
-export const MenuContainer = styled.div`
-  width: auto;
-  border-radius: 5px;
-`;
-
-export const ModalContent = styled.div``;

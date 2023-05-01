@@ -1,8 +1,8 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import { MdAdd } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Li } from "components/TopBar/UserSubMenu/styles";
-import { SubMenu, SubMenuBtn, SubMenuBtnContainer } from "./styles";
+import { SubBtnMenu, SubMenuBtn, SubMenuBtnContainer } from "./styles";
 
 interface MenuItemType {
   id: number;
@@ -20,24 +20,7 @@ const SubButtonMenu = ({ menuItems }: IProps) => {
   const handleCloseMenu = useCallback(() => {
     setShowUserSubMenu(false);
   }, []);
-
-  useEffect(() => {
-    const onClickOutSide = (e: globalThis.MouseEvent) => {
-      if (
-        showUserSubMenu &&
-        !MenuRef.current?.contains(e.target as HTMLElement)
-      ) {
-        console.log("mousedown 바깥쪽 클릭");
-        setShowUserSubMenu(false);
-        setChangePos(false);
-      }
-    };
-    document.addEventListener("mousedown", onClickOutSide);
-    return () => {
-      document.removeEventListener("mousedown", onClickOutSide);
-    };
-  }, [showUserSubMenu]);
-
+  
   return (
     <SubMenuBtnContainer ref={MenuRef}>
       <SubMenuBtn
@@ -50,7 +33,7 @@ const SubButtonMenu = ({ menuItems }: IProps) => {
         <MdAdd />
       </SubMenuBtn>
       {showUserSubMenu && (
-        <SubMenu open={changePos}>
+        <SubBtnMenu open={changePos}>
           {menuItems.map((menu) => (
             <Li key={menu.id}>
               <Link onClick={handleCloseMenu} to={menu.path}>
@@ -58,7 +41,7 @@ const SubButtonMenu = ({ menuItems }: IProps) => {
               </Link>
             </Li>
           ))}
-        </SubMenu>
+        </SubBtnMenu>
       )}
     </SubMenuBtnContainer>
   );

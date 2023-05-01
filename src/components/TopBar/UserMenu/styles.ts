@@ -58,25 +58,3 @@ export const UserItem = styled(Li)`
     background-color: transparent;
   }
 `;
-
-// 서브 메뉴
-export const UserSubmenu = styled.ul`
-  display: none;
-  position: absolute;
-  left: -59px;
-  top: 51px;
-  background: #fff;
-  border: 1px solid gray;
-  border-radius: 5px;
-
-  &.active {
-    display: block;
-  }
-
-  li {
-    text-align: center;
-    border-bottom: 1px solid gray;
-    padding-top: 5px;
-    cursor: pointer;
-  }
-`;
