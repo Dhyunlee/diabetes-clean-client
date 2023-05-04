@@ -6,10 +6,10 @@ import {
   ContentsItem,
   ContentsItemBody,
   ContentsItemHeader,
-} from "components/Memo/MemoList/styles";
+} from "components/Memo/styles";
 dayjs.locale("ko");
 
-const MemoItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {
+const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {
   const { openModal } = useModal();
 
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
@@ -46,4 +46,4 @@ const MemoItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) =>
   );
 };
 
-export default MemoItem;
+export default DiabetesItem;

@@ -71,7 +71,13 @@ const FormDiabetes = () => {
       note: inutMemo,
       createdAt,
     };
-    useMutate.mutate(insertData);
+
+    if(insertData.sugar_level && insertData.slot) {
+      useMutate.mutate(insertData);
+    } else {
+      alert('시간대 또는 당수치를 입력해주세요');
+      return;
+    }
   };
 
   return (
@@ -87,6 +93,7 @@ const FormDiabetes = () => {
               type="date"
               value={createdDate}
               onChange={onChangeWrittenDate}
+              required
             />
           </InputWrap>
         </InputGroup>
@@ -100,6 +107,7 @@ const FormDiabetes = () => {
               type="time"
               value={createdTime}
               onChange={onChangeWrittenTime}
+              required
             />
           </InputWrap>
         </InputGroup>
@@ -128,6 +136,7 @@ const FormDiabetes = () => {
               placeholder="당수치를 입력해주세요"
               pattern="[0-9]+"
               onChange={onChangeGI}
+              required
             />
           </InputWrap>
           <UnitTextWrap>

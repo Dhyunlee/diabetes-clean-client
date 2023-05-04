@@ -6,7 +6,7 @@ import { useModal } from "hooks/useModal";
 import { Header, Main } from "styles/common";
 import { useRecoilValue } from "recoil";
 import { modalState } from "store/modalState";
-import MemoDetailModal from "components/Memo/MemoDetailModal";
+import MemoDetailModal from "components/Memo/DiabetesDetailModal";
 const App = () => {
   const modalValue = useRecoilValue(modalState);
   const { openModal } = useModal();

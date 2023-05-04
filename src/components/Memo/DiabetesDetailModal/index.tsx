@@ -12,22 +12,43 @@ import {
 import { useModal } from "hooks/useModal";
 import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
 import { useCallback } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { deleteDiabetes } from "utils/apis/diabetesApis";
+import { useNavigate } from "react-router-dom";
 interface IDetail {
   isOpenModal: boolean;
 }
 
 const MemoDetailModal = ({ isOpenModal }: IDetail) => {
   const { closeModal } = useModal();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const useMutate = useMutation(deleteDiabetes, {
+    onSuccess: () => {
+      queryClient.invalidateQueries<string>(["diabetes"]);
+      navigate("/", { replace: true });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   const modalValue = useRecoilValue(modalState);
+  const diabetesId = modalValue.data?._id;
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
     modalValue.data?.slot?.includes(itemIcons_desc)
   );
 
   const onDelDiabetes = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      console.log("당수치 삭제");
+      if (diabetesId) {
+        if (window.confirm("당수치 삭제")) {
+          useMutate.mutate(diabetesId);
+          closeModal();
+        }
+      }
     },
-    []
+    [closeModal, diabetesId, useMutate]
   );
   const onEditDiabetes = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {

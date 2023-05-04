@@ -1,3 +1,8 @@
+export interface CommonResponse {
+  isOk: boolean,
+  msg: string
+}
+
 export interface IAuthRequest {
   email: string;
   password: string;
