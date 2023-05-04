@@ -18,6 +18,7 @@ export interface IUserInfo {
   nickname: string;
   updatedAt: string;
 }
+export type IWriterInfo = Pick<IUserInfo, "_id" | "nickname" | "imageSrc">;
 
 export interface IUserResponse {
   isOk: boolean;
@@ -29,7 +30,7 @@ export interface iDiabetesRequest {
   sugar_level: number;
   slot: string;
   note: string;
-  createdAt: string;
+  createdAt: Date | string;
 }
 
 export interface IDiabetesInfo {
@@ -37,10 +38,25 @@ export interface IDiabetesInfo {
   writer?: string;
   sugar_level: number;
   slot: string;
-  createdAt: Date;
+  createdAt: Date | string;
 }
 
 export interface IDiabetesResponse {
   isOk: boolean;
   diabetesInfo: IDiabetesInfo[];
+}
+
+export interface IContents {
+  _id: string;
+  writer: IWriterInfo;
+  content: string;
+  iamgeName: string;
+  imageUrl: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: string;
+}
+export interface IContentsResponse {
+  isOk: boolean;
+  contents: IContents[];
 }

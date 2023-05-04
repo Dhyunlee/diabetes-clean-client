@@ -28,8 +28,6 @@ const EditContents = () => {
   }, []);
   const onSubmitContent = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(content)
-
-    
   };
   return (
     <div>
