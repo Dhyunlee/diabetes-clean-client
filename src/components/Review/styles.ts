@@ -9,7 +9,6 @@ export const ReviewContainer = styled.div`
   }
 
   .review_item {
-    cursor: pointer;
     &:hover {
       color: ${palette.gray[3]};
     }
@@ -17,18 +16,19 @@ export const ReviewContainer = styled.div`
 
   .review_item.links {
     position: relative;
+    top: -2px;
 
     .likes-icon {
       font-size: 20px;
       position: relative;
-      top: 5px;
+      top: 3px;
       left: 2px;
       padding-right: 5px;
+      cursor: pointer;
     }
     .count {
       padding-left: 3px;
       position: absolute;
-      top: -2px;
       right: -8px;
     }
   }
