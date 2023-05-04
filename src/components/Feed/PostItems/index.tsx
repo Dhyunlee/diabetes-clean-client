@@ -11,6 +11,7 @@ import PostHeader from "../PostHeader";
 interface IProps {
   id: number;
   writer: {
+    _id: string;
     userName: string;
     imgUrl: string;
   };

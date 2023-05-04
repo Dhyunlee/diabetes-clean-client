@@ -17,8 +17,6 @@ interface Props {
 }
 
 const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
-  const navigate = useNavigate();
-
   return (
     <Menu showMenu={showSubMenu} onCloseMenu={onCloseMenu} customCss={customCss}>
       <SubMenuList>
@@ -27,7 +25,7 @@ const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
           <SubMenuItem
             key={menu.id}
             className="menu-list"
-            onClick={() => {navigate(`${menu.path}`)}}
+            onClick={onCloseMenu}
           >
             <Link onClick={onCloseMenu} to={menu.path}>
               {menu.targetName}

@@ -14,6 +14,7 @@ const fakePostData = [
   {
     id: 1,
     writer: {
+      _id: '634ed1b8fb68dffc1428248f', 
       userName: "이동현",
       imgUrl: "https://avatars.githubusercontent.com/u/58792751?s=40&v=4",
     },
@@ -24,8 +25,9 @@ const fakePostData = [
   {
     id: 2,
     writer: {
-      userName: "JohnMabee",
-      imgUrl: "https://mui.com/static/images/avatar/1.jpg",
+      _id: '634ed31e08f1cc2c6f34e8fa',
+      userName: "mikes",
+      imgUrl: "",
     },
     imgUrl:
       "https://health.chosun.com/site/data/img_dir/2019/08/30/2019083000046_0.jpg",
