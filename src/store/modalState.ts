@@ -1,10 +1,14 @@
 import { IDiabetesInfo } from "models/db";
 import { atom } from "recoil";
 
+export interface ITextInfo {
+  text: string
+}
+
 export interface IModalState {
   type: string | null;
   isOpen: boolean;
-  data?: IDiabetesInfo;
+  props?: string | JSX.Element;
 }
 
 export const modalState = atom<IModalState>({
@@ -12,6 +16,6 @@ export const modalState = atom<IModalState>({
   default: {
     type: null,
     isOpen: false,
-    data: {_id: '', sugar_level: 0, slot: '', createdAt: ''}
+    props: ''
   },
 });

@@ -62,16 +62,13 @@ export const ModalWrap = styled.div<{ disappear: boolean }>`
   }}
 `;
 
-export const ModalContainer = styled.div<{ disappear: boolean }>`
+export const ModalContainer = styled.div`
   width: auto;
   position: relative;
   padding: 25px 85px 38px 40px;
   border: 1px solid gray;
   border-radius: 5px;
   background: #fff;
-  animation-duration: 0.3s;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
   `;
 
 export const CloseBtn = styled.button`

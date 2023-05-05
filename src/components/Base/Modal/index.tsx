@@ -62,7 +62,7 @@ const Modal: FunctionComponent<IModal> = ({ isOpenModal, children }) => {
     <>
       {renderLayout(
         <ModalWrap disappear={!isOpenModal} onClick={closeModal}>
-          <ModalContainer disappear={!isOpenModal} onClick={stopPropagation}>
+          <ModalContainer onClick={stopPropagation}>
             <CloseBtn>
               <span onClick={closeModal}>&times;</span>
             </CloseBtn>
