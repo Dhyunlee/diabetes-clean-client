@@ -6,7 +6,6 @@ const ReviewStatus = () => {
     <div className="review-status">
       <div className="review_item links">
         <span>
-          <span>좋아요</span>
           <span className="likes-icon">
             {false ? (
               <FcLike color="#000" className="icon" />

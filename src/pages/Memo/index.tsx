@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { Container } from "styles/common";
+import { useQuery } from "react-query";
+import dayjs from "dayjs";
+import { getUserApi } from "utils/apis/userApis";
+import { getDiabetes } from "utils/apis/diabetesApis";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import Diabetes from "components/Memo/Diabetes";
-import { useQuery } from "react-query";
-import { getUserApi } from "utils/apis/userApis";
+import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
-import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
+
+import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
-import dayjs from "dayjs";
+import alertHandler from "utils/functions/alertHandler";
 const Memo = () => {
   const navigate = useNavigate();
   const [curDate, setCurDate] = useState(dayjs());
@@ -62,7 +64,10 @@ const Memo = () => {
     const today_ = Number(today.split("-").join(""));
     const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
     if (today_ <= curDate_) {
-      alert("이번달까지만 조회 가능합니다.");
+      alertHandler.onDefaultAlert({
+        msg: "이번달까지만 조회 가능합니다.",
+        pos: "top",
+      });
       return;
     }
     setCurDate(curDate.add(1, "month"));
