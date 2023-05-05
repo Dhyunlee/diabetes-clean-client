@@ -18,12 +18,15 @@ import { useMutation, useQueryClient } from "react-query";
 import { createDiabetes } from "utils/apis/diabetesApis";
 import { iDiabetesRequest } from "models/db";
 import { userState } from "store/userState";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { useModal } from "hooks/useModal";
 
 const FormDiabetes = () => {
+  const { closeModal } = useModal();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { _id: userId } = useRecoilValue(userState);
-  const [sugarLevel, setSugarLevel] = useState<string | number>("");
+  const [sugarLevel, setSugarLevel] = useState<number | string>("");
   const [slot, setSlot] = useState<string>("");
   const [inutMemo, setInutMemo] = useState("");
   const [createdDate, setCreatedDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -39,8 +42,8 @@ const FormDiabetes = () => {
     },
   });
 
-  const onChangeGI = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSugarLevel(e.target.value);
+  const onChangeSugarLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSugarLevel(Number(e.target.value) || "");
   };
 
   const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -57,9 +60,27 @@ const FormDiabetes = () => {
   };
 
   const onChnageSlot = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log({ slot: e.target.value });
     setSlot(e.target.value);
   };
 
+  const onCancal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    alertHandler
+      .onConfirm({
+        icon: 'warning',
+        innerHtml:
+          '<p>페이지를 떠나면 기록한 내용이 모두 없어집니다.<br />그래도 떠나시겠습니까?</p>',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          navigate(-1);
+          closeModal();
+        } else if (result.isDismissed) {
+          alertHandler.onToast({ msg: alertMessage.cancelMsg });
+          closeModal();
+        }
+      });
+  };
   const onWriteMemo = (e: React.MouseEvent<HTMLButtonElement>) => {
     const createdAt: string = dayjs(`${createdDate} ${createdTime}`).format(
       "YYYY-MM-DD HH:mm:ss"
@@ -71,7 +92,15 @@ const FormDiabetes = () => {
       note: inutMemo,
       createdAt,
     };
-    useMutate.mutate(insertData);
+
+    if (sugarLevel && slot) {
+      useMutate.mutate(insertData);
+    } else {
+      const text = !sugarLevel
+        ? "당수치를 입력해주세요"
+        : "시간대를 입력해주세요";
+      alertHandler.onToast({ msg: text, icon: "info" });
+    }
   };
 
   return (
@@ -87,6 +116,7 @@ const FormDiabetes = () => {
               type="date"
               value={createdDate}
               onChange={onChangeWrittenDate}
+              required
             />
           </InputWrap>
         </InputGroup>
@@ -100,6 +130,7 @@ const FormDiabetes = () => {
               type="time"
               value={createdTime}
               onChange={onChangeWrittenTime}
+              required
             />
           </InputWrap>
         </InputGroup>
@@ -127,7 +158,8 @@ const FormDiabetes = () => {
               maxLength={3}
               placeholder="당수치를 입력해주세요"
               pattern="[0-9]+"
-              onChange={onChangeGI}
+              onChange={onChangeSugarLevel}
+              required
             />
           </InputWrap>
           <UnitTextWrap>
@@ -142,7 +174,7 @@ const FormDiabetes = () => {
           />
         </TextareaGroup>
         <ButtonGroup>
-          <button type="reset" onClick={() => navigate(-1)}>
+          <button type="reset" onClick={onCancal}>
             취소하기
           </button>
           <button type="submit" onClick={onWriteMemo}>

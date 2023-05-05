@@ -38,9 +38,6 @@ export const reset = css`
     border-radius: 25px;
   }
 
-  height: 500px;
-  overflow-y: auto;
-
   html {
     font-size: 16px;
   }
@@ -60,5 +57,15 @@ export const reset = css`
   ul,
   li {
     list-style: none;
+  }
+
+  .swal2-container {
+    font-size: 18px !important;
+  }
+  .swal2-top-end {
+    width: fit-content !important;
+    .swal2-title {
+      font-size: 15px !important;
+    }
   }
 `;

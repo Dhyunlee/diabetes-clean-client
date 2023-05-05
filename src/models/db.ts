@@ -1,3 +1,8 @@
+export interface CommonResponse {
+  isOk: boolean,
+  msg: string
+}
+
 export interface IAuthRequest {
   email: string;
   password: string;
@@ -39,6 +44,7 @@ export interface IDiabetesInfo {
   sugar_level: number;
   slot: string;
   createdAt: Date | string;
+  note?: string;
 }
 
 export interface IDiabetesResponse {

@@ -39,7 +39,7 @@ export const ReviewContainer = styled.div`
       padding-left: 3px;
       position: absolute;
       top: -4px;
-      right: -12px;
+      right: -13px;
     }
   }
 `;

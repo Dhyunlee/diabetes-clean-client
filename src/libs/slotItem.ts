@@ -12,7 +12,7 @@ export interface ICreatedTimeItem {
 export const selectedSlotItem = [
   {
     id: 0,
-    slot: 'default',
+    slot: '',
     dec: '선택',
   },
   {

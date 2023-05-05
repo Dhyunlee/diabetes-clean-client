@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { MemoHeader } from "components/Memo/MemoList/styles";
+import { MemoHeader } from "components/Memo/styles";
 
 export const EditHeader = styled(MemoHeader)``;
 
