@@ -1,7 +1,7 @@
 import Cookies, { CookieSetOptions } from 'universal-cookie';
 const cookies = new Cookies();
 
-class useCookie {
+class UseCookie {
   setCookie(key: string, value: string, option?: CookieSetOptions | undefined) {
      return cookies.set(key, value, { ...option });
   }
@@ -12,4 +12,4 @@ class useCookie {
     return cookies.remove(key);
   }
 }
-export default new useCookie();
+export default new UseCookie();

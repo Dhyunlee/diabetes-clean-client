@@ -5,7 +5,7 @@ import DiabetesItem from "../DiabetesItem";
 interface IProps {
   diabetesInfo?: IDiabetesInfo[];
 }
-const Diabetes = ({ diabetesInfo }: IProps) => {
+const DiabetesList = ({ diabetesInfo }: IProps) => {
   return (
     <div className="contents-container">
       <ContentsList>
@@ -21,4 +21,4 @@ const Diabetes = ({ diabetesInfo }: IProps) => {
   );
 };
 
-export default Diabetes;
+export default DiabetesList;

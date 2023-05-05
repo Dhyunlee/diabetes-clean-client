@@ -5,11 +5,9 @@ import { modalState } from "store/modalState";
 import Topbar from "components/TopBar";
 import GlobalModal from "components/Memo/GlobalModal";
 import { Header, Main } from "styles/common";
-import { useModal } from "hooks/useModal";
 
 const App = () => {
   const modalValue = useRecoilValue(modalState);
-  const { openModal } = useModal();
   const [isOpenModal, setOpenModal] = useState(false);
   useEffect(() => {
     const $body = document.body;

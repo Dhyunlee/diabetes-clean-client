@@ -1,33 +1,36 @@
-import React, {useCallback} from "react";
+import React, { useCallback, useState } from "react";
+import Swal from "sweetalert2";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { deleteDiabetes, getDiabetesFindById } from "utils/apis/diabetesApis";
-import { DetailContainer, DetailModalContent, DetailModalHeader } from "../GlobalModal/styles";
+import {
+  DetailContainer,
+  DetailModalContent,
+  DetailModalHeader,
+} from "../GlobalModal/styles";
 import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
 import { timeIcons } from "libs/time-icons";
 import dayjs from "dayjs";
+import { useModal } from "hooks/useModal";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 
 interface Iprops {
-  id: string
+  id: string;
 }
 
-const DiabetesDetail = ({id}: Iprops) => {
-  console.log({id})
+const DiabetesDetail = ({ id }: Iprops) => {
   const queryClient = useQueryClient();
+  const { closeModal } = useModal();
   const navigate = useNavigate();
-
-  const {data} = useQuery({
-    queryKey: ['diabetes', id],
+  const { data } = useQuery({
+    queryKey: ["diabetes", id],
     queryFn: () => getDiabetesFindById(id),
     enabled: !!id,
-  })
+  });
 
   const diabetes = data?.diabetesInfo;
-;
-
-
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
-  diabetes?.slot?.includes(itemIcons_desc)
+    diabetes?.slot?.includes(itemIcons_desc)
   );
 
   const useMutate = useMutation(deleteDiabetes, {
@@ -43,13 +46,23 @@ const DiabetesDetail = ({id}: Iprops) => {
   const onDelDiabetes = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (diabetes._id) {
-        if (window.confirm("당수치 삭제")) {
-          useMutate.mutate(diabetes._id);
-          // closeModal();
-        }
+        alertHandler
+          .onConfirm({
+            msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?",
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              useMutate.mutate(diabetes._id);
+              alertHandler.onToast({ msg: alertMessage.delMsg });
+              closeModal();
+            } else if (result.isDismissed) {
+              alertHandler.onToast({ msg: alertMessage.cancelMsg });
+              closeModal();
+            }
+          });
       }
     },
-    [diabetes?._id, useMutate]
+    [diabetes?._id, closeModal, useMutate]
   );
   const onEditDiabetes = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {

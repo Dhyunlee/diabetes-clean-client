@@ -7,7 +7,6 @@ import Story from "pages/Story";
 import Memo from "pages/Memo";
 import PrivateRoutes from "./PrivateRoutes";
 import My from "pages/My";
-import useStorage from "utils/functions/useStorage";
 import WriteMemo from "pages/WriteMemo";
 import FormDiabetes from "components/EditMemo/FormDiabetes";
 import FormDiet from "components/EditMemo/FormDiet";

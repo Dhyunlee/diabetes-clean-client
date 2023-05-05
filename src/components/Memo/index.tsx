@@ -4,7 +4,7 @@ import { Container } from "styles/common";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
 import { Route, Routes } from "react-router-dom";
-import Diabetes from "components/Memo/Diabetes";
+import Diabetes from "components/Memo/DiabetesList";
 import { useQuery } from "react-query";
 import dayjs from "dayjs";
 import Diet from "components/Memo/Diet";

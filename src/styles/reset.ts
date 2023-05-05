@@ -58,4 +58,14 @@ export const reset = css`
   li {
     list-style: none;
   }
+
+  .swal2-container {
+    font-size: 18px !important;
+  }
+  .swal2-top-end {
+    width: fit-content !important;
+    .swal2-title {
+      font-size: 15px !important;
+    }
+  }
 `;
