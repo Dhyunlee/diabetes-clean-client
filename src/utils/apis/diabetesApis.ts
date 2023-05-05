@@ -13,6 +13,19 @@ const getDiabetes = async (userId: string | null) => {
   }
 };
 
+const getDiabetesFindById = async (id: string | null) => {
+  try {
+    if (!id) return;
+    const { data } = await api.get(`/api/v1/diabetes/${id}`, {
+      withCredentials: true,
+    });
+    console.log({data})
+    return data;
+  } catch (error: any) {
+    throw error.response;
+  }
+};
+
 const createDiabetes = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<IDiabetesResponse>(
@@ -60,4 +73,4 @@ const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
   }
 };
 
-export { getDiabetes, createDiabetes, deleteDiabetes, updateDiabetes };
+export { getDiabetes, getDiabetesFindById, createDiabetes, deleteDiabetes, updateDiabetes };

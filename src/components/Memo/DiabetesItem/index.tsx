@@ -7,6 +7,7 @@ import {
   ContentsItemBody,
   ContentsItemHeader,
 } from "components/Memo/styles";
+import DiabetesDetail from "../DiabetesDetail";
 dayjs.locale("ko");
 
 const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {
@@ -23,7 +24,7 @@ const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo
         openModal({
           type: _id,
           isOpen: true,
-          data: { _id, sugar_level, slot, createdAt, note },
+          props: <DiabetesDetail id={_id}/>,
         });
       }}
     >
