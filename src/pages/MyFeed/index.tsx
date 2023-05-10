@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 
 const MyFeed = () => {
-  const { write } = useParams();
+  const { username } = useParams();
 
-  return <div>{write}님 Feed</div>;
+  return <div>{username}님 Feed</div>;
 };
 
 export default MyFeed;
