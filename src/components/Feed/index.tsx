@@ -5,8 +5,10 @@ import { useQuery } from "react-query";
 import { IUserResponse } from "models/db";
 import { getUserApi } from "utils/apis/userApis";
 import { useMemo } from "react";
+import { ROUTER_PATH } from "constants/router_path";
 
 const Feed = () => {
+  const {SAVE_CONTENTS, STORY} = ROUTER_PATH;
   const {
     data: userData,
   } = useQuery<IUserResponse>("user", getUserApi);
@@ -15,15 +17,15 @@ const Feed = () => {
   const menuItem = useMemo(() => ([
     {
       id: 1,
-      path: "/story/save",
+      path: `${SAVE_CONTENTS}`,
       targetName: "작성하기",
     },
     {
       id: 2,
-      path: `/profile/${write}`,
+      path: `${STORY}/${write}`,
       targetName: "내피드",
     },
-  ]), [write])
+  ]), [SAVE_CONTENTS, STORY, write])
   return (
     <StoryWarp>
       <PostCardsWrap>

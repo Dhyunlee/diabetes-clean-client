@@ -71,6 +71,7 @@ export const PostBodyBlock = styled.div`
   .img-wrap {
     padding-top: 8px;
     width: 100%;
+    height: 350px;
 
     img {
       width: 100%;
