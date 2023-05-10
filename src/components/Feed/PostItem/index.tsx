@@ -9,7 +9,7 @@ import {
 } from "../PostCards/styles";
 import PostHeader from "../PostHeader";
 interface IProps {
-  id: number;
+  id: string;
   writer: {
     _id: string;
     userName: string;
@@ -21,6 +21,7 @@ interface IProps {
 }
 const PostItem = (props: IProps) => {
   const { id, writer, content, imgName, imgUrl } = props;
+  
   return (
     <PostCardWrap key={id}>
       <PostHeader writer={writer}/>
@@ -35,7 +36,7 @@ const PostItem = (props: IProps) => {
         </PostBodyBlock>
         <Contour />
         <ReviewBlock>
-          <Review />
+          <Review postId={id}/>
         </ReviewBlock>
       </PostBody>
     </PostCardWrap>

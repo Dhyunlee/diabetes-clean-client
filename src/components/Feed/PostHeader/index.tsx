@@ -63,7 +63,7 @@ const PostHeader = ({ writer }: IProps) => {
         <ContentsInfo
           userName={writer.userName}
           imgUrl={writer.imgUrl}
-          link={`/profile/${writer.userName}`}
+          link={`/story/${writer.userName}`}
         />
         <Icons
           onClick={onToggleMenu}
