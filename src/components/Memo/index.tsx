@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { Container } from "styles/common";
 import DateArea from "components/Memo/Base/DateArea";

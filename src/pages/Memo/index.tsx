@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { getUserApi } from "utils/apis/userApis";
@@ -13,8 +13,10 @@ import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
 import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 import alertHandler from "utils/functions/alertHandler";
+import { ROUTER_PATH } from "constants/router_path";
+import SubButtonMenu from "components/Base/SubButtonMenu";
 const Memo = () => {
-  const navigate = useNavigate();
+  const { SAVE_MEMO_DIABETES } = ROUTER_PATH;
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
@@ -55,6 +57,23 @@ const Memo = () => {
       setProcessData(thisMonthDate);
     }
   }, [curDate, diabetesData?.diabetesInfo]);
+
+  const menuItem = useMemo(
+    () => [
+      {
+        id: 1,
+        path: `${SAVE_MEMO_DIABETES}`,
+        targetName: "당수치 기록",
+      },
+      {
+        id: 2,
+        path: `/story`,
+        targetName: "식단 기록",
+      },
+    ],
+    [SAVE_MEMO_DIABETES]
+  );
+
 
   const currentDate = `${curDate.year()}년 ${
     curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
@@ -104,6 +123,7 @@ const Memo = () => {
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
       </MemoContents>
+      <SubButtonMenu menuItems={menuItem} />
     </Container>
   );
 };
