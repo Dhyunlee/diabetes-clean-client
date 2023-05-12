@@ -1,12 +1,11 @@
 import { IContentsResponse } from "models/db";
 import api from "utils/axios";
 
-const getAllContents = async (userId: string | null) => {
+const getAllContents = async () => {
   try {
-    const data = "개발중";
-    // const { data } = await api.get<IContentsResponse>(`/api/v1/contents`, {
-    //   withCredentials: true,
-    // });
+    const { data } = await api.get<IContentsResponse>(`/api/v1/contents`, {
+      withCredentials: true,
+    });
     return data;
   } catch (error: any) {
     throw error.response;

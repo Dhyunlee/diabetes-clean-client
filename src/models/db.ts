@@ -60,7 +60,7 @@ export interface IContents {
   imageUrl: string;
   createdAt: Date | string;
   updateAt: Date | string;
-  isDeleted: string;
+  isDeleted?: boolean;
 }
 export interface IContentsResponse {
   isOk: boolean;
