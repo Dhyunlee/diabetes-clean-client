@@ -131,7 +131,7 @@ const SignUp = () => {
     IAuthResponse,
     AxiosError,
     { email: string; password: string; nickname: string }
-  >(["user"], (data) => postUserApi<IAuthRequest>(data), {
+  >(postUserApi, {
     onMutate() {
       setIsSucessSignUp(false);
     },

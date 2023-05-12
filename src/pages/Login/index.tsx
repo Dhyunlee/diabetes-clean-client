@@ -46,7 +46,7 @@ const Login = () => {
     IAuthResponse,
     AxiosError,
     { email: string; password: string }
-  >(["user"], () => logInApi(inputs), {
+  >(logInApi, {
     onMutate() {
       setIsSucessLogIn(true);
     },
@@ -55,7 +55,7 @@ const Login = () => {
         setStorage("accessToken", data.accessToken);
         navigate('/')
       }
-      queryClient.refetchQueries(["user"]);
+      queryClient.refetchQueries({queryKey: ['user']});
     },
     onError(error: any) {
       console.log({ login: error });
