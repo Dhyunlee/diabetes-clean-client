@@ -10,7 +10,6 @@ const PostCards = () => {
     isLoading,
   } = useContentsQuery();
   const contents = useMemo(() => contentsData?.contents, [contentsData]);
-  console.log({contents})
   if(contents === undefined && isLoading) {
     return <div>포스팅 불러오는중</div>
   }

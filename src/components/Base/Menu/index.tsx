@@ -18,7 +18,6 @@ const Menu: FC<Props> = ({ children, showMenu, onCloseMenu, customCss }) => {
 
   useEffect(() => {
     const onClickOutSide = (e: globalThis.MouseEvent) => {
-      console.log(e.target);
       if (showMenu && !menuRef.current?.contains(e.target as HTMLElement)) {
         onCloseMenu();
       }

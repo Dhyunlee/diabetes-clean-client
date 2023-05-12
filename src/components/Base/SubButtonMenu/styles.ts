@@ -13,8 +13,8 @@ export const SubMenuBtnContainer = styled.div`
 export const SubMenuBtn = styled.button<IStyleProps>`
   z-index: 5;
   cursor: pointer;
-  width: 65px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
   display: block;
   align-items: center;
   justify-content: center;
@@ -73,20 +73,18 @@ const BtnTextAnimationDown = keyframes`
   }
 `;
 
-export const SubBtnMenu = styled.ul<{open?: boolean}>`
+export const SubBtnMenu = styled.ul<{ open?: boolean }>`
   position: absolute;
   top: -41px;
   right: 40px;
   width: max-content;
   & li {
     animation: ${BtnTextAnimationUp};
-    ${
-      (props => !props.open && (
-        css`
+    ${(props) =>
+      !props.open &&
+      css`
         animation: ${BtnTextAnimationDown};
-      `
-    ))
-    }
+      `}
   }
   & li:nth-of-type(1) {
     animation-duration: 0.5s;

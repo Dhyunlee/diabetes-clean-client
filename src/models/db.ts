@@ -30,7 +30,7 @@ export interface IUserResponse {
   userInfo: IUserInfo;
 }
 
-export interface iDiabetesRequest {
+export interface IDiabetesRequest {
   writer: string;
   sugar_level: number;
   slot: string;
@@ -52,6 +52,13 @@ export interface IDiabetesResponse {
   diabetesInfo: IDiabetesInfo[];
 }
 
+export interface IContentsRequest {
+  writer: string;
+  content: string;
+  imageName?: string;
+  imageUrl?: string;
+}
+
 export interface IContents {
   _id: string;
   writer: IWriterInfo;
@@ -60,7 +67,7 @@ export interface IContents {
   imageUrl: string;
   createdAt: Date | string;
   updateAt: Date | string;
-  isDeleted?: boolean;
+  isDeleted: boolean;
 }
 export interface IContentsResponse {
   isOk: boolean;
