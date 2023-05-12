@@ -19,7 +19,7 @@ import { createDiabetes } from "utils/apis/diabetesApis";
 import { iDiabetesRequest } from "models/db";
 import { userState } from "store/userState";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
-import { useModal } from "hooks/useModal";
+import { useModal } from "hooks/common/useModal";
 
 const FormDiabetes = () => {
   const { closeModal } = useModal();

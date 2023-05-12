@@ -8,35 +8,27 @@ import {
   ReviewBlock,
 } from "../PostCards/styles";
 import PostHeader from "../PostHeader";
-interface IProps {
-  id: string;
-  writer: {
-    _id: string;
-    userName: string;
-    imgUrl: string;
-  };
-  imgUrl: string;
-  imgName: string;
-  content: string;
-}
-const PostItem = (props: IProps) => {
-  const { id, writer, content, imgName, imgUrl } = props;
-  
+import { IContents } from "models/db";
+const PostItem = (props: IContents) => {
+  const { _id, writer, content, iamgeName, imageUrl } = props;
+
   return (
-    <PostCardWrap key={id}>
-      <PostHeader writer={writer}/>
+    <PostCardWrap key={_id}>
+      <PostHeader writer={writer} />
       <PostBody>
         <PostBodyBlock className="nn">
-          <div className="img-wrap">
-            <img src={imgUrl} alt={imgName || ""} />
-          </div>
+          {imageUrl && (
+            <div className="img-wrap">
+              <img src={imageUrl} alt={iamgeName || ""} />
+            </div>
+          )}
           <div className="content-wrap">
             <p>{content}</p>
           </div>
         </PostBodyBlock>
         <Contour />
         <ReviewBlock>
-          <Review postId={id}/>
+          <Review postId={_id} />
         </ReviewBlock>
       </PostBody>
     </PostCardWrap>

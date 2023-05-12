@@ -6,6 +6,7 @@ interface IProps {
   diabetesInfo?: IDiabetesInfo[];
 }
 const DiabetesList = ({ diabetesInfo }: IProps) => {
+  console.log({diabetesInfo})
   return (
     <div className="contents-container">
       <ContentsList>

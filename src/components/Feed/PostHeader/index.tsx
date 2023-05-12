@@ -5,13 +5,10 @@ import ContentsInfo from "components/Base/ContentsInfo";
 import SubMenu from "../../Base/SubMenu";
 import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
+import { IWriterInfo } from "models/db";
 
 interface IProps {
-  writer: {
-    _id: string;
-    userName: string;
-    imgUrl: string;
-  };
+  writer: IWriterInfo;
 }
 const PostHeader = ({ writer }: IProps) => {
   const { _id: userId } = useRecoilValue(userState);
@@ -61,9 +58,9 @@ const PostHeader = ({ writer }: IProps) => {
     <div style={{ position: "relative", width: "100%" }}>
       <PostHeaderBlock>
         <ContentsInfo
-          userName={writer.userName}
-          imgUrl={writer.imgUrl}
-          link={`/story/${writer.userName}`}
+          userName={writer.nickname}
+          imgUrl={writer.imageSrc}
+          link={`/story/${writer.nickname}`}
         />
         <Icons
           onClick={onToggleMenu}

@@ -10,9 +10,7 @@ export const PostCardContainer = styled.div`
 `;
 
 export const PostCardWrap = styled.div`
-  &:nth-of-type(2) {
-    margin: 20px 0;
-  }
+  margin: 20px 0;
   padding: 20px 15px;
   background-color: #fff;
   border-radius: 5px;
