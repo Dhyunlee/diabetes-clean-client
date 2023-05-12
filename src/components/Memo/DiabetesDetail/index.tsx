@@ -1,17 +1,16 @@
-import React, { useCallback, useState } from "react";
-import Swal from "sweetalert2";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import React, { useCallback } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { deleteDiabetes, getDiabetesFindById } from "utils/apis/diabetesApis";
 import {
   DetailContainer,
   DetailModalContent,
   DetailModalHeader,
-} from "../GlobalModal/styles";
+} from "components/Base/GlobalModal/styles";
 import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
 import { timeIcons } from "libs/time-icons";
 import dayjs from "dayjs";
-import { useModal } from "hooks/useModal";
+import { useModal } from "hooks/common/useModal";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 
 interface Iprops {
@@ -34,7 +33,10 @@ const DiabetesDetail = ({ id }: Iprops) => {
   );
 
   const useMutate = useMutation(deleteDiabetes, {
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data.isOk) {
+        alertHandler.onToast({ msg: data.msg });
+      }
       queryClient.invalidateQueries<string>(["diabetes"]);
       navigate("/", { replace: true });
     },
@@ -45,7 +47,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
 
   const onDelDiabetes = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (diabetes._id) {
+      if (diabetes?._id) {
         alertHandler
           .onConfirm({
             msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?",

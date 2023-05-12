@@ -6,6 +6,7 @@ export const Header = styled.header`
 
 export const Main = styled.main`
   width: 100%;
+  padding: 10px;
 `;
 
 export const Container = styled.div`

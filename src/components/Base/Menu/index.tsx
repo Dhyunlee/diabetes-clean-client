@@ -1,24 +1,41 @@
-import React, { FC, MouseEvent, ReactNode, useCallback } from 'react';
-import { MenuWrap, MenuContainer } from './styles';
+import React, { FC, useEffect, useRef } from "react";
+import { SubMenuContainer, SubMenuWrap } from "./styles";
 
-interface Props {
-  children: ReactNode;
-  showMenu: boolean;
-  onCloseModal: () => void;
-  onClick?: () => void;
+export interface CustomCss {
+  posX?: number, 
+  posY?: number,
 }
 
-const Menu: FC<Props> = ({ showMenu, children, onCloseModal }) => {
-  const stopPropagation = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-  }, []);
+interface Props {
+  children: React.ReactNode;
+  customCss?: CustomCss;
+  showMenu: boolean;
+  onCloseMenu: () => void;
+}
+
+const Menu: FC<Props> = ({ children, showMenu, onCloseMenu, customCss }) => {
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onClickOutSide = (e: globalThis.MouseEvent) => {
+      if (showMenu && !menuRef.current?.contains(e.target as HTMLElement)) {
+        onCloseMenu();
+      }
+    };
+    document.addEventListener("mousedown", onClickOutSide);
+    return () => {
+      document.removeEventListener("mousedown", onClickOutSide);
+    };
+  }, [onCloseMenu, showMenu]);
 
   if (!showMenu) return null;
 
   return (
-    <MenuWrap onClick={onCloseModal}>
-      <MenuContainer onClick={stopPropagation}>{children}</MenuContainer>
-    </MenuWrap>
+    <>
+      <SubMenuWrap posX={customCss?.posX} posY={customCss?.posY} ref={menuRef}>
+        <SubMenuContainer>{children}</SubMenuContainer>
+      </SubMenuWrap>
+    </>
   );
 };
 

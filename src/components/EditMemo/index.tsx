@@ -3,7 +3,7 @@ import {
 } from "components/Memo/styles";
 import { NavLink, Outlet } from "react-router-dom";
 import { Container } from "styles/common";
-import { EditContents, EditHeader } from "./styles";
+import { EditBody, EditHeader } from "./styles";
 
 const EditMemo = () => {
   return (
@@ -42,9 +42,9 @@ const EditMemo = () => {
           </ul>
         </SubmenuContainer>
       </EditHeader>
-      <EditContents>
+      <EditBody>
         <Outlet />
-      </EditContents>
+      </EditBody>
     </Container>
   );
 };

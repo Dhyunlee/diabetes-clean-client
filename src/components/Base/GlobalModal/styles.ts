@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ContentsItem } from "../styles";
+import { ContentsItem } from "../../Memo/styles";
 
 export const DetailContainer = styled(ContentsItem)`
   padding: 30px 20px;

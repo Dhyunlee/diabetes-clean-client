@@ -23,18 +23,19 @@ export interface IUserInfo {
   nickname: string;
   updatedAt: string;
 }
+export type IWriterInfo = Pick<IUserInfo, "_id" | "nickname" | "imageSrc">;
 
 export interface IUserResponse {
   isOk: boolean;
   userInfo: IUserInfo;
 }
 
-export interface iDiabetesRequest {
+export interface IDiabetesRequest {
   writer: string;
   sugar_level: number;
   slot: string;
   note: string;
-  createdAt: string;
+  createdAt: Date | string;
 }
 
 export interface IDiabetesInfo {
@@ -42,11 +43,33 @@ export interface IDiabetesInfo {
   writer?: string;
   sugar_level: number;
   slot: string;
-  createdAt: string;
+  createdAt: Date | string;
   note?: string;
 }
 
 export interface IDiabetesResponse {
   isOk: boolean;
   diabetesInfo: IDiabetesInfo[];
+}
+
+export interface IContentsRequest {
+  writer: string;
+  content: string;
+  imageName?: string;
+  imageUrl?: string;
+}
+
+export interface IContents {
+  _id: string;
+  writer: IWriterInfo;
+  content: string;
+  iamgeName: string;
+  imageUrl: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: boolean;
+}
+export interface IContentsResponse {
+  isOk: boolean;
+  contents: IContents[];
 }

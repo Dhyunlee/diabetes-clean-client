@@ -1,9 +1,9 @@
-import React from 'react'
+import { useParams } from "react-router-dom";
 
 const MyFeed = () => {
-  return (
-    <div>MyFeed</div>
-  )
-}
+  const { username } = useParams();
 
-export default MyFeed
+  return <div>{username}님 Feed</div>;
+};
+
+export default MyFeed;

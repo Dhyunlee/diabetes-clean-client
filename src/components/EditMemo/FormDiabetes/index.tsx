@@ -14,12 +14,12 @@ import Input from "components/Base/Input";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import dayjs from "dayjs";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createDiabetes } from "utils/apis/diabetesApis";
-import { iDiabetesRequest } from "models/db";
+import { IDiabetesRequest } from "models/db";
 import { userState } from "store/userState";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
-import { useModal } from "hooks/useModal";
+import { useModal } from "hooks/common/useModal";
 
 const FormDiabetes = () => {
   const { closeModal } = useModal();
@@ -32,7 +32,7 @@ const FormDiabetes = () => {
   const [createdDate, setCreatedDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [createdTime, setCreatedTime] = useState(dayjs().format("HH:mm"));
 
-  const useMutate = useMutation(createDiabetes<iDiabetesRequest>, {
+  const useMutate = useMutation(createDiabetes<IDiabetesRequest>, {
     onSuccess: () => {
       queryClient.invalidateQueries<string>(["diabetes"]);
       navigate("/", { replace: true });

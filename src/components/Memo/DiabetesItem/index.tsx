@@ -1,4 +1,4 @@
-import { useModal } from "hooks/useModal";
+import { useModal } from "hooks/common/useModal";
 import { timeIcons } from "libs/time-icons";
 import { IDiabetesInfo } from "models/db";
 import dayjs from "dayjs";

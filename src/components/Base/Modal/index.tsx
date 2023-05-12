@@ -9,7 +9,7 @@ import React, {
 import { useEffect } from "react";
 import { CloseBtn, ModalContainer, ModalWrap } from "./styles";
 import { createPortal } from "react-dom";
-import { useModal } from "hooks/useModal";
+import { useModal } from "hooks/common/useModal";
 
 interface IModal {
   children: React.ReactNode;

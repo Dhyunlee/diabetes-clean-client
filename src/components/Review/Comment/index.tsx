@@ -1,8 +1,9 @@
 import ContentsInfo from "components/Base/ContentsInfo";
 import { CommentContainer } from "./styles";
 
-const Comment = () => {
+const Comment = ({writer, content}: any) => {
   const imgUrl = "https://mui.com/static/images/avatar/3.jpg";
+  
 
   return (
     <CommentContainer>
@@ -11,7 +12,7 @@ const Comment = () => {
           imgUrl={imgUrl}
           imgSize={40}
           userName={"sugarclean119"}
-          link={"/mypage"}
+          link={"/story/sugarclean119"}
         />
       </div>
       <div className="comment-contents">

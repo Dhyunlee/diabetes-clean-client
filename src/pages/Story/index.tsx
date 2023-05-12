@@ -1,4 +1,4 @@
-import Feed from "components/Story/Feed";
+import Feed from "components/Feed";
 
 const Story = () => {
   return (

@@ -16,7 +16,6 @@ export const InputGroup = styled.div`
   margin-top: 13px;
   display: flex;
   width: 100%;
-  height: 30px;
   gap: 5px;
 `;
 export const LabelWrap = styled.div`
@@ -41,11 +40,11 @@ export const UnitTextWrap = styled.div`
   }
 `;
 
-export const TextareaGroup = styled.div`
+export const TextareaGroup = styled.div<{height?: number}>`
   margin-top: 13px;
   padding: 10px;
   width: 100%;
-  height: 300px;
+  height: ${(props) => props.height || 300}px;
   textarea {
     border: 1px solid ${palette.gray[2]};
     padding: 12px;

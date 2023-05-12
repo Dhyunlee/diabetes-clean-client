@@ -1,13 +1,7 @@
-import React, { useEffect } from "react";
-import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
-import { IUserResponse } from "models/db";
-import { getUserApi } from "utils/apis/userApis";
+import { Container } from "styles/common";
 
 const MyPage = () => {
-  return (
-    <div>MyPage</div>
-  )
-}
+  return <Container>MyPage</Container>;
+};
 
-export default React.memo(MyPage);
+export default MyPage;

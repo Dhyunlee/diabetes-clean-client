@@ -3,8 +3,11 @@ import WriteComment from "components/Review/WriteComment";
 import ReviewStatus from "./ReviewStatus";
 import { CommentsContainer, ReviewContainer } from "./styles";
 
-
-const Review = () => {
+interface IProps {
+  postId: string;
+}
+const Review = ({ postId }: IProps) => {
+  
   return (
     <ReviewContainer>
       <ReviewStatus />

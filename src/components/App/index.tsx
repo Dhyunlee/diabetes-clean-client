@@ -3,7 +3,7 @@ import RouterContainer from "routes";
 import { useRecoilValue } from "recoil";
 import { modalState } from "store/modalState";
 import Topbar from "components/TopBar";
-import GlobalModal from "components/Memo/GlobalModal";
+import GlobalModal from "components/Base/GlobalModal";
 import { Header, Main } from "styles/common";
 
 const App = () => {

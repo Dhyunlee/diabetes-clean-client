@@ -6,7 +6,7 @@ import { ContentsInfoInterface } from "./styles";
 
 interface IProps {
   userName: string;
-  imgUrl: string;
+  imgUrl?: string;
   imgName?: string;
   imgSize?: number;
   link: string;

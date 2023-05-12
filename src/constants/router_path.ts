@@ -7,10 +7,9 @@ export const ROUTER_PATH = {
   MEMO_DIABETES: "/memo/diabetes",
   MEMO: "/memo/*",
   MYPAGE: "/mypage",
-  SAVE_CONTENTS: "/story/save",
+  SAVE_CONTENTS: "/new-contents/story",
   STORY: "/story",
-  MY_FEED: "/story/me"
-
+  MY_FEED: "/story/:username"
 };
 
 Object.freeze(ROUTER_PATH);

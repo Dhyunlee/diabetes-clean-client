@@ -3,8 +3,8 @@ import AppLayout from "components/App";
 import { Global, ThemeProvider } from "@emotion/react";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import { QueryClientProvider, QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { theme } from "libs/palette";
 import { reset } from "styles/reset";
 
@@ -27,7 +27,7 @@ root.render(
     <RecoilRoot>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          <ReactQueryDevtools initialIsOpen={false} />
           <ThemeProvider theme={theme}>
             <AppLayout />
           </ThemeProvider>

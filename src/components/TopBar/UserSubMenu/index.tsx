@@ -1,46 +1,62 @@
-import React, { useCallback } from "react";
-
-import Menu from "components/Base/Menu";
-import { useQueryClient } from "react-query";
-import { Link, useNavigate } from "react-router-dom";
-import { Li, MenuContainer } from "./styles";
+import React, { useCallback, useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
+import SubMenu from "components/Base/SubMenu";
 
 interface Props {
-  showUserSubMenu: boolean;
-  handleCloseMenu: () => void;
+  showSubMenu: boolean;
+  onCloseMenu: () => void;
 }
-const UserSubMenu = ({ showUserSubMenu, handleCloseMenu }: Props) => {
+const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const {removeStorage} = useStorage;
+  const { removeStorage } = useStorage;
 
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
-      removeStorage('accessToken')
-      queryClient.setQueryData("user", false);
+      removeStorage("accessToken");
+      queryClient.setQueryData(["user"], false);
       navigate("/login", { replace: true });
     });
 
-    handleCloseMenu();
+    onCloseMenu();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const menuItem = useMemo(
+    () => [
+      {
+        id: 1,
+        path: "/mypage",
+        targetName: "마이페이지",
+      },
+      {
+        id: 2,
+        path: null,
+        targetName: "로그아웃",
+        handler: handleLogOut,
+      },
+    ],
+    [handleLogOut]
+  );
+
   return (
-    <Menu showMenu={showUserSubMenu} onCloseModal={handleCloseMenu}>
-      <MenuContainer className="user-sub-menu">
-        <Li onClick={() => navigate("/mypage")}>
-          <Link onClick={handleCloseMenu} to={"/mypage"}>
-            마이페이지
-          </Link>
-        </Li>
-        <Li onClick={handleLogOut}>
-          <button onClick={handleLogOut}>로그아웃</button>
-        </Li>
-      </MenuContainer>
-    </Menu>
+    <>
+      {showSubMenu && (
+        <SubMenu
+          menuItem={menuItem}
+          customCss={{
+            posY: 60,
+            posX: 30,
+          }}
+          showSubMenu={showSubMenu}
+          onCloseMenu={onCloseMenu}
+        />
+      )}
+    </>
   );
 };
 

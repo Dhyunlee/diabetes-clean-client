@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import {useRecoilValue} from 'recoil';
+import { useRecoilValue } from "recoil";
 import { Container } from "styles/common";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
 import { Route, Routes } from "react-router-dom";
 import Diabetes from "components/Memo/DiabetesList";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
@@ -14,7 +14,7 @@ import { userState } from "store/userState";
 import { MemoContents, MemoHeader } from "./styles";
 
 const MemoList = () => {
-  const {_id: userId} = useRecoilValue(userState)
+  const { _id: userId } = useRecoilValue(userState);
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
@@ -23,14 +23,12 @@ const MemoList = () => {
     data: diabetesData,
     isError,
     isLoading,
-  } = useQuery<IDiabetesResponse>(
-    ["diabetes", userId],
-    () => getDiabetes(userId),
-    {
-      retry: 2,
-      enabled: !!userId,
-    }
-  );
+  } = useQuery<IDiabetesResponse>({
+    queryKey: ["diabetes", userId],
+    queryFn: () => getDiabetes(userId),
+    retry: 2,
+    enabled: !!userId,
+  });
 
   useEffect(() => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
