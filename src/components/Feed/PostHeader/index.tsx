@@ -6,13 +6,18 @@ import SubMenu from "../../Base/SubMenu";
 import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
 import { IWriterInfo } from "models/db";
+import { useDelContentsMutation } from "hooks/services/mutations";
+import alertHandler from "utils/functions/alertHandler";
 
 interface IProps {
   writer: IWriterInfo;
+  contentId: string;
+  isDeleted: boolean;
 }
-const PostHeader = ({ writer }: IProps) => {
+const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
   const { _id: userId } = useRecoilValue(userState);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+  const mutation = useDelContentsMutation();
   const onToggleMenu = useCallback(() => {
     setShowSubMenu((prev) => !prev);
   }, []);
@@ -21,38 +26,59 @@ const PostHeader = ({ writer }: IProps) => {
     setShowSubMenu(false);
   }, []);
 
-  const menuItem = useMemo(
-    () => {
-      if(userId === writer._id) {
-        return [
-          {
-            id: 1,
-            path: "/mypage",
-            targetName: "게시물 수정",
-          },
-          {
-            id: 2,
-            path: null,
-            targetName: "게시물 삭제",
-          },
-        ] 
-      }
+  const onDelPost = useCallback(() => {
+    if (contentId) {
+      alertHandler
+        .onConfirm({
+          msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            mutation.mutate(contentId);
+          }
+        });
+    }
+  }, [mutation, contentId]);
+
+  const onReportPost = useCallback(() => {
+    console.log("ReportPost");
+  }, []);
+
+  const onHidePost = useCallback(() => {
+    console.log("HidePost");
+  }, []);
+
+  const menuItem = useMemo(() => {
+    if (userId === writer._id) {
       return [
         {
           id: 1,
-          path: null,
-          targetName: "게시물 숨기기",
+          path: "/mypage",
+          targetName: "게시물 수정",
         },
         {
           id: 2,
           path: null,
-          targetName: "게시물 신고",
+          targetName: "게시물 삭제",
+          handler: onDelPost,
         },
-      ]
-  
-    },
-    [userId, writer._id]
-  );
+      ];
+    }
+    return [
+      {
+        id: 1,
+        path: null,
+        targetName: "게시물 숨기기",
+        handler: onHidePost,
+      },
+      {
+        id: 2,
+        path: null,
+        targetName: "게시물 신고",
+        handler: onReportPost,
+      },
+    ];
+  }, [onDelPost, onHidePost, onReportPost, userId, writer._id]);
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
@@ -62,17 +88,19 @@ const PostHeader = ({ writer }: IProps) => {
           imgUrl={writer.imageSrc}
           link={`/story/${writer.nickname}`}
         />
-        <Icons
-          onClick={onToggleMenu}
-          onMouseDown={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <span>
-            <FiMoreHorizontal />
-          </span>
-        </Icons>
-        {showSubMenu && (
+        {!isDeleted && (
+          <Icons
+            onClick={onToggleMenu}
+            onMouseDown={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <span>
+              <FiMoreHorizontal />
+            </span>
+          </Icons>
+        )}
+        {!isDeleted && showSubMenu && (
           <SubMenu
             menuItem={menuItem}
             showSubMenu={showSubMenu}
