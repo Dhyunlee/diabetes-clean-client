@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useRecoilState } from "recoil";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 // import UserSubMenu from "components/TopBar/UserSubMenu";
@@ -23,7 +23,10 @@ const UserMenu = () => {
     error,
     isError,
     isLoading,
-  } = useQuery<IUserResponse>("user", getUserApi);
+  } = useQuery<IUserResponse>({
+    queryKey: ["user"],
+    queryFn: () => getUserApi(),
+  });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const handleShowUserSubMenu = useCallback(() => {

@@ -14,7 +14,7 @@ import Input from "components/Base/Input";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import dayjs from "dayjs";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createDiabetes } from "utils/apis/diabetesApis";
 import { iDiabetesRequest } from "models/db";
 import { userState } from "store/userState";

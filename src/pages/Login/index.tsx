@@ -2,7 +2,7 @@ import React from "react";
 
 import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logInApi } from "utils/apis/userApis";
 // import { useCookies } from "react-cookie";
 
@@ -46,7 +46,7 @@ const Login = () => {
     IAuthResponse,
     AxiosError,
     { email: string; password: string }
-  >("user", () => logInApi(inputs), {
+  >(["user"], () => logInApi(inputs), {
     onMutate() {
       setIsSucessLogIn(true);
     },
@@ -55,7 +55,7 @@ const Login = () => {
         setStorage("accessToken", data.accessToken);
         navigate('/')
       }
-      queryClient.refetchQueries("user");
+      queryClient.refetchQueries(["user"]);
     },
     onError(error: any) {
       console.log({ login: error });

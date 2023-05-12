@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { deleteDiabetes, getDiabetesFindById } from "utils/apis/diabetesApis";
 import {

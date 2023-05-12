@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
@@ -17,7 +17,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
       removeStorage("accessToken");
-      queryClient.setQueryData("user", false);
+      queryClient.setQueryData(["user"], false);
       navigate("/login", { replace: true });
     });
 

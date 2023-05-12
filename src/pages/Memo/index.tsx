@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { getUserApi } from "utils/apis/userApis";
 import { getDiabetes } from "utils/apis/diabetesApis";
@@ -19,7 +19,7 @@ const Memo = () => {
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
   const { data: userData, error } = useQuery<IUserResponse>(
-    "user",
+    ["user"],
     getUserApi,
     {
       refetchOnWindowFocus: false,
