@@ -1,4 +1,4 @@
-import { IContentsResponse } from "models/db";
+import { CommonResponse, IContentsResponse } from "models/db";
 import api from "utils/axios";
 
 const getAllContents = async () => {
@@ -15,9 +15,12 @@ const getAllContents = async () => {
 const getUserContents = async (userId: string | null) => {
   try {
     if (!userId) return;
-    const { data } = await api.get<IContentsResponse>(`/api/v1/contents/users/${userId}`, {
-      withCredentials: true,
-    });
+    const { data } = await api.get<IContentsResponse>(
+      `/api/v1/contents/users/${userId}`,
+      {
+        withCredentials: true,
+      }
+    );
     return data;
   } catch (error: any) {
     throw error.response;
@@ -26,7 +29,7 @@ const getUserContents = async (userId: string | null) => {
 
 const createContents = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post("/api/v1/contents", insertData, {
+    const { data } = await api.post<CommonResponse>("/api/v1/contents", insertData, {
       withCredentials: true,
     });
     return data;
@@ -36,4 +39,20 @@ const createContents = async <T>(insertData: T) => {
   }
 };
 
-export { getAllContents, getUserContents, createContents };
+const deleteContents = async (contentId: string) => {
+  try {
+    const { data } = await api.delete<CommonResponse>(
+      `/api/v1/contents/${contentId}`,
+      {
+        withCredentials: true,
+      }
+    );
+    console.log({res: data})
+    return data;
+  } catch (error: any) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export { getAllContents, getUserContents, createContents, deleteContents };
