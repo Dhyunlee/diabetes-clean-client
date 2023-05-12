@@ -4,16 +4,18 @@ import { useNavigate } from "react-router-dom";
 import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
 import SubMenu from "components/Base/SubMenu";
+import { useRecoilValue } from "recoil";
+import { userState } from "store/userState";
 
 interface Props {
   showSubMenu: boolean;
   onCloseMenu: () => void;
 }
 const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
+  const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { removeStorage } = useStorage;
-
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
       removeStorage("accessToken");
@@ -35,12 +37,17 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
       },
       {
         id: 2,
+        path: `/story/${userInfo.nickname}`,
+        targetName: "내피드",
+      },
+      {
+        id: 3,
         path: null,
         targetName: "로그아웃",
         handler: handleLogOut,
       },
     ],
-    [handleLogOut]
+    [handleLogOut, userInfo]
   );
 
   return (

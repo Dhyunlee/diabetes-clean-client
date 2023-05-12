@@ -20,6 +20,9 @@ export const SubMenuList = styled.ul<{
   & li:nth-of-type(3) {
     animation-duration: 1s;
   }
+  a {
+    display: block;
+  }
 `;
 
 export const SubMenuItem = styled.li`

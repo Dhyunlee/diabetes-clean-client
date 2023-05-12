@@ -60,9 +60,6 @@ const UserMenu = () => {
         <>
           <MenuList>
             <UserItem>
-              <Link to={SAVE_MEMO_DIABETES}>기록 하기</Link>
-            </UserItem>
-            <UserItem>
               {userData && (
                 <ProfileWrap onClick={handleShowUserSubMenu}>
                   <Avatar
