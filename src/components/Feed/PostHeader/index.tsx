@@ -31,7 +31,7 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
     if (contentId) {
       alertHandler
         .onConfirm({
-          msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?",
+          msg: "포스팅을 삭제하실건가요?",
         })
         .then((result) => {
           if (result.isConfirmed) {
