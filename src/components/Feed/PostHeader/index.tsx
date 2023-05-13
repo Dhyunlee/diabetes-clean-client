@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import gravatar from "gravatar";
 import { PostHeaderBlock, Icons } from "../PostCards/styles";
 import { FiMoreHorizontal } from "react-icons/fi";
 import ContentsInfo from "components/Base/ContentsInfo";
@@ -85,7 +86,14 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
       <PostHeaderBlock>
         <ContentsInfo
           userName={writer.nickname}
-          imgUrl={writer.imageSrc}
+          imgUrl={
+            writer?.imageSrc
+              ? writer?.imageSrc
+              : gravatar.url(writer.nickname, {
+                  s: "32px",
+                  d: "retro",
+                })
+          }
           link={`/story/${writer.nickname}`}
         />
         {!isDeleted && (
@@ -102,7 +110,7 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
         )}
         {!isDeleted && showSubMenu && (
           <SubMenu
-            customCss={{posX: '125px'}}
+            customCss={{ posX: "125px" }}
             menuItem={menuItem}
             showSubMenu={showSubMenu}
             onCloseMenu={onCloseMenu}
