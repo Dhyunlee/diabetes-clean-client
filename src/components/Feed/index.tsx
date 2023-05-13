@@ -1,4 +1,4 @@
-import SubButtonMenu from "components/Base/SubButtonMenu";
+import SideBtnMenu from "components/Base/SideBtnMenu";
 import PostCards from "./PostCards";
 import { PostCardsWrap, StoryWarp } from "./styles";
 import { useQuery } from "@tanstack/react-query";
@@ -34,7 +34,7 @@ const Feed = () => {
       <PostCardsWrap>
         <PostCards />
       </PostCardsWrap>
-      <SubButtonMenu menuItems={menuItem} />
+      <SideBtnMenu menuItem={menuItem} />
     </StoryWarp>
   );
 };

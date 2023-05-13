@@ -2,8 +2,10 @@ import React, { FC, useEffect, useRef } from "react";
 import { SubMenuContainer, SubMenuWrap } from "./styles";
 
 export interface CustomCss {
-  posX?: number, 
-  posY?: number,
+  width?: string;
+  height?: string;
+  posX?: string, 
+  posY?: string,
 }
 
 interface Props {
@@ -32,7 +34,7 @@ const Menu: FC<Props> = ({ children, showMenu, onCloseMenu, customCss }) => {
 
   return (
     <>
-      <SubMenuWrap posX={customCss?.posX} posY={customCss?.posY} ref={menuRef}>
+      <SubMenuWrap width={customCss?.width} posX={customCss?.posX} posY={customCss?.posY} ref={menuRef}>
         <SubMenuContainer>{children}</SubMenuContainer>
       </SubMenuWrap>
     </>

@@ -13,10 +13,11 @@ import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
 import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 import alertHandler from "utils/functions/alertHandler";
+import SideBtnMenu from "components/Base/SideBtnMenu";
 import { ROUTER_PATH } from "constants/router_path";
-import SubButtonMenu from "components/Base/SubButtonMenu";
 const Memo = () => {
-  const { SAVE_MEMO_DIABETES } = ROUTER_PATH;
+  const { SAVE_MEMO_DIABETES} = ROUTER_PATH;
+
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
@@ -58,22 +59,6 @@ const Memo = () => {
     }
   }, [curDate, diabetesData?.diabetesInfo]);
 
-  const menuItem = useMemo(
-    () => [
-      {
-        id: 1,
-        path: `${SAVE_MEMO_DIABETES}`,
-        targetName: "당수치 기록",
-      },
-      {
-        id: 2,
-        path: `/story`,
-        targetName: "식단 기록",
-      },
-    ],
-    [SAVE_MEMO_DIABETES]
-  );
-
 
   const currentDate = `${curDate.year()}년 ${
     curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
@@ -95,9 +80,25 @@ const Memo = () => {
   const decreamentDate = () => {
     setCurDate(curDate.subtract(1, "month"));
   };
+  const menuItem = useMemo(
+    () => [
+      {
+        id: 1,
+        path: `${SAVE_MEMO_DIABETES}`,
+        targetName: "당수치 기록",
+      },
+      {
+        id: 2,
+        path: `/story`,
+        targetName: "식단 기록",
+      },
+    ],
+    [SAVE_MEMO_DIABETES]
+  );
 
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
   if (isError) return <div>데이터를 가져오는 실패했어요</div>;
+
 
   return (
     <Container>
@@ -123,7 +124,7 @@ const Memo = () => {
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
       </MemoContents>
-      <SubButtonMenu menuItems={menuItem} />
+      <SideBtnMenu menuItem={menuItem}/>
     </Container>
   );
 };

@@ -102,6 +102,7 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
         )}
         {!isDeleted && showSubMenu && (
           <SubMenu
+            customCss={{posX: '125px'}}
             menuItem={menuItem}
             showSubMenu={showSubMenu}
             onCloseMenu={onCloseMenu}

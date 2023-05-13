@@ -1,25 +1,22 @@
 import styled from "@emotion/styled";
 import { palette } from "libs/palette";
+import { fadeIn } from "../Modal/styles";
 
 export const SubMenuList = styled.ul<{
-  posX?: number;
-  posY?: number;
+  width?: string;
+  height?: string;
 }>`
-  z-index: 2;
+  width: ${(props) => props.width || "fit-content"};
+  height: ${(props) => props.height || "auto"};
+  text-align: center;
+  box-shadow: ${({ theme }) => theme.boxShadow.middle};
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
   background: #fff;
-  width: max-content;
+  z-index: 2;
 
-  & li {
-  }
-  & li:nth-of-type(1) {
-    animation-duration: 0.5s;
-  }
-  & li:nth-of-type(2) {
-    animation-duration: 0.8s;
-  }
-  & li:nth-of-type(3) {
-    animation-duration: 1s;
-  }
   a {
     display: block;
   }
@@ -27,7 +24,6 @@ export const SubMenuList = styled.ul<{
 
 export const SubMenuItem = styled.li`
   font-size: 15px;
-  padding: 8px;
   position: relative;
   top: 0;
   left: 0;
@@ -35,6 +31,7 @@ export const SubMenuItem = styled.li`
 
   a,
   button {
+    padding: 10px 8px;
     font-size: inherit;
     border: none;
     border-radius: 4px;

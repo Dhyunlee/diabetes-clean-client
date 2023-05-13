@@ -5,7 +5,6 @@ import { useRecoilState } from "recoil";
 import { useQuery } from "@tanstack/react-query";
 import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
-// import UserSubMenu from "components/TopBar/UserSubMenu";
 import Avatar from "components/Base/Avatar";
 import { getUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
@@ -29,7 +28,7 @@ const UserMenu = () => {
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
-  const handleShowUserSubMenu = useCallback(() => {
+  const onShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);
 
@@ -61,7 +60,12 @@ const UserMenu = () => {
           <MenuList>
             <UserItem>
               {userData && (
-                <ProfileWrap onClick={handleShowUserSubMenu}>
+                <ProfileWrap
+                  onClick={onShowUserSubMenu}
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
                   <Avatar
                     size={32}
                     imgName="profile-img"

@@ -7,11 +7,11 @@ import SubMenu from "components/Base/SubMenu";
 import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
 
-interface Props {
+interface IProps {
   showSubMenu: boolean;
   onCloseMenu: () => void;
 }
-const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
+const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -55,12 +55,12 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: Props) => {
       {showSubMenu && (
         <SubMenu
           menuItem={menuItem}
-          customCss={{
-            posY: 60,
-            posX: 30,
-          }}
           showSubMenu={showSubMenu}
           onCloseMenu={onCloseMenu}
+          customCss={{
+            posX: '135px',
+            posY: '60px',
+          }}
         />
       )}
     </>

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/react";
+import { css } from "@emotion/react";
 
 interface IStyleProps {
   open: boolean;
@@ -53,46 +53,9 @@ export const SubMenuBtn = styled.button<IStyleProps>`
     `}
 `;
 
-const BtnTextAnimationUp = keyframes`
-  0% {
-    transform: translateY(50px);
-  }
-
-  90% {
-    transform: translateY(0px);
-  }
-`;
-
-const BtnTextAnimationDown = keyframes`
-  0% {
-    transform: translateY(0px);
-  }
-  
-  90% {
-    transform: translateY(50px);
-  }
-`;
-
-export const SubBtnMenu = styled.ul<{ open?: boolean }>`
+export const SubMenuBtnWrap = styled.ul`
   position: absolute;
   top: -41px;
   right: 40px;
   width: max-content;
-  & li {
-    animation: ${BtnTextAnimationUp};
-    ${(props) =>
-      !props.open &&
-      css`
-        animation: ${BtnTextAnimationDown};
-      `}
-  }
-  & li:nth-of-type(1) {
-    animation-duration: 0.5s;
-  }
-  & li:nth-of-type(2) {
-    animation-duration: 0.8s;
-  }
-  & li:nth-of-type(3) {
-    animation-duration: 1s;
-  }
 `;
