@@ -73,3 +73,19 @@ export interface IContentsResponse {
   isOk: boolean;
   contents: IContents[];
 }
+
+export interface IComment {
+  _id: string;
+  writer: IWriterInfo;
+  contentsId: string;
+  parentCommentId: string;
+  content: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: boolean;
+}
+
+export interface IContentsResponse {
+  isOk: boolean;
+  comment: IComment[];
+}
