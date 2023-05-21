@@ -1,23 +1,27 @@
 import ContentsInfo from "components/Base/ContentsInfo";
-import { CommentContainer } from "./styles";
+import { CommentContainer, CommentContents, CommentHeader } from "./styles";
+import { IComment } from "models/db";
 
-const Comment = ({writer, content}: any) => {
-  const imgUrl = "https://mui.com/static/images/avatar/3.jpg";
-  
+interface Iprops {
+  comment: IComment;
+}
 
+const Comment = ({comment}: Iprops) => {
+  const {content, createdAt, writer} = comment;
   return (
     <CommentContainer>
-      <div className="comment-header">
+      <CommentHeader>
         <ContentsInfo
-          imgUrl={imgUrl}
+          createdAt={createdAt}
+          imgUrl={writer.imageSrc}
           imgSize={40}
-          userName={"sugarclean119"}
+          userName={writer.nickname}
           link={"/story/sugarclean119"}
         />
-      </div>
-      <div className="comment-contents">
-        <p>바다 정말 이쁘네용 ^^</p>
-      </div>
+      </CommentHeader>
+      <CommentContents>
+        <p>{content}</p>
+      </CommentContents>
     </CommentContainer>
   );
 };
