@@ -5,6 +5,7 @@ export const ReviewContainer = styled.div`
   .review-status {
     display: flex;
     align-items: center;
+    padding: 10px 0;
     gap: 26px;
   }
 
