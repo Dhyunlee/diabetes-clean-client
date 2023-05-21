@@ -19,7 +19,6 @@ const getDiabetesFindById = async (id: string | null) => {
     const { data } = await api.get(`/api/v1/diabetes/${id}`, {
       withCredentials: true,
     });
-    console.log({data})
     return data;
   } catch (error: any) {
     throw error.response;
@@ -73,4 +72,10 @@ const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
   }
 };
 
-export { getDiabetes, getDiabetesFindById, createDiabetes, deleteDiabetes, updateDiabetes };
+export {
+  getDiabetes,
+  getDiabetesFindById,
+  createDiabetes,
+  deleteDiabetes,
+  updateDiabetes,
+};
