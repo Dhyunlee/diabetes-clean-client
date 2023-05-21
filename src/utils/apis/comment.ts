@@ -1,9 +1,10 @@
-import { IContentsResponse } from "models/db";
+import { ICommentResponse } from "models/db";
 import api from "utils/axios";
 
-const getAllComment = async () => {
+const getAllComment = async (contentsId: string | null) => {
   try {
-    const { data } = await api.get<IContentsResponse>(`/api/v1/contents`, {
+    if(!contentsId) return;
+    const { data } = await api.get<ICommentResponse>(`/api/v1/comment/contents/${contentsId}`, {
       withCredentials: true,
     });
     return data;
