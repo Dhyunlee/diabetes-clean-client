@@ -14,8 +14,9 @@ interface IProps {
   writer: IWriterInfo;
   contentId: string;
   isDeleted: boolean;
+  createdAt: string | Date;
 }
-const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
+const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   const { _id: userId } = useRecoilValue(userState);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
   const mutation = useDelContentsMutation();
@@ -85,6 +86,7 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
     <div style={{ position: "relative", width: "100%" }}>
       <PostHeaderBlock>
         <ContentsInfo
+        createdAt={createdAt}
           userName={writer.nickname}
           imgUrl={
             writer?.imageSrc
