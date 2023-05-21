@@ -21,7 +21,7 @@ function Topbar() {
             </button>
           </div>
           <div className="page-title">
-            <Link to="/"><img width={110} src="/images/logo.png" alt="logo-img"/></Link>
+            <Link to="/"><img width={100} src="/images/logo.png" alt="logo-img"/></Link>
           </div>
         </div>
         <div className="menu-right">
