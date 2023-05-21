@@ -2,7 +2,10 @@ import {useState} from 'react';
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 
-const ReviewStatus = () => {
+interface IProps {
+  commentLength?: number
+}
+const ReviewStatus = ({commentLength}: IProps) => {
   const [likes, setLikes] = useState(false);
   const onClickLikes = () => {
     setLikes(prev => !prev);
@@ -26,7 +29,7 @@ const ReviewStatus = () => {
       <div className="review_item comments">
         <span>
           <span>댓글</span>
-          <span className="count">{0}</span>
+          <span className="count">{commentLength}</span>
         </span>
       </div>
     </div>
