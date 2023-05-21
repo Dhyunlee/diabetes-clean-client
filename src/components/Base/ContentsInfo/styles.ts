@@ -13,14 +13,17 @@ export const ContentsInfoInterface = styled.div`
   }
 
   .right-info {
-    flex: 8;
+    flex: 10;
     display: flex;
     flex-direction: column;
     font-weight: 200;
     font-size: 15px;
     .user_name {
-      cursor: pointer;
-
+      span {
+        display: inline-block;
+        padding: 3px;
+        cursor: pointer;
+      }
       &:hover {
         color: ${palette.gray[3]}// #868e96;
       }
