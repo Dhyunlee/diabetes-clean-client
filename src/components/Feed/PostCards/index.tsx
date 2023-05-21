@@ -1,20 +1,20 @@
 import { useMemo } from "react";
 import PostItem from "../PostItem";
-import {useContentsQuery} from "hooks/services/queries";
+import { useContentsQuery } from "hooks/services/queries";
 import { PostCardContainer } from "./styles";
 
 const PostCards = () => {
-  const {
-    data: contentsData,
-    isError,
-    isLoading,
-  } = useContentsQuery();
+  const { data: contentsData, isError, isLoading } = useContentsQuery();
   const contents = useMemo(() => contentsData?.contents, [contentsData]);
-  if(contents === undefined && isLoading) {
-    return <div>포스팅 불러오는중</div>
+  if (contents === undefined && isLoading) {
+    return <div>포스팅 불러오는중</div>;
   }
-  if(isError) {
-    console.log('포스팅을 불러오는데 실패했습니다.')
+  if (isError) {
+    return (
+      <div>
+        포스팅을 불러오는데 실패했습니다.
+      </div>
+    );
   }
   return (
     <PostCardContainer className="post">
