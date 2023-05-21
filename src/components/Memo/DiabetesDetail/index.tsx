@@ -21,7 +21,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
   const navigate = useNavigate();
-  const { data } = useQuery({
+  const { data, isError } = useQuery({
     queryKey: ["diabetes", id],
     queryFn: () => getDiabetesFindById(id),
     enabled: !!id,
@@ -41,7 +41,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
       navigate("/", { replace: true });
     },
     onError: (error) => {
-      console.log(error);
+      console.log({error});
     },
   });
 
@@ -73,6 +73,15 @@ const DiabetesDetail = ({ id }: Iprops) => {
     []
   );
 
+  if (isError) {
+    return (
+      <div>
+        당수치 데이터를 불러오는데 실패했습니다.
+        <br />
+        네트워크를 확인해주세요!
+      </div>
+    );
+  }
   return (
     <DetailContainer>
       <DetailModalHeader>
