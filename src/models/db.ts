@@ -85,7 +85,7 @@ export interface IComment {
   isDeleted: boolean;
 }
 
-export interface IContentsResponse {
+export interface ICommentResponse {
   isOk: boolean;
   comment: IComment[];
 }
