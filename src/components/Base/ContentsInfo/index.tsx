@@ -29,8 +29,8 @@ const ContentsInfo = ({
         <Avatar size={imgSize ?? 45} imgName={imgName ?? "avatar-img"} imgUrl={imgUrl} />
       </div>
       <div className="right-info">
-        <div className="user_name" onClick={() => navigate(link)}>
-          <span>{userName}</span>
+        <div className="user_name">
+          <span onClick={() => navigate(link)}>{userName}</span>
         </div>
         <div className="saved_date">
           <span>{tiemBefore(createdAt)}</span>

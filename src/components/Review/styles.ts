@@ -46,5 +46,5 @@ export const ReviewContainer = styled.div`
 `;
 
 export const CommentsContainer = styled.div`
-  padding-top: 35px;
+  padding-top: 20px;
 `;

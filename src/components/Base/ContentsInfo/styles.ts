@@ -13,7 +13,7 @@ export const ContentsInfoInterface = styled.div`
   }
 
   .right-info {
-    flex: 10;
+    flex: 13;
     display: flex;
     flex-direction: column;
     font-weight: 200;
