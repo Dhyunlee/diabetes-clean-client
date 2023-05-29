@@ -1,5 +1,5 @@
 import Comment from "components/Review/Comment";
-import WriteComment from "components/Review/WriteComment";
+import CommentForm from "components/Review/CommentForm";
 import ReviewStatus from "./ReviewStatus";
 import { CommentsContainer, ReviewContainer } from "./styles";
 import {useCommentQuery} from "hooks/services/queries/";
@@ -18,7 +18,7 @@ const Review = ({ postId }: IProps) => {
       <Contour />
       {/* 댓글 리스트 */}
       <CommentsContainer>
-        <WriteComment />
+        <CommentForm contentsId={postId}/>
         {
           comments?.map(comment => (
             <Comment key={comment._id} comment={comment}/>
