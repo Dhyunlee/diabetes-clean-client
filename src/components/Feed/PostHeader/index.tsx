@@ -60,18 +60,18 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
         {
           id: 1,
           path: "/mypage",
-          targetName: "게시물 수정",
+          label: "게시물 수정",
         },
         {
           id: 2,
           path: null,
-          targetName: "게시물 삭제",
+          label: "게시물 삭제",
           handler: onDelPost,
         },
         {
           id: 3,
           path: null,
-          targetName: "취소",
+          label: "취소",
           handler: onCloseMenu,
         },
       ];
@@ -80,25 +80,25 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       {
         id: 1,
         path: null,
-        targetName: `${true ? "팔로우" : "팔로우 취소"}`,
+        label: `${true ? "팔로우" : "팔로우 취소"}`,
         handler: onFollow,
       },
       {
         id: 2,
         path: null,
-        targetName: "게시물 숨기기",
+        label: "게시물 숨기기",
         handler: onHidePost,
       },
       {
         id: 3,
         path: null,
-        targetName: "게시물 신고",
+        label: "게시물 신고",
         handler: onReportPost,
       },
       {
         id: 4,
         path: null,
-        targetName: "취소",
+        label: "취소",
         handler: onCloseMenu,
       },
     ];
