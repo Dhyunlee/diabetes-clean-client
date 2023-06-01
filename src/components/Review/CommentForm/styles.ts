@@ -2,13 +2,14 @@ import styled from "@emotion/styled";
 
 export const CommentsFormContainer = styled.div`
   .comments-form {
-    display: flex;
-    gap: 15px;
+    padding: 15px 0;
     width: 100%;
 
     .input-wrap {
-      width: 85%;
-      height: 30px;
+      padding-bottom: 5px;
+    }
+    .button-wrap {
+      text-align: end;
     }
   }
 `;
