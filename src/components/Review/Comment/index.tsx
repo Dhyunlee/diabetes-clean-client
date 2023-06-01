@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
@@ -11,6 +11,8 @@ import { userState } from "store/userState";
 import { useDelCommentMutation } from "hooks/services/mutations";
 
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
+import { useToggle } from "hooks/common/useToggle";
+import CommentForm from "../CommentForm";
 
 interface Iprops {
   comment: IComment;
@@ -18,16 +20,19 @@ interface Iprops {
 
 const Comment = ({ comment }: Iprops) => {
   const { _id: userId } = useRecoilValue(userState);
-  const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+  const [isShowSubMenu, setIsShowSubMenu, onToggleMenu] = useToggle();
+  const [isShowCommentForm, setIsShowCommentForm, onToggleComment] =
+    useToggle();
   const mutation = useDelCommentMutation();
-  const { _id, content, createdAt, writer, isDeleted } = comment;
-
-  const onToggleMenu = useCallback(() => {
-    setShowSubMenu((prev) => !prev);
-  }, []);
+  const { _id: commentId, content, createdAt, writer, isDeleted, contentsId } = comment;
 
   const onCloseMenu = useCallback(() => {
-    setShowSubMenu(false);
+    setIsShowSubMenu(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const onCloseCommentForm = useCallback(() => {
+    setIsShowCommentForm(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onReportComment = useCallback(() => {
@@ -39,31 +44,32 @@ const Comment = ({ comment }: Iprops) => {
   }, []);
 
   const onDelComment = useCallback(() => {
-    if (_id) {
+    if (commentId) {
       alertHandler
         .onConfirm({
           msg: "댓글을 삭제하실건가요?",
         })
         .then((result) => {
           if (result.isConfirmed) {
-            mutation.mutate(_id);
+            mutation.mutate(commentId);
           }
         });
     }
-  }, [_id, mutation]);
+  }, [commentId, mutation]);
 
   const menuItem = useMemo(() => {
     if (userId === writer._id) {
       return [
         {
           id: 1,
-          path: "/mypage",
-          targetName: "댓글 수정",
+          path: null,
+          label: `${isShowCommentForm ? "수정 취소" : "댓글 수정"}`,
+          handler: isShowCommentForm ? onCloseCommentForm : onToggleComment,
         },
         {
           id: 2,
           path: null,
-          targetName: "댓글 삭제",
+          label: "댓글 삭제",
           handler: onDelComment,
         },
       ];
@@ -72,11 +78,19 @@ const Comment = ({ comment }: Iprops) => {
       {
         id: 1,
         path: null,
-        targetName: "신고",
+        label: "신고",
         handler: onHideComment,
       },
     ];
-  }, [onDelComment, onHideComment, userId, writer._id]);
+  }, [
+    userId,
+    writer._id,
+    onHideComment,
+    isShowCommentForm,
+    onCloseCommentForm,
+    onToggleComment,
+    onDelComment,
+  ]);
 
   return (
     <CommentContainer>
@@ -107,17 +121,33 @@ const Comment = ({ comment }: Iprops) => {
             </span>
           </Icons>
         )}
-        {!isDeleted && showSubMenu && (
+        {!isDeleted && isShowSubMenu && (
           <SubMenu
             menuItem={menuItem}
-            showSubMenu={showSubMenu}
+            showSubMenu={isShowSubMenu}
             onCloseMenu={onCloseMenu}
             customCss={{ posX: "125px", posY: "35px" }}
           />
         )}
       </CommentHeader>
       <CommentContents>
-        <p>{isDeleted ? "해당 댓글이 삭제되었습니다." : content}</p>
+        <>
+          {isDeleted ? (
+            "해당 댓글이 삭제되었습니다."
+          ) : (
+            <>
+              {isShowCommentForm ? (
+                <CommentForm
+                  contentsId={contentsId}
+                  commentId={commentId}
+                  preContent={content}
+                  onClose={onCloseCommentForm}
+                  editMode
+                />
+              ): <p>{content}</p>}
+            </>
+          )}
+        </>
       </CommentContents>
     </CommentContainer>
   );
