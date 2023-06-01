@@ -1,26 +1,17 @@
+import {
+  DetailedHTMLProps,
+  FunctionComponent,
+  InputHTMLAttributes,
+} from "react";
 import { InputInterface } from "./styles";
 
-interface inputType {
-  text: string;
-  type?: "text" | "email" | "password";
-  placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+type commonInputProps = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
-const Input = ({
-  text = "text",
-  type,
-  placeholder,
-  onChange,
-}: inputType) => {
-  return (
-    <InputInterface
-      onChange={onChange}
-      value={text}
-      type={type}
-      placeholder={placeholder}
-    />
-  );
+const Input: FunctionComponent<commonInputProps> = ({ ...rest }) => {
+  return <InputInterface {...rest} />;
 };
 
 export default Input;

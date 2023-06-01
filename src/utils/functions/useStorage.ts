@@ -1,4 +1,4 @@
-class useStorage {
+class UseStorage {
   getStorage(key: string) {
     return localStorage.getItem(key);
   }
@@ -9,4 +9,4 @@ class useStorage {
     localStorage.removeItem(key);
   }
 }
-export default new useStorage();
+export default new UseStorage();

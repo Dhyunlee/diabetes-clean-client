@@ -56,8 +56,6 @@ export const DateAreaContainer = styled.div`
 // -- [ MemoContents ] --
 export const MemoContents = styled.section`
   margin-top: 30px;
-  height: 500px;
-  overflow-y: auto;
 
   .contents-container {
     min-width: 97%;

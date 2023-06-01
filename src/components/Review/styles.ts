@@ -5,11 +5,11 @@ export const ReviewContainer = styled.div`
   .review-status {
     display: flex;
     align-items: center;
+    padding: 10px 0;
     gap: 26px;
   }
 
   .review_item {
-    cursor: pointer;
     &:hover {
       color: ${palette.gray[3]};
     }
@@ -17,18 +17,19 @@ export const ReviewContainer = styled.div`
 
   .review_item.links {
     position: relative;
+    top: -2px;
 
     .likes-icon {
       font-size: 20px;
       position: relative;
-      top: 5px;
+      top: 3px;
       left: 2px;
       padding-right: 5px;
+      cursor: pointer;
     }
     .count {
       padding-left: 3px;
       position: absolute;
-      top: -2px;
       right: -8px;
     }
   }
@@ -39,11 +40,11 @@ export const ReviewContainer = styled.div`
       padding-left: 3px;
       position: absolute;
       top: -4px;
-      right: -12px;
+      right: -13px;
     }
   }
 `;
 
 export const CommentsContainer = styled.div`
-  padding-top: 35px;
+  padding-top: 20px;
 `;

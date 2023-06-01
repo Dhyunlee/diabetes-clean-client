@@ -1,46 +1,77 @@
-import React, { FC, MouseEvent, ReactNode, useCallback } from 'react';
-import { CloseBtn, ModalContainer, ModalWrap } from './styles';
+import React, {
+  FunctionComponent,
+  ReactNode,
+  memo,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
+import { useEffect } from "react";
+import { CloseBtn, ModalContainer, ModalWrap } from "./styles";
+import { createPortal } from "react-dom";
+import { useModal } from "hooks/common/useModal";
 
-interface Props {
-  children: ReactNode;
-  isShowModal: boolean;
-  onCloseModal: () => void;
+interface IModal {
+  children: React.ReactNode;
+  isOpenModal: boolean;
 }
 
-const Modal: FC<Props> = ({ children, isShowModal, onCloseModal }) => {
-  console.log(isShowModal);
-  const stopPropagation = useCallback((e: MouseEvent<HTMLDivElement>) => {
+const Modal: FunctionComponent<IModal> = ({ isOpenModal, children }) => {
+  const { closeModal } = useModal();
+  const domRef = useRef<Element | null>();
+  const [isMountedModal, setIsMountedModal] = useState(false);
+  const [localVisible, setLocalVisible] = useState(isOpenModal);
+  const [animate, setAnimate] = useState(false);
+
+  const stopPropagation = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   }, []);
 
-  if (!isShowModal) return null;
+  useEffect(() => {
+    setIsMountedModal(true);
+    if (document) {
+      const rootModal = document.getElementById("root-modal");
+      domRef.current = rootModal; // ref에 root-modal 전달.
+    }
+    return () => {
+      setIsMountedModal(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    let t: any;
+    if (localVisible && !isOpenModal) {
+      setAnimate(true);
+      t = setTimeout(() => setAnimate(false), 250);
+    }
+    setLocalVisible(isOpenModal);
+    return () => {
+      clearTimeout(t);
+    };
+  }, [localVisible, isOpenModal]);
+
+  if (!localVisible && !animate) return null;
+
+  const renderLayout = (element: ReactNode) => {
+    if (domRef.current && isMountedModal) {
+      return createPortal(element, domRef.current);
+    }
+  };
+
   return (
-    <ModalWrap onClick={onCloseModal}>
-      <ModalContainer onClick={stopPropagation}>
-        <CloseBtn onClick={onCloseModal}>
-          <span>&times;</span>
-        </CloseBtn>
-        {children}
-      </ModalContainer>
-    </ModalWrap>
+    <>
+      {renderLayout(
+        <ModalWrap disappear={!isOpenModal} onClick={closeModal}>
+          <ModalContainer onClick={stopPropagation}>
+            <CloseBtn>
+              <span onClick={closeModal}>&times;</span>
+            </CloseBtn>
+            {children}
+          </ModalContainer>
+        </ModalWrap>
+      )}
+    </>
   );
 };
 
-Modal.defaultProps = {
-  isShowModal: true,
-};
-
-// const Modal = ({ children, title }) => {
-//   return (
-//     <ModalWrap className="modal">
-//       <ModalContainer>
-//         <CloseBtn onClick={() => {}}>
-//           <span>&times;</span>
-//         </CloseBtn>
-//         {children}
-//       </ModalContainer>
-//     </ModalWrap>
-//   );
-// };
-
-export default Modal;
+export default memo(Modal);

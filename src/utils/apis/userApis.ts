@@ -1,20 +1,23 @@
 import api from "utils/axios";
+import useStorage from "utils/functions/useStorage";
+import { CommonResponse, IAuthResponse, IUserResponse } from "models/db";
 
 /* 유저 및 인증 */
 const logInApi = async <T>(insertData: T) => {
+  console.log({insertData})
   try {
-    const { data } = await api.post("/api/v1/auth/login", insertData, {
+    const { data } = await api.post<IAuthResponse>("/api/v1/auth/login", insertData, {
       withCredentials: true,
     });
     return data;
   } catch (error: any) {
     console.log(error);
-    throw error.response;
+    throw error;
   }
 };
 const checkemailApi = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post(
+    const { data } = await api.post<CommonResponse>(
       "/api/v1/auth/checkemail",
       { email: insertData },
       { withCredentials: true }
@@ -26,15 +29,19 @@ const checkemailApi = async <T>(insertData: T) => {
 };
 
 const getUserApi = async () => {
+  const { removeStorage } = useStorage;
   try {
-    const { data } = await api.get("/api/v1/users", {
+    const { data } = await api.get<IUserResponse>("/api/v1/users", {
       withCredentials: true,
     });
-    console.log(data)
     return data;
   } catch (error: any) {
-    console.log(error.response);
-    throw error
+    if (error.status === 403) {
+      console.log("403");
+      window.location.href = "/login";
+      removeStorage("accessToken");
+    }
+    throw error;
   }
 };
 const postUserApi = async <T>(insertData: T) => {
@@ -51,4 +58,11 @@ const postUserApi = async <T>(insertData: T) => {
 const updateUserApi = async () => {};
 const deleteUserApi = async () => {};
 
-export { logInApi, getUserApi, postUserApi, updateUserApi, deleteUserApi, checkemailApi };
+export {
+  logInApi,
+  getUserApi,
+  postUserApi,
+  updateUserApi,
+  deleteUserApi,
+  checkemailApi,
+};

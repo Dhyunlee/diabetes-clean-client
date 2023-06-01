@@ -1,6 +1,39 @@
+import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const ModalWrap = styled.div`
+export const fadeIn = keyframes`
+ from {
+    opacity: 0;
+} to {
+    opacity: 1;
+ }
+`;
+
+export const fadeOut = keyframes`
+ from {
+    opacity: 1;
+} to {
+    opacity: 0;
+ }
+`;
+
+export const slideUp = keyframes`
+ from {
+    transform: translateY(200px);
+} to {
+    transform: translateY(0px);
+ }
+`;
+
+export const slideDown = keyframes`
+ from {
+    transform: translateY(0px);
+ } to {
+    transform: translateY(200px);
+ }
+`;
+
+export const ModalWrap = styled.div<{ disappear: boolean }>`
   width: 100%;
   position: fixed;
   left: 0;
@@ -8,22 +41,35 @@ export const ModalWrap = styled.div`
   top: 0;
   bottom: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 111;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease-in-out;
+  
+  //--- animation: test
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
+
+  ${({disappear}) => {
+    return (
+      disappear &&
+      css`
+        animation-name: ${fadeOut};
+      `
+    );
+  }}
 `;
 
 export const ModalContainer = styled.div`
   width: auto;
-  padding: 10px 50px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  padding: 25px 85px 38px 40px;
   border: 1px solid gray;
   border-radius: 5px;
   background: #fff;
-`;
+  `;
 
 export const CloseBtn = styled.button`
   width: 25px;
@@ -33,8 +79,8 @@ export const CloseBtn = styled.button`
   box-shadow: 0 0 0 0 rgb(0 0 0 / 10%), 0 2px 5px rgb(0 0 0 / 10%);
   border-radius: 5px;
   position: absolute;
-  top: 3px;
-  right: 6px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
 
   &:active {
@@ -48,19 +94,6 @@ export const CloseBtn = styled.button`
     padding: 0 5px;
     font-size: 20px;
     color: #2d2d2d;
-  }
-`;
-
-export const ModalTitle = styled.header`
-  padding: 20px 30px;
-  text-align: center;
-  font-size: 20px;
-
-  &::after {
-    content: "";
-    width: 100%;
-    height: 1px;
-    background: gray;
   }
 `;
 

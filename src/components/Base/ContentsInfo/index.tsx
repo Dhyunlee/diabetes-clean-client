@@ -3,14 +3,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "../Avatar";
 import { ContentsInfoInterface } from "./styles";
+import { tiemBefore } from "utils/functions/tiemBefore";
 
 interface IProps {
   userName: string;
-  imgUrl: string;
+  imgUrl?: string;
   imgName?: string;
   imgSize?: number;
   link: string;
-  createdAt?: Date | string;
+  createdAt: Date | string;
 }
 
 const ContentsInfo = ({
@@ -28,11 +29,11 @@ const ContentsInfo = ({
         <Avatar size={imgSize ?? 45} imgName={imgName ?? "avatar-img"} imgUrl={imgUrl} />
       </div>
       <div className="right-info">
-        <div className="user_name" onClick={() => navigate(link)}>
-          <span>{userName}</span>
+        <div className="user_name">
+          <span onClick={() => navigate(link)}>{userName}</span>
         </div>
         <div className="saved_date">
-          <span>1시간전</span>
+          <span>{tiemBefore(createdAt)}</span>
         </div>
       </div>
     </ContentsInfoInterface>

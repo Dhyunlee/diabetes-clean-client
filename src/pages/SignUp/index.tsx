@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi, postUserApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import {
   FormBtn,
@@ -131,7 +131,7 @@ const SignUp = () => {
     IAuthResponse,
     AxiosError,
     { email: string; password: string; nickname: string }
-  >("user", (data) => postUserApi<IAuthRequest>(data), {
+  >(postUserApi, {
     onMutate() {
       setIsSucessSignUp(false);
     },

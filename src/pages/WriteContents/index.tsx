@@ -1,8 +1,8 @@
-import React from 'react'
+import EditContents from 'components/EditContents'
 
 const WriteContents = () => {
   return (
-    <div>WriteContents</div>
+    <EditContents/>
   )
 }
 

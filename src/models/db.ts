@@ -1,3 +1,8 @@
+export interface CommonResponse {
+  isOk: boolean;
+  msg: string;
+}
+
 export interface IAuthRequest {
   email: string;
   password: string;
@@ -18,20 +23,76 @@ export interface IUserInfo {
   nickname: string;
   updatedAt: string;
 }
+export type IWriterInfo = Pick<IUserInfo, "_id" | "nickname" | "imageSrc">;
 
 export interface IUserResponse {
   isOk: boolean;
   userInfo: IUserInfo;
 }
 
+export interface IDiabetesRequest {
+  writer: string;
+  sugar_level: number;
+  slot: string;
+  note: string;
+  createdAt: Date | string;
+}
+
 export interface IDiabetesInfo {
   readonly _id: string;
   writer?: string;
-  GI: number;
+  sugar_level: number;
   slot: string;
-  createdAt: Date;
+  createdAt: Date | string;
+  note?: string;
 }
+
 export interface IDiabetesResponse {
   isOk: boolean;
   diabetesInfo: IDiabetesInfo[];
+}
+
+export interface IContentsRequest {
+  writer: string;
+  content: string;
+  imageName?: string;
+  imageUrl?: string;
+}
+
+export interface IContents {
+  _id: string;
+  writer: IWriterInfo;
+  content: string;
+  imageName: string;
+  imageUrl: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: boolean;
+}
+export interface IContentsResponse {
+  isOk: boolean;
+  contents: IContents[];
+}
+
+export interface ICommentRequest {
+  writer: string;
+  contentsId: string;
+  parentCommentId?: string;
+  content: string;
+}
+
+export interface IComment {
+  _id: string;
+  writer: IWriterInfo;
+  contentsId: string;
+  parentCommentId: string;
+  content: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: boolean;
+}
+
+export interface ICommentResponse {
+  isOk: boolean;
+  comment: IComment[];
 }
