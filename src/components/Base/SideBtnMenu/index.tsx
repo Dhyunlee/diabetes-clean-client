@@ -5,7 +5,7 @@ import SideMenu from "./SideMenu";
 interface MenuItemType {
   id: number;
   path: string | null;
-  targetName: string;
+  label: string;
   handler?: any;
 }
 

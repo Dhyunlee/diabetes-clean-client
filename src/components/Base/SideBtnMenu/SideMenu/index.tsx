@@ -3,7 +3,7 @@ import SubMenu from "components/Base/SubMenu";
 interface MenuItemType {
   id: number;
   path: string | null;
-  targetName: string;
+  label: string;
   handler?: any;
 }
 

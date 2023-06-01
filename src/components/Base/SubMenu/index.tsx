@@ -5,7 +5,7 @@ import Menu, { CustomCss } from "components/Base/Menu";
 interface MenuItemType {
   id: number;
   path: string | null;
-  targetName: string;
+  label: string;
   handler?: any;
 }
 
@@ -32,7 +32,7 @@ const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
               onClick={onCloseMenu}
             >
               <Link onClick={onCloseMenu} to={menu.path}>
-                {menu.targetName}
+                {menu.label}
               </Link>
             </SubMenuItem>
           ) : (
@@ -41,7 +41,7 @@ const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
               className="menu-list"
               onClick={menu.handler}
             >
-              <button onClick={onCloseMenu}>{menu.targetName}</button>
+              <button onClick={onCloseMenu}>{menu.label}</button>
             </SubMenuItem>
           )
         )}
