@@ -14,8 +14,9 @@ interface IProps {
   writer: IWriterInfo;
   contentId: string;
   isDeleted: boolean;
+  createdAt: string | Date;
 }
-const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
+const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   const { _id: userId } = useRecoilValue(userState);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
   const mutation = useDelContentsMutation();
@@ -41,6 +42,10 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
     }
   }, [mutation, contentId]);
 
+  const onFollow = useCallback(() => {
+    console.log("팔로우하기");
+  }, []);
+
   const onReportPost = useCallback(() => {
     console.log("ReportPost");
   }, []);
@@ -55,13 +60,19 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
         {
           id: 1,
           path: "/mypage",
-          targetName: "게시물 수정",
+          label: "게시물 수정",
         },
         {
           id: 2,
           path: null,
-          targetName: "게시물 삭제",
+          label: "게시물 삭제",
           handler: onDelPost,
+        },
+        {
+          id: 3,
+          path: null,
+          label: "취소",
+          handler: onCloseMenu,
         },
       ];
     }
@@ -69,22 +80,43 @@ const PostHeader = ({ writer, contentId, isDeleted }: IProps) => {
       {
         id: 1,
         path: null,
-        targetName: "게시물 숨기기",
-        handler: onHidePost,
+        label: `${true ? "팔로우" : "팔로우 취소"}`,
+        handler: onFollow,
       },
       {
         id: 2,
         path: null,
-        targetName: "게시물 신고",
+        label: "게시물 숨기기",
+        handler: onHidePost,
+      },
+      {
+        id: 3,
+        path: null,
+        label: "게시물 신고",
         handler: onReportPost,
       },
+      {
+        id: 4,
+        path: null,
+        label: "취소",
+        handler: onCloseMenu,
+      },
     ];
-  }, [onDelPost, onHidePost, onReportPost, userId, writer._id]);
+  }, [
+    onCloseMenu,
+    onDelPost,
+    onFollow,
+    onHidePost,
+    onReportPost,
+    userId,
+    writer._id,
+  ]);
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
       <PostHeaderBlock>
         <ContentsInfo
+          createdAt={createdAt}
           userName={writer.nickname}
           imgUrl={
             writer?.imageSrc

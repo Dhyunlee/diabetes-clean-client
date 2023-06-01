@@ -85,12 +85,12 @@ const Memo = () => {
       {
         id: 1,
         path: `${SAVE_MEMO_DIABETES}`,
-        targetName: "당수치 기록",
+        label: "당수치 기록",
       },
       {
         id: 2,
         path: `/story`,
-        targetName: "식단 기록",
+        label: "식단 기록",
       },
     ],
     [SAVE_MEMO_DIABETES]

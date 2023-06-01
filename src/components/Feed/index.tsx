@@ -19,12 +19,12 @@ const Feed = () => {
       {
         id: 1,
         path: `${SAVE_CONTENTS}`,
-        targetName: "작성하기",
+        label: "작성하기",
       },
       {
         id: 2,
         path: `${STORY}/${write}`,
-        targetName: "내피드",
+        label: "내피드",
       },
     ],
     [SAVE_CONTENTS, STORY, write]

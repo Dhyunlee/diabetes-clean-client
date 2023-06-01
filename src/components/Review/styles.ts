@@ -5,6 +5,7 @@ export const ReviewContainer = styled.div`
   .review-status {
     display: flex;
     align-items: center;
+    padding: 10px 0;
     gap: 26px;
   }
 
@@ -45,5 +46,5 @@ export const ReviewContainer = styled.div`
 `;
 
 export const CommentsContainer = styled.div`
-  padding-top: 35px;
+  padding-top: 20px;
 `;

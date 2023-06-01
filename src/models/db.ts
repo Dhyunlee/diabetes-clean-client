@@ -1,6 +1,6 @@
 export interface CommonResponse {
-  isOk: boolean,
-  msg: string
+  isOk: boolean;
+  msg: string;
 }
 
 export interface IAuthRequest {
@@ -63,7 +63,7 @@ export interface IContents {
   _id: string;
   writer: IWriterInfo;
   content: string;
-  iamgeName: string;
+  imageName: string;
   imageUrl: string;
   createdAt: Date | string;
   updateAt: Date | string;
@@ -72,4 +72,27 @@ export interface IContents {
 export interface IContentsResponse {
   isOk: boolean;
   contents: IContents[];
+}
+
+export interface ICommentRequest {
+  writer: string;
+  contentsId: string;
+  parentCommentId?: string;
+  content: string;
+}
+
+export interface IComment {
+  _id: string;
+  writer: IWriterInfo;
+  contentsId: string;
+  parentCommentId: string;
+  content: string;
+  createdAt: Date | string;
+  updateAt: Date | string;
+  isDeleted: boolean;
+}
+
+export interface ICommentResponse {
+  isOk: boolean;
+  comment: IComment[];
 }

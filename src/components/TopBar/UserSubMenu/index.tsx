@@ -33,17 +33,17 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
       {
         id: 1,
         path: "/mypage",
-        targetName: "마이페이지",
+        label: "마이페이지",
       },
       {
         id: 2,
         path: `/story/${userInfo.nickname}`,
-        targetName: "내피드",
+        label: "내피드",
       },
       {
         id: 3,
         path: null,
-        targetName: "로그아웃",
+        label: "로그아웃",
         handler: handleLogOut,
       },
     ],

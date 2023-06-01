@@ -1,4 +1,4 @@
-import { palette } from 'libs/palette';
+import { palette } from "libs/palette";
 import styled from "@emotion/styled";
 
 export const Navbar = styled.div`
@@ -32,8 +32,9 @@ export const Navbar = styled.div`
   }
   .page-title {
     position: relative;
-    top: -5px;
-    margin-left: 5px;
+    left: 0;
+    top: 3px;
+    margin-left: 0;
     height: 100%;
     font-size: 20px;
     line-height: 40px;
