@@ -1,6 +1,7 @@
+import { useMemo } from "react";
 import LinkMenuItem from "components/TopBar/LinkMenuItem";
 import { CloseBtn, NavbarToggle, StyledNavMenu } from "./styles";
-import { menuItemData } from "libs/menuItemData";
+import { ROUTER_PATH } from "constants/router_path";
 
 interface IProps {
   isOpen: boolean;
@@ -8,6 +9,28 @@ interface IProps {
 }
 
 const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
+  const {INDEX, STORY, MYPAGE} = ROUTER_PATH;
+  const userMenuItem = useMemo(
+    () => [
+      {
+        id: 1,
+        label: "기록",
+        path: `${INDEX}`,
+      },
+      {
+        id: 2,
+        label: "스토리",
+        path: `${STORY}`,
+      },
+      {
+        id: 3,
+        label: "마이페이지",
+        path: `${MYPAGE}`,
+      },
+    ],
+    [INDEX, MYPAGE, STORY]
+  );
+
   return (
     <StyledNavMenu className={isOpen ? "nav-menu active" : "nav-menu"}>
       <ul className="nav-menu-items" onClick={showCloseSidebar}>
@@ -16,7 +39,7 @@ const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
             <span>&times;</span>
           </CloseBtn>
         </NavbarToggle>
-        <LinkMenuItem menuItemData={menuItemData}/>
+        <LinkMenuItem menuItemData={userMenuItem} />
       </ul>
     </StyledNavMenu>
   );

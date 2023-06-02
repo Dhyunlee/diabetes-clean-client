@@ -1,13 +1,7 @@
 import { Link } from "react-router-dom";
 import { SubMenuItem, SubMenuList } from "./styles";
 import Menu, { CustomCss } from "components/Base/Menu";
-
-interface MenuItemType {
-  id: number;
-  path: string | null;
-  label: string;
-  handler?: any;
-}
+import { MenuItemType } from "typings/menuItem";
 
 interface Props {
   customCss?: CustomCss;

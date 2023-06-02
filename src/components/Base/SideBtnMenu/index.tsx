@@ -1,13 +1,8 @@
 import { useState, useCallback, useRef } from "react";
 import { MdAdd } from "react-icons/md";
+import SubMenu from "components/Base/SubMenu";
+import { MenuItemType } from "typings/menuItem";
 import { SubMenuBtn, SubMenuBtnContainer } from "./styles";
-import SideMenu from "./SideMenu";
-interface MenuItemType {
-  id: number;
-  path: string | null;
-  label: string;
-  handler?: any;
-}
 
 interface IProps {
   menuItem: MenuItemType[];
@@ -35,11 +30,14 @@ const SideBtnMenu = ({ menuItem }: IProps) => {
         <MdAdd />
       </SubMenuBtn>
 
-      <SideMenu
-        menuItem={menuItem}
-        showUserSubMenu={showUserSubMenu}
-        onCloseMenu={onCloseMenu}
-      />
+      {showUserSubMenu && (
+        <SubMenu
+          menuItem={menuItem}
+          showSubMenu={showUserSubMenu}
+          onCloseMenu={onCloseMenu}
+          customCss={{posX: '55px', posY: '-50px', width: '90px' }}
+        />
+      )}
     </SubMenuBtnContainer>
   );
 };
