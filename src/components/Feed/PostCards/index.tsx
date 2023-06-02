@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import PostItem from "../PostItem";
+import PostItem from "components/Feed/PostItem";
 import { useContentsQuery } from "hooks/services/queries";
 import { PostCardContainer } from "./styles";
 

@@ -1,5 +1,4 @@
 import { SubmenuContainer } from "pages/Memo/styles";
-import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Submenu = () => {

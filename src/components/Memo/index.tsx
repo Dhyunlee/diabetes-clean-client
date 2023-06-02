@@ -1,16 +1,16 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { Container } from "styles/common";
+import dayjs from "dayjs";
+import { useQuery } from "@tanstack/react-query";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
-import { Route, Routes } from "react-router-dom";
 import Diabetes from "components/Memo/DiabetesList";
-import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import Diet from "components/Memo/Diet";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 import { userState } from "store/userState";
+import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 
 const MemoList = () => {

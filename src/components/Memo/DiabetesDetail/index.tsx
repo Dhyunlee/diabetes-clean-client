@@ -1,17 +1,17 @@
 import React, { useCallback } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
+import dayjs from "dayjs";
+import { timeIcons } from "libs/time-icons";
+import { useModal } from "hooks/common/useModal";
 import { deleteDiabetes, getDiabetesFindById } from "utils/apis/diabetesApis";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import {
   DetailContainer,
   DetailModalContent,
   DetailModalHeader,
 } from "components/Base/GlobalModal/styles";
-import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
-import { timeIcons } from "libs/time-icons";
-import dayjs from "dayjs";
-import { useModal } from "hooks/common/useModal";
-import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 
 interface Iprops {
   id: string;

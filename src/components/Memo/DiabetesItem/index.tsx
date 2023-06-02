@@ -1,13 +1,13 @@
+import dayjs from "dayjs";
+import DiabetesDetail from "components/Memo/DiabetesDetail/index";
 import { useModal } from "hooks/common/useModal";
 import { timeIcons } from "libs/time-icons";
 import { IDiabetesInfo } from "models/db";
-import dayjs from "dayjs";
 import {
   ContentsItem,
   ContentsItemBody,
   ContentsItemHeader,
 } from "components/Memo/styles";
-import DiabetesDetail from "../DiabetesDetail";
 dayjs.locale("ko");
 
 const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {

@@ -1,11 +1,11 @@
 import React from "react";
-
 import { useState, useCallback } from "react";
+import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logInApi } from "utils/apis/userApis";
-// import { useCookies } from "react-cookie";
-
+import { IAuthResponse } from "models/db";
+import useStorage from "utils/functions/useStorage";
 import {
   Container,
   FormWrap,
@@ -14,10 +14,7 @@ import {
   InputWrap,
   FrmBtnContainer,
   Valid,
-} from "../SignUp/styles";
-import { IUserResponse, IAuthResponse } from "models/db";
-import { AxiosError } from "axios";
-import useStorage from "utils/functions/useStorage";
+} from "pages/SignUp/styles";
 
 const Login = () => {
   const { setStorage } = useStorage;

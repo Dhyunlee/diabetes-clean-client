@@ -1,6 +1,6 @@
 import { ContentsItem, ContentsList } from "components/Memo/styles";
+import DiabetesItem from "components/Memo/DiabetesItem";
 import { IDiabetesInfo } from "models/db";
-import DiabetesItem from "../DiabetesItem";
 
 interface IProps {
   diabetesInfo?: IDiabetesInfo[];

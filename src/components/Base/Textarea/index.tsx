@@ -1,6 +1,6 @@
 import { forwardRef, ForwardedRef, DetailedHTMLProps, TextareaHTMLAttributes } from "react";
-import { TextareaInterface } from "./styles";
 import { useAutoSizeTextArea } from "hooks/common/useAutoSizeTextArea";
+import { TextareaInterface } from "./styles";
 
 type commonTextAreaProps = DetailedHTMLProps<
   TextareaHTMLAttributes<HTMLTextAreaElement>,

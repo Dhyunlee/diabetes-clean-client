@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
-import { CommentsFormContainer } from "./styles";
-import Button from "components/Base/Button";
 import { useRecoilValue } from "recoil";
-import { userState } from "store/userState";
-import { useCreateCommentMutation } from "hooks/services/mutations";
+import Button from "components/Base/Button";
 import Textarea from "components/Base/Textarea";
+import { useCreateCommentMutation } from "hooks/services/mutations";
 import useUpdateCommentMutation from "hooks/services/mutations/comment/useUpdateCommentMutation";
+import { userState } from "store/userState";
 import alertHandler from "utils/functions/alertHandler";
+import { CommentsFormContainer } from "./styles";
 
 interface IProps {
   contentsId: string;

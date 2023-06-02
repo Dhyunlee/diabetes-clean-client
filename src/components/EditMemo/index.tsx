@@ -1,8 +1,6 @@
-import {
-  SubmenuContainer,
-} from "components/Memo/styles";
 import { NavLink, Outlet } from "react-router-dom";
 import { Container } from "styles/common";
+import { SubmenuContainer } from "components/Memo/styles";
 import { EditBody, EditHeader } from "./styles";
 
 const EditMemo = () => {

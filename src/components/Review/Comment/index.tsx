@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
@@ -6,13 +6,12 @@ import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
 import ContentsInfo from "components/Base/ContentsInfo";
 import { Icons } from "components/Feed/PostCards/styles";
+import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
 import { useDelCommentMutation } from "hooks/services/mutations";
-
-import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 import { useToggle } from "hooks/common/useToggle";
-import CommentForm from "../CommentForm";
+import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 
 interface Iprops {
   comment: IComment;

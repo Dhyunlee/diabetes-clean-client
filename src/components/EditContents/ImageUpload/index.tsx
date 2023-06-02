@@ -6,7 +6,6 @@ import {
   ImageUploadForm,
   ThumbnailImg,
 } from "./styles";
-import { InputGroup, LabelWrap } from "components/EditMemo/FormDiabetes/styles";
 
 interface IProps {
   setImgUrl: Dispatch<React.SetStateAction<string>>;

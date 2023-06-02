@@ -1,5 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useRecoilValue } from "recoil";
+import Input from "components/Base/Input";
 import { ISelectedSlotItem, selectedSlotItem } from "libs/slotItem";
+import { createDiabetes } from "utils/apis/diabetesApis";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { userState } from "store/userState";
+import { IDiabetesRequest } from "models/db";
+import { useModal } from "hooks/common/useModal";
 import {
   ButtonGroup,
   FormWrap,
@@ -10,16 +20,6 @@ import {
   TextareaGroup,
   UnitTextWrap,
 } from "./styles";
-import Input from "components/Base/Input";
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import dayjs from "dayjs";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetesRequest } from "models/db";
-import { userState } from "store/userState";
-import alertHandler, { alertMessage } from "utils/functions/alertHandler";
-import { useModal } from "hooks/common/useModal";
 
 const FormDiabetes = () => {
   const { closeModal } = useModal();

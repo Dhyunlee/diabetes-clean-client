@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { checkemailApi, postUserApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
-import { useMutation } from "@tanstack/react-query";
-
+import { IAuthResponse } from "models/db";
 import {
   FormBtn,
   Container,
@@ -14,8 +15,6 @@ import {
   Valid,
   FrmBtnContainer,
 } from "./styles";
-import { AxiosError } from "axios";
-import { IAuthRequest, IAuthResponse } from "models/db";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -55,77 +54,86 @@ const SignUp = () => {
     setIsCompleteState(result);
   }, [isComplete]);
 
-  const onFormChange = (e: any) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value.trim(),
-    });
-    isFormValue.current = true;
-  };
-
-  const onClickCheckEmail = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (isEmail) {
-      try {
-        const res = await checkemailApi<string>(email);
-        console.log(res);
-        alert(res.msg);
-        setIsCheckEmail(true);
-        setIsComplete({
-          ...isComplete,
-          isCompleteEmail: true,
-        });
-      } catch (error: any) {
-        if (error.status === 409) {
-          console.log(409)
-          alert(error.data.msg);
-          setIsCheckEmail(false);
-          setIsComplete({
-            ...isComplete,
-            isCompleteEmail: false,
-          });
-        } else {
-          alert("서버 오류, 잠시후 시도해주세요");
-          setIsCheckEmail(false);
-          setIsComplete({
-            ...isComplete,
-            isCompleteEmail: false,
-          });
-        }
-        return;
-      }
-    } else {
-      alert("이메일을 입력해주세요!");
-      setIsComplete({
-        ...isComplete,
-        isCompleteEmail: false,
-      });
-    }
-  };
-
-  const checkPw = (p1: string, p2: string) => p1 === p2;
-  const onClickCheckPw = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    let isCheck = password && checkPw(password, passwordCheck);
-    if (isCheck) {
-      alert("비밀번호가 일치합니다.");
-      setIsCheckPw(true);
-      setIsComplete({
-        ...isComplete,
-        isCompletePw: true,
-      });
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
-      setIsCheckPw(false);
-      setIsComplete({
-        ...isComplete,
-        isCompletePw: false,
-      });
+  const onFormChange = useCallback(
+    (e: any) => {
       setInputs({
         ...inputs,
-        password: "",
-        passwordCheck: "",
+        [e.target.name]: e.target.value.trim(),
       });
-    }
-  };
+      isFormValue.current = true;
+    },
+    [inputs]
+  );
+
+  const onClickCheckEmail = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      if (isEmail) {
+        try {
+          const res = await checkemailApi<string>(email);
+          console.log(res);
+          alert(res.msg);
+          setIsCheckEmail(true);
+          setIsComplete({
+            ...isComplete,
+            isCompleteEmail: true,
+          });
+        } catch (error: any) {
+          if (error.status === 409) {
+            console.log(409);
+            alert(error.data.msg);
+            setIsCheckEmail(false);
+            setIsComplete({
+              ...isComplete,
+              isCompleteEmail: false,
+            });
+          } else {
+            alert("서버 오류, 잠시후 시도해주세요");
+            setIsCheckEmail(false);
+            setIsComplete({
+              ...isComplete,
+              isCompleteEmail: false,
+            });
+          }
+          return;
+        }
+      } else {
+        alert("이메일을 입력해주세요!");
+        setIsComplete({
+          ...isComplete,
+          isCompleteEmail: false,
+        });
+      }
+    },
+    [email, isComplete, isEmail]
+  );
+
+  const checkPw = (p1: string, p2: string) => p1 === p2;
+  const onClickCheckPw = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      let isCheck = password && checkPw(password, passwordCheck);
+      if (isCheck) {
+        alert("비밀번호가 일치합니다.");
+        setIsCheckPw(true);
+        setIsComplete({
+          ...isComplete,
+          isCompletePw: true,
+        });
+      } else {
+        alert("비밀번호가 일치하지 않습니다.");
+        setIsCheckPw(false);
+        setIsComplete({
+          ...isComplete,
+          isCompletePw: false,
+        });
+        setInputs({
+          ...inputs,
+          password: "",
+          passwordCheck: "",
+        });
+      }
+    },
+    [inputs, isComplete, password, passwordCheck]
+  );
 
   const mutation = useMutation<
     IAuthResponse,
@@ -204,7 +212,9 @@ const SignUp = () => {
               </div>
               {isFocus.isEmail && (
                 <Valid className={`valid ${isEmail ? "success" : "error"}`}>
-                  {isEmail ? "이메일 형식이 올바릅니다." : "이메일 형식이 올바르지 않습니다."}
+                  {isEmail
+                    ? "이메일 형식이 올바릅니다."
+                    : "이메일 형식이 올바르지 않습니다."}
                 </Valid>
               )}
             </InputWrap>

@@ -6,12 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
+import UserSubMenu from "components/TopBar/UserSubMenu";
 import { getUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
 import { MenuList, ProfileWrap, UserItem } from "./styles";
-import UserSubMenu from "../UserSubMenu";
 
 const UserMenu = () => {
   const [userInfo, setUserInfo] = useRecoilState(userState);
