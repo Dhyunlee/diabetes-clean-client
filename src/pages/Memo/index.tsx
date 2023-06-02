@@ -1,33 +1,28 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { getUserApi } from "utils/apis/userApis";
-import { getDiabetes } from "utils/apis/diabetesApis";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
-import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
-
-import { Container } from "styles/common";
-import { MemoContents, MemoHeader } from "./styles";
-import alertHandler from "utils/functions/alertHandler";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { ROUTER_PATH } from "constants/router_path";
-const Memo = () => {
-  const { SAVE_MEMO_DIABETES} = ROUTER_PATH;
+import { getUserApi } from "utils/apis/userApis";
+import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
+import { getDiabetes } from "utils/apis/diabetesApis";
+import alertHandler from "utils/functions/alertHandler";
+import { Container } from "styles/common";
+import { MemoContents, MemoHeader } from "./styles";
 
+const Memo = () => {
+  const { STORY, SAVE_MEMO_DIABETES } = ROUTER_PATH;
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-  const { data: userData, error } = useQuery<IUserResponse>(
-    ["user"],
-    getUserApi,
-    {
-      refetchOnWindowFocus: false,
-    }
-  );
+  const { data: userData } = useQuery<IUserResponse>(["user"], getUserApi, {
+    refetchOnWindowFocus: false,
+  });
   const userId = userData?.userInfo?._id || null;
   const {
     data: diabetesData,
@@ -59,12 +54,15 @@ const Memo = () => {
     }
   }, [curDate, diabetesData?.diabetesInfo]);
 
+  const currentDate = useMemo(
+    () =>
+      `${curDate.year()}년 ${
+        curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
+      }월`,
+    [curDate]
+  );
 
-  const currentDate = `${curDate.year()}년 ${
-    curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
-  }월`;
-
-  const increamentDate = () => {
+  const increamentDate = useCallback(() => {
     const today_ = Number(today.split("-").join(""));
     const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
     if (today_ <= curDate_) {
@@ -75,11 +73,12 @@ const Memo = () => {
       return;
     }
     setCurDate(curDate.add(1, "month"));
-  };
+  }, [curDate, today]);
 
-  const decreamentDate = () => {
+  const decreamentDate = useCallback(() => {
     setCurDate(curDate.subtract(1, "month"));
-  };
+  }, [curDate]);
+
   const menuItem = useMemo(
     () => [
       {
@@ -89,16 +88,15 @@ const Memo = () => {
       },
       {
         id: 2,
-        path: `/story`,
+        path: `${STORY}`,
         label: "식단 기록",
       },
     ],
-    [SAVE_MEMO_DIABETES]
+    [SAVE_MEMO_DIABETES, STORY]
   );
 
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
   if (isError) return <div>데이터를 가져오는 실패했어요</div>;
-
 
   return (
     <Container>
@@ -124,7 +122,7 @@ const Memo = () => {
           <Route path="*" element={<Navigate replace to="/memo/diabetes" />} />
         </Routes>
       </MemoContents>
-      <SideBtnMenu menuItem={menuItem}/>
+      <SideBtnMenu menuItem={menuItem} />
     </Container>
   );
 };

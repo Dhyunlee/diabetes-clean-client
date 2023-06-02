@@ -1,19 +1,15 @@
-import SideBtnMenu from "components/Base/SideBtnMenu";
-import PostCards from "./PostCards";
-import { PostCardsWrap, StoryWarp } from "./styles";
-import { useQuery } from "@tanstack/react-query";
-import { getUserApi } from "utils/apis/userApis";
 import { useMemo } from "react";
+import { useRecoilValue } from "recoil";
+import PostCards from "./PostCards";
 import { ROUTER_PATH } from "constants/router_path";
+import SideBtnMenu from "components/Base/SideBtnMenu";
+import { userState } from "store/userState";
+import { PostCardsWrap, StoryWarp } from "./styles";
 
 const Feed = () => {
+  const userInfo = useRecoilValue(userState);
   const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
-  const {data: userData} = useQuery({
-    queryKey: ["user"],
-    queryFn: () => getUserApi(),
-  })
-  const write = userData?.userInfo?.nickname;
-
+  
   const menuItem = useMemo(
     () => [
       {
@@ -23,11 +19,11 @@ const Feed = () => {
       },
       {
         id: 2,
-        path: `${STORY}/${write}`,
+        path: `${STORY}/${userInfo.nickname}`,
         label: "내피드",
       },
     ],
-    [SAVE_CONTENTS, STORY, write]
+    [SAVE_CONTENTS, STORY, userInfo.nickname]
   );
   return (
     <StoryWarp>

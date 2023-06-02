@@ -1,17 +1,19 @@
 import React, { useCallback, useMemo } from "react";
+import { useRecoilValue } from "recoil";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import SubMenu from "components/Base/SubMenu";
 import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
-import SubMenu from "components/Base/SubMenu";
-import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
+import { ROUTER_PATH } from "constants/router_path";
 
 interface IProps {
   showSubMenu: boolean;
   onCloseMenu: () => void;
 }
 const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
+  const { MYPAGE, STORY } = ROUTER_PATH;
   const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -24,7 +26,6 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
     });
 
     onCloseMenu();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -32,12 +33,12 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
     () => [
       {
         id: 1,
-        path: "/mypage",
+        path: `${MYPAGE}`,
         label: "마이페이지",
       },
       {
         id: 2,
-        path: `/story/${userInfo.nickname}`,
+        path: `${STORY}/${userInfo.nickname}`,
         label: "내피드",
       },
       {
@@ -47,7 +48,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
         handler: handleLogOut,
       },
     ],
-    [handleLogOut, userInfo]
+    [MYPAGE, STORY, handleLogOut, userInfo.nickname]
   );
 
   return (

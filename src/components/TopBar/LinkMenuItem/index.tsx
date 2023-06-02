@@ -1,24 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NavContents } from "../styles";
-
-interface ILinkMenuItem {
-  title?: string,
-  path?: string,
-  cName?: string
-}
+import { NavContents } from "components/TopBar/styles";
+import { MenuItemType } from "typings/menuItem";
 
 interface IProps {
-  menuItemData: ILinkMenuItem[]
+  menuItemData: MenuItemType[]
 }
 
 const LinkMenuItem = ({menuItemData}: IProps) => {
   return (
     <>
-      {menuItemData.map((item, index) => (
-        <NavContents key={index} className={item.cName}>
+      {menuItemData?.map((item, index) => (
+        <NavContents key={index} className={item.label}>
           <Link to={item.path as string}>
-            <span>{item.title}</span>
+            <span>{item.label}</span>
           </Link>
         </NavContents>
       ))}

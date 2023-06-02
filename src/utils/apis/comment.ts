@@ -1,11 +1,14 @@
+import { API_PATH } from "constants/api_path";
 import { CommonResponse, ICommentResponse } from "models/db";
 import api from "utils/axios";
+
+const {COMMENT_API} = API_PATH;
 
 const getAllComment = async (contentsId: string | null) => {
   try {
     if (!contentsId) return;
     const { data } = await api.get<ICommentResponse>(
-      `/api/v1/comment/contents/${contentsId}`,
+      `${COMMENT_API}/contents/${contentsId}`,
       {
         withCredentials: true,
       }
@@ -19,7 +22,7 @@ const getAllComment = async (contentsId: string | null) => {
 const createComment = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<CommonResponse>(
-      "/api/v1/comment",
+      `${COMMENT_API}`,
       insertData,
       {
         withCredentials: true,
@@ -36,7 +39,7 @@ const updateComment = async ({content, commentId}: {content: string, commentId: 
   console.log({commentId, content})
   try {
     const { data } = await api.patch<CommonResponse>(
-      `/api/v1/comment/${commentId}`,
+      `${COMMENT_API}/${commentId}`,
       {content},
       {
         withCredentials: true,
@@ -53,7 +56,7 @@ const updateComment = async ({content, commentId}: {content: string, commentId: 
 const deleteComment = async (commentId: string) => {
   try {
     const { data } = await api.delete<CommonResponse>(
-      `/api/v1/comment/${commentId}`,
+      `${COMMENT_API}/${commentId}`,
       {
         withCredentials: true,
       }

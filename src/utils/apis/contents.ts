@@ -1,9 +1,12 @@
+import { API_PATH } from "constants/api_path";
 import { CommonResponse, IContentsResponse } from "models/db";
 import api from "utils/axios";
 
+const { CONTENTS_API } = API_PATH;
+
 const getAllContents = async () => {
   try {
-    const { data } = await api.get<IContentsResponse>(`/api/v1/contents`, {
+    const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`, {
       withCredentials: true,
     });
     return data;
@@ -16,7 +19,7 @@ const getUserContents = async (userId: string | null) => {
   try {
     if (!userId) return;
     const { data } = await api.get<IContentsResponse>(
-      `/api/v1/contents/users/${userId}`,
+      `${CONTENTS_API}/users/${userId}`,
       {
         withCredentials: true,
       }
@@ -29,7 +32,7 @@ const getUserContents = async (userId: string | null) => {
 
 const createContents = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<CommonResponse>("/api/v1/contents", insertData, {
+    const { data } = await api.post<CommonResponse>(`${CONTENTS_API}`, insertData, {
       withCredentials: true,
     });
     return data;
@@ -42,7 +45,7 @@ const createContents = async <T>(insertData: T) => {
 const deleteContents = async (contentId: string) => {
   try {
     const { data } = await api.delete<CommonResponse>(
-      `/api/v1/contents/${contentId}`,
+      `${CONTENTS_API}/${contentId}`,
       {
         withCredentials: true,
       }
