@@ -2,13 +2,6 @@ import { css } from "@emotion/react";
 import { palette } from "libs/palette";
 
 export const reset = css`
-  /* @font-face {
-    font-family: 'EarlyFontDiary';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EarlyFontDiary.woff2')
-      format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  } */
   @font-face {
     font-family: "nexongoth";
     src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff")
@@ -18,7 +11,6 @@ export const reset = css`
   }
 
   * {
-    /* font-family: 'EarlyFontDiary'; 다이어리 페이지에서만  */
     font-family: "nexongoth";
     margin: 0;
     padding: 0;
