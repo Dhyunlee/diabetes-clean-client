@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { COMMENT_KEY } from 'constants/query_key';
-import { ICommentRequest } from 'models/db';
+import { CommonResponse, ICommentRequest } from 'models/db';
 import { createComment } from 'utils/apis/comment';
 import alertHandler from 'utils/functions/alertHandler';
 
 const useCreateCommentMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation(createComment<ICommentRequest>, {
+  return useMutation<CommonResponse, AxiosError, ICommentRequest>(createComment<ICommentRequest>, {
     onSuccess: (data) => {
       queryClient.invalidateQueries<string>([COMMENT_KEY]);
       alertHandler.onToast({ msg: data.msg });
@@ -17,5 +18,4 @@ const useCreateCommentMutation = () => {
     }
   })
 }
-
 export default useCreateCommentMutation;
