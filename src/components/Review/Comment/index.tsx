@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
+import ContentsInfo from "components/Feed/PostUserInfo";
 import { Icons } from "components/Feed/PostCards/styles";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
