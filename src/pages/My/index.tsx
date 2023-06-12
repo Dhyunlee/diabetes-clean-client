@@ -1,7 +1,9 @@
-import { Container } from "styles/common";
+import My from "components/My";
 
 const MyPage = () => {
-  return <Container>MyPage</Container>;
+  return (
+    <My />
+  );
 };
 
 export default MyPage;

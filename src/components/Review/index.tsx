@@ -1,9 +1,9 @@
 import ReviewStatus from "./ReviewStatus";
 import Comment from "components/Review/Comment";
 import CommentForm from "components/Review/CommentForm";
-import { Contour } from "components/Feed/styles";
 import {useCommentQuery} from "hooks/services/queries/";
 import { CommentsContainer, ReviewContainer } from "./styles";
+import { Contour } from "styles/common";
 
 interface IProps {
   postId: string;
