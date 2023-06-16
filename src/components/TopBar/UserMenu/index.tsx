@@ -7,7 +7,7 @@ import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
-import { getUserApi } from "utils/apis/userApis";
+import { getCurrentUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
@@ -15,7 +15,7 @@ import { MenuList, ProfileWrap, UserItem } from "./styles";
 
 const UserMenu = () => {
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES } = ROUTER_PATH;
+  const { LOGIN, SIGNUP } = ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
   const {
     data: userData,
@@ -24,7 +24,7 @@ const UserMenu = () => {
     isLoading,
   } = useQuery<IUserResponse>({
     queryKey: ["user"],
-    queryFn: () => getUserApi(),
+    queryFn: () => getCurrentUserApi(),
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
