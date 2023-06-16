@@ -4,7 +4,7 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import gravatar from "gravatar";
 import SubMenu from "components/Base/SubMenu";
 import ContentsInfo from "components/Base/ContentsInfo";
-import { PostHeaderBlock, Icons } from "components/Feed/PostCards/styles";
+import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
 import { IWriterInfo } from "models/db";
 import { useDelContentsMutation } from "hooks/services/mutations";
