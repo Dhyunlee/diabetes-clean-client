@@ -1,5 +1,16 @@
-import { FunctionComponent, MouseEvent } from "react";
+import {
+  DetailedHTMLProps,
+  FunctionComponent,
+  MouseEvent,
+  ButtonHTMLAttributes,
+} from "react";
 import { ButtonInterface } from "./style";
+import { SerializedStyles } from "@emotion/react";
+
+type commonInputProps = DetailedHTMLProps<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
 interface inputType {
   text: string;
@@ -7,16 +18,11 @@ interface inputType {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Button: FunctionComponent<inputType> = ({
+const Button: FunctionComponent<inputType & commonInputProps> = ({
   text,
-  type,
-  onClick,
+  ...rest
 }) => {
-  return (
-    <ButtonInterface value={text} type={type} onClick={onClick}>
-      {text}
-    </ButtonInterface>
-  );
+  return <ButtonInterface {...rest}>{text}</ButtonInterface>;
 };
 
 export default Button;
