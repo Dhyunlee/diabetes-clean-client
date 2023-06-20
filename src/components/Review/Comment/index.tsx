@@ -57,7 +57,7 @@ const Comment = ({ comment }: Iprops) => {
   }, [commentId, mutation]);
 
   const menuItem = useMemo(() => {
-    if (userId === writer._id) {
+    if (userId === writer?._id) {
       return [
         {
           id: 1,
@@ -83,7 +83,7 @@ const Comment = ({ comment }: Iprops) => {
     ];
   }, [
     userId,
-    writer._id,
+    writer?._id,
     onHideComment,
     isShowCommentForm,
     onCloseCommentForm,
@@ -99,13 +99,13 @@ const Comment = ({ comment }: Iprops) => {
           imgUrl={
             writer?.imageSrc
               ? writer?.imageSrc
-              : gravatar.url(writer.nickname, {
+              : gravatar.url(writer?.nickname, {
                   s: "32px",
                   d: "retro",
                 })
           }
           imgSize={40}
-          userName={writer.nickname}
+          userName={writer?.nickname}
           link={"/story/sugarclean119"}
         />
         {!isDeleted && (
