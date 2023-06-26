@@ -40,9 +40,7 @@ const UserProfile = () => {
               <span>프로필 수정</span>
             </div>
           </EditBtnWrap>
-          <div className="inner btn-name">
-            <Button text="회원 탈퇴" />
-          </div>
+          <Button posX={105} size={15} text="회원 탈퇴"/>
         </ProfileContainer>
       </ProfileBlock>
     </div>
