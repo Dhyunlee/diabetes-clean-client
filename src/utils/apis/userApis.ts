@@ -31,7 +31,7 @@ const checkemailApi = async <T>(insertData: T) => {
   }
 };
 
-const getUserApi = async () => {
+const getCurrentUserApi = async () => {
   const { removeStorage } = useStorage;
   try {
     const { data } = await api.get<IUserResponse>(`${USER_API}`, {
@@ -63,7 +63,7 @@ const deleteUserApi = async () => {};
 
 export {
   logInApi,
-  getUserApi,
+  getCurrentUserApi,
   postUserApi,
   updateUserApi,
   deleteUserApi,

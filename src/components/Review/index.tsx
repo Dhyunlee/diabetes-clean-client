@@ -12,6 +12,7 @@ const Review = ({ postId }: IProps) => {
   const {data} = useCommentQuery(postId);
   const comments = data?.comment;
   const commentLength = data?.comment.length;
+
   return (
     <ReviewContainer>
       <ReviewStatus commentLength={commentLength}/>

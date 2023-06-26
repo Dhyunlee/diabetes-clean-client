@@ -5,13 +5,14 @@ import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
 import ContentsInfo from "components/Feed/PostUserInfo";
-import { Icons } from "components/Feed/PostCards/styles";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
 import { useDelCommentMutation } from "hooks/services/mutations";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
+import { ROUTER_PATH } from "constants/router_path";
+import { Icons } from "components/Posts/styles";
 
 interface Iprops {
   comment: IComment;
@@ -23,8 +24,15 @@ const Comment = ({ comment }: Iprops) => {
   const [isShowCommentForm, setIsShowCommentForm, onToggleComment] =
     useToggle();
   const mutation = useDelCommentMutation();
-  const { _id: commentId, content, createdAt, writer, isDeleted, contentsId } = comment;
-
+  const {
+    _id: commentId,
+    content,
+    createdAt,
+    writer,
+    isDeleted,
+    contentsId,
+  } = comment;
+  const { STORY } = ROUTER_PATH;
   const onCloseMenu = useCallback(() => {
     setIsShowSubMenu(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +98,6 @@ const Comment = ({ comment }: Iprops) => {
     onToggleComment,
     onDelComment,
   ]);
-
   return (
     <CommentContainer>
       <CommentHeader>
@@ -105,8 +112,8 @@ const Comment = ({ comment }: Iprops) => {
                 })
           }
           imgSize={40}
-          userName={writer?.nickname}
-          link={"/story/sugarclean119"}
+          userName={writer.nickname}
+          link={`${STORY}/${writer.nickname}`}
         />
         {!isDeleted && (
           <Icons
@@ -143,7 +150,9 @@ const Comment = ({ comment }: Iprops) => {
                   onClose={onCloseCommentForm}
                   editMode
                 />
-              ): <p>{content}</p>}
+              ) : (
+                <p>{content}</p>
+              )}
             </>
           )}
         </>

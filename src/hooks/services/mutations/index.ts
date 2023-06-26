@@ -2,3 +2,4 @@ export { default as useCreateContentsMutation } from "./contents/useCreateConten
 export { default as useDelContentsMutation } from "./contents/useDelContentsMutation";
 export {default as useCreateCommentMutation} from './comment/useCreateCommentMutation';
 export {default as useDelCommentMutation} from './comment/useDelCommentMutation';
+export {default as useUpdateCommentMutation} from './comment/useUpdateCommentMutation'

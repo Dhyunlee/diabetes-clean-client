@@ -1,7 +1,7 @@
 import {
-  ButtonHTMLAttributes,
   DetailedHTMLProps,
   FunctionComponent,
+  ButtonHTMLAttributes,
 } from "react";
 import { ButtonInterface } from "./style";
 

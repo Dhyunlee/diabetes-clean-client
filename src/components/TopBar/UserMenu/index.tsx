@@ -7,7 +7,7 @@ import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
-import { getUserApi } from "utils/apis/userApis";
+import { getCurrentUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
@@ -24,7 +24,7 @@ const UserMenu = () => {
     isLoading,
   } = useQuery<IUserResponse>({
     queryKey: ["user"],
-    queryFn: () => getUserApi(),
+    queryFn: () => getCurrentUserApi(),
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 

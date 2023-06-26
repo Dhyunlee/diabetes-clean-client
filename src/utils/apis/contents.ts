@@ -14,12 +14,11 @@ const getAllContents = async () => {
     throw error.response;
   }
 };
-
-const getUserContents = async (userId: string | null) => {
+const getUserContents = async (nickname: string | null) => {
   try {
-    if (!userId) return;
+    if (!nickname) return;
     const { data } = await api.get<IContentsResponse>(
-      `${CONTENTS_API}/users/${userId}`,
+      `${CONTENTS_API}/users/${nickname}`,
       {
         withCredentials: true,
       }

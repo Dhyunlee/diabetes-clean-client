@@ -21,7 +21,7 @@ export const ButtonInterface = styled.button<{
   cursor: pointer;
 
   &:hover {
-    background-color: ${palette.gray[0]};
+    opacity: 0.8;
   }
   &:active {
     transform: translateY(3px);

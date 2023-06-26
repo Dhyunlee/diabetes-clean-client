@@ -8,7 +8,7 @@ import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { ROUTER_PATH } from "constants/router_path";
-import { getUserApi } from "utils/apis/userApis";
+import { getCurrentUserApi } from "utils/apis/userApis";
 import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import alertHandler from "utils/functions/alertHandler";
@@ -20,7 +20,7 @@ const Memo = () => {
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-  const { data: userData } = useQuery<IUserResponse>(["user"], getUserApi, {
+  const { data: userData } = useQuery<IUserResponse>(["user"], getCurrentUserApi, {
     refetchOnWindowFocus: false,
   });
   const userId = userData?.userInfo?._id || null;

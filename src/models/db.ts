@@ -23,7 +23,7 @@ export interface IUserInfo {
   nickname: string;
   updatedAt: string;
 }
-export type IWriterInfo = Pick<IUserInfo, "_id" | "nickname" | "imageSrc">;
+export type IWriterInfo = Pick<IUserInfo, "_id" | "nickname" | "imageSrc" | "email">;
 
 export interface IUserResponse {
   isOk: boolean;
