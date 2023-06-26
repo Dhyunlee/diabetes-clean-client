@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Avatar from "../Avatar";
-import { ContentsInfoInterface } from "./styles";
+import Avatar from "../../Base/Avatar";
+import { PostUserInfoInterface } from "./styles";
 import { tiemBefore } from "utils/functions/tiemBefore";
 
 interface IProps {
@@ -12,7 +12,7 @@ interface IProps {
   createdAt: Date | string;
 }
 
-const ContentsInfo = ({
+const PostUserInfo = ({
   imgUrl,
   imgName,
   link,
@@ -22,9 +22,13 @@ const ContentsInfo = ({
 }: IProps) => {
   const navigate = useNavigate();
   return (
-    <ContentsInfoInterface>
+    <PostUserInfoInterface>
       <div className="left-img" onClick={() => navigate(link)}>
-        <Avatar size={imgSize ?? 45} imgName={imgName ?? "avatar-img"} imgUrl={imgUrl} />
+        <Avatar
+          size={imgSize ?? 45}
+          imgName={imgName ?? "avatar-img"}
+          imgUrl={imgUrl}
+        />
       </div>
       <div className="right-info">
         <div className="user_name">
@@ -34,8 +38,8 @@ const ContentsInfo = ({
           <span>{tiemBefore(createdAt)}</span>
         </div>
       </div>
-    </ContentsInfoInterface>
+    </PostUserInfoInterface>
   );
 };
 
-export default ContentsInfo;
+export default PostUserInfo;

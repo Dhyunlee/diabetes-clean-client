@@ -10,8 +10,6 @@ export const AvatarStyle = styled.span<IStyleProps>`
   display: inline-block;
   width: ${({size}) => size ?? 80}px;
   height: ${({size}) => size ?? 80}px;
-  cursor: pointer;
-  
   img {
     border: 1px solid rgb(0 0 0 / 10%);
     padding: 2px;

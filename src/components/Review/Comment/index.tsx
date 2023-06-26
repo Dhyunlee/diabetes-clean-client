@@ -4,8 +4,7 @@ import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
-import { Icons } from "components/Posts/styles";
+import ContentsInfo from "components/Feed/PostUserInfo";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
@@ -13,6 +12,7 @@ import { useDelCommentMutation } from "hooks/services/mutations";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 import { ROUTER_PATH } from "constants/router_path";
+import { Icons } from "components/Posts/styles";
 
 interface Iprops {
   comment: IComment;
@@ -65,7 +65,7 @@ const Comment = ({ comment }: Iprops) => {
   }, [commentId, mutation]);
 
   const menuItem = useMemo(() => {
-    if (userId === writer._id) {
+    if (userId === writer?._id) {
       return [
         {
           id: 1,
@@ -91,7 +91,7 @@ const Comment = ({ comment }: Iprops) => {
     ];
   }, [
     userId,
-    writer._id,
+    writer?._id,
     onHideComment,
     isShowCommentForm,
     onCloseCommentForm,
@@ -106,7 +106,7 @@ const Comment = ({ comment }: Iprops) => {
           imgUrl={
             writer?.imageSrc
               ? writer?.imageSrc
-              : gravatar.url(writer.nickname, {
+              : gravatar.url(writer?.nickname, {
                   s: "32px",
                   d: "retro",
                 })

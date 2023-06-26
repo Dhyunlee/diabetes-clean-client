@@ -3,12 +3,13 @@ import { useRecoilValue } from "recoil";
 import { FiMoreHorizontal } from "react-icons/fi";
 import gravatar from "gravatar";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
+
 import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
 import { IWriterInfo } from "models/db";
 import { useDelContentsMutation } from "hooks/services/mutations";
 import alertHandler from "utils/functions/alertHandler";
+import PostUserInfo from "components/Feed/PostUserInfo";
 
 interface IProps {
   writer: IWriterInfo;
@@ -115,7 +116,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   return (
     <div style={{ position: "relative", width: "100%" }}>
       <PostHeaderBlock>
-        <ContentsInfo
+        <PostUserInfo
           createdAt={createdAt}
           userName={writer.nickname}
           imgUrl={
