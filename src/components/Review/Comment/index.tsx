@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
+import ContentsInfo from "components/Feed/PostUserInfo";
 import { Icons } from "components/Feed/PostCards/styles";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
@@ -57,7 +57,7 @@ const Comment = ({ comment }: Iprops) => {
   }, [commentId, mutation]);
 
   const menuItem = useMemo(() => {
-    if (userId === writer._id) {
+    if (userId === writer?._id) {
       return [
         {
           id: 1,
@@ -83,7 +83,7 @@ const Comment = ({ comment }: Iprops) => {
     ];
   }, [
     userId,
-    writer._id,
+    writer?._id,
     onHideComment,
     isShowCommentForm,
     onCloseCommentForm,
@@ -99,13 +99,13 @@ const Comment = ({ comment }: Iprops) => {
           imgUrl={
             writer?.imageSrc
               ? writer?.imageSrc
-              : gravatar.url(writer.nickname, {
+              : gravatar.url(writer?.nickname, {
                   s: "32px",
                   d: "retro",
                 })
           }
           imgSize={40}
-          userName={writer.nickname}
+          userName={writer?.nickname}
           link={"/story/sugarclean119"}
         />
         {!isDeleted && (

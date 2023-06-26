@@ -11,10 +11,3 @@ export const StoryWarp = styled(Container)`
 `;
 
 export const PostCardsWrap = styled.div``;
-
-export const Contour = styled.div`
-  // 구분선(Contour)
-  width: 100%;
-  height: 1px;
-  background-color: ${palette.gray[1]};
-`;

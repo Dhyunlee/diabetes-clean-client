@@ -5,9 +5,9 @@ interface IAatarProps {
   posX?: number;
   posY?: number;
   imgUrl?: string;
-  imgName: string;
+  imgName?: string;
 }
-const Avatar = ({size, posX, posY, imgName, imgUrl}: IAatarProps) => {
+const Avatar = ({size, posX, posY, imgName = 'profile-img', imgUrl}: IAatarProps) => {
   return (
     <AvatarStyle size={size} posX={posX} posY={posY}>
       <img src={imgUrl} alt={imgName}/>
