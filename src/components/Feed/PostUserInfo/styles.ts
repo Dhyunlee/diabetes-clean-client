@@ -10,6 +10,7 @@ export const PostUserInfoInterface = styled.div`
   .left-img {
     flex: 1;
     display: flex;
+    cursor: pointer;
   }
 
   .right-info {

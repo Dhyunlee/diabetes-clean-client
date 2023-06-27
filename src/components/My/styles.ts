@@ -2,13 +2,14 @@ import styled from "@emotion/styled";
 import { Container } from "styles/common";
 
 export const MyContainer = styled(Container)`
+  margin: 10px auto;
   padding: 10px 25px;
   max-width: 680px;
   background: #fff;
 `;
 
 export const Title = styled.header`
-    margin-left: 10px;
+  margin-left: 10px;
   font-size: 18px;
   position: relative;
   &::before {

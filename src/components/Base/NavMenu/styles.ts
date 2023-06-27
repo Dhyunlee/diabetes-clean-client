@@ -10,7 +10,6 @@ export const NavMenutWrap = styled.nav<{
   ul {
     position: relative;
     padding: 10px 15px;
-    background-color: #e9ecef;
     display: flex;
     border-radius: 5px;
     gap: 15px;
@@ -23,7 +22,6 @@ export const NavMenutWrap = styled.nav<{
     text-align: center;
     transition: all 0.3s ease-in-out;
     &.active {
-      padding: 3px;
       position: absolute;
       display: inline-flex;
       height: 3px;
