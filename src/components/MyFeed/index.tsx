@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Link, useParams, Outlet } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 import gravatar from "gravatar";
 import { useRecoilValue } from "recoil";
 import Avatar from "components/Base/Avatar";
@@ -7,7 +7,6 @@ import Button from "components/Base/Button";
 import { ROUTER_PATH } from "constants/router_path";
 import { userState } from "store/userState";
 import { useUserContentsQuery } from "hooks/services/queries";
-import { PostItemWrap } from "components/Posts/styles";
 import {
   MyFeedContainer,
   MyFeedWrap,
@@ -19,6 +18,7 @@ import {
   UserStatus,
   ContentsMenu,
 } from "./styles";
+import NavMenu from "components/Base/NavMenu";
 
 const MyFeed = () => {
   const { STORY } = ROUTER_PATH;
@@ -27,11 +27,18 @@ const MyFeed = () => {
   const userInfo = useMemo(() => data?.contents[0]?.writer, [data?.contents]);
 
   const currentUser = useRecoilValue(userState);
+
+  const subMenus = [
+    { id: 1, text: "내 게시글", url: `${STORY}/${username}` },
+    { id: 2, text: "관심 글", url: `${STORY}/${username}/empathy` },
+    { id: 3, text: "활동 내역", url: `${STORY}/${username}/activity` },
+  ];
+
   return (
     <MyFeedWrap>
       <MyFeedContainer>
         <Header>
-          <span>{username}님 Story</span>
+          <span>{username}님 스토리</span>
         </Header>
         <MyFeedMain>
           <LeftSide>
@@ -98,17 +105,7 @@ const MyFeed = () => {
           </LeftSide>
           <MainContents>
             <ContentsMenu>
-              <ul>
-                <li>
-                  <Link to={`${STORY}/${username}`}>내 게시글</Link>
-                </li>
-                <li>
-                  <Link to={`${STORY}/${username}/empathy`}>관심 글</Link>
-                </li>
-                <li>
-                  <Link to={`${STORY}/${username}/activity`}>활동 내역</Link>
-                </li>
-              </ul>
+              <NavMenu lists={subMenus}/>
             </ContentsMenu>
             <Outlet />
           </MainContents>
