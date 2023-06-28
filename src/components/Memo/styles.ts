@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const MemoHeader = styled.header`
   .memo-title {
-    padding: 20px 0;
+    padding: 20px 5px;
     font-size: 20px;
   }
 `;

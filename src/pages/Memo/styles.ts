@@ -11,23 +11,12 @@ export const MemoHeader = styled.header`
 export const SubmenuContainer = styled.nav`
   width: 100%;
   padding: 5px;
-
-  .menu {
-    display: flex;
-  }
-  .menu-item {
-    padding: 3px 5px;
-    cursor: pointer;
-    &:nth-of-type(2) {
-      margin-left: 15px;
-    }
-  }
 `;
 
 // -- [ DateArea ] --
 export const DateAreaContainer = styled.div`
   width: 100%;
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 0 5px;
   display: flex;
   justify-content: space-between;
