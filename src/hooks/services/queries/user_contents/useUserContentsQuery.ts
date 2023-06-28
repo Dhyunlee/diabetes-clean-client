@@ -8,7 +8,7 @@ const useUserContentsQuery = (userId: string) => {
   return useQuery<IContentsResponse | undefined, AxiosError>({
     queryKey: [`${CONTENTS_KEY}/${userId}`],
     queryFn: () => getUserContents(userId),
-    enabled: !!userId,
+    enabled: !!userId
   });
 };
 

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { palette } from "libs/palette";
 
 export const Header = styled.header`
-  box-shadow: ${({theme}) => theme.boxShadow.light};
+  box-shadow: ${({ theme }) => theme.boxShadow.light};
 `;
 
 export const Main = styled.main`

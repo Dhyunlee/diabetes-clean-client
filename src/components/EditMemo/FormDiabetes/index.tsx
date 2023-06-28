@@ -18,7 +18,7 @@ import {
   LabelWrap,
   Select,
   TextareaGroup,
-  UnitTextWrap,
+  UnitTextWrap
 } from "./styles";
 
 const FormDiabetes = () => {
@@ -39,7 +39,7 @@ const FormDiabetes = () => {
     },
     onError: (error) => {
       console.log(error);
-    },
+    }
   });
 
   const onChangeSugarLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,12 +64,12 @@ const FormDiabetes = () => {
     setSlot(e.target.value);
   };
 
-  const onCancal = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onCancal = () => {
     alertHandler
       .onConfirm({
-        icon: 'warning',
+        icon: "warning",
         innerHtml:
-          '<p>페이지를 떠나면 기록한 내용이 모두 없어집니다.<br />그래도 떠나시겠습니까?</p>',
+          "<p>페이지를 떠나면 기록한 내용이 모두 없어집니다.<br />그래도 떠나시겠습니까?</p>"
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -81,7 +81,7 @@ const FormDiabetes = () => {
         }
       });
   };
-  const onWriteMemo = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onWriteMemo = () => {
     const createdAt: string = dayjs(`${createdDate} ${createdTime}`).format(
       "YYYY-MM-DD HH:mm:ss"
     );
@@ -90,7 +90,7 @@ const FormDiabetes = () => {
       sugar_level: Number(sugarLevel),
       slot,
       note: inutMemo,
-      createdAt,
+      createdAt
     };
 
     if (sugarLevel && slot) {

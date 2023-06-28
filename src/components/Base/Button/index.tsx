@@ -1,7 +1,7 @@
 import {
   DetailedHTMLProps,
   FunctionComponent,
-  ButtonHTMLAttributes,
+  ButtonHTMLAttributes
 } from "react";
 import { ButtonInterface } from "./style";
 
@@ -10,7 +10,7 @@ type commonButtonProps = DetailedHTMLProps<
   HTMLButtonElement
 >;
 
-interface customType{
+interface customType {
   text: string;
   posX?: string | number;
   posY?: string | number;

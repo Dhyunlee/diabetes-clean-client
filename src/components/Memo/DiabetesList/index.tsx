@@ -11,7 +11,7 @@ const DiabetesList = ({ diabetesInfo }: IProps) => {
       <ContentsList>
         {diabetesInfo?.length ? (
           diabetesInfo.map((info) => {
-            return <DiabetesItem key={info._id} {...info}/>;
+            return <DiabetesItem key={info._id} {...info} />;
           })
         ) : (
           <ContentsItem>기록한 내역이 없습니다.</ContentsItem>

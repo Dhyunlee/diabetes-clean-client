@@ -13,7 +13,7 @@ import {
   InputName,
   InputWrap,
   FrmBtnContainer,
-  Valid,
+  Valid
 } from "pages/SignUp/styles";
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
   const queryClient = useQueryClient();
   const [inputs, setInputs] = useState({
     email: "",
-    password: "",
+    password: ""
   });
 
   const [errorMsg, setErrorMsg] = useState("");
@@ -34,7 +34,7 @@ const Login = () => {
     (e: any) => {
       setInputs({
         ...inputs,
-        [e.target.name]: e.target.value.trim(),
+        [e.target.name]: e.target.value.trim()
       });
     },
     [inputs]
@@ -50,9 +50,9 @@ const Login = () => {
     onSuccess(data) {
       if (data) {
         setStorage("accessToken", data.accessToken);
-        navigate('/')
+        navigate("/");
       }
-      queryClient.refetchQueries({queryKey: ['user']});
+      queryClient.refetchQueries({ queryKey: ["user"] });
     },
     onError(error: any) {
       console.log({ login: error });
@@ -63,7 +63,7 @@ const Login = () => {
         setErrorMsg("서버 오류, 잠시후 시도해주세요");
         setIsSucessLogIn(false);
       }
-    },
+    }
   });
 
   const onSubmit = useCallback(
@@ -71,7 +71,7 @@ const Login = () => {
       e.preventDefault();
       const userInfo = {
         email,
-        password,
+        password
       };
 
       if (password && email) {
@@ -79,7 +79,7 @@ const Login = () => {
       }
       setInputs({
         email: "",
-        password: "",
+        password: ""
       });
     },
     [email, mutation, password]
@@ -96,7 +96,7 @@ const Login = () => {
             <InputName htmlFor="email">이메일</InputName>
             <InputWrap
               style={{
-                width: "296px",
+                width: "296px"
               }}
             >
               <input
@@ -105,7 +105,7 @@ const Login = () => {
                 name="email"
                 required
                 style={{
-                  width: "100%",
+                  width: "100%"
                 }}
                 placeholder="이메일을 입력해주세요"
                 onChange={onFormChange}
@@ -117,7 +117,7 @@ const Login = () => {
             <InputName htmlFor="pw">비밀번호</InputName>
             <InputWrap
               style={{
-                width: "296px",
+                width: "296px"
               }}
             >
               <input
@@ -126,7 +126,7 @@ const Login = () => {
                 name="password"
                 required
                 style={{
-                  width: "100%",
+                  width: "100%"
                 }}
                 placeholder="비밀번호를 입력해주세요"
                 onChange={onFormChange}
@@ -146,7 +146,7 @@ const Login = () => {
             <button
               type="reset"
               style={{
-                width: 143,
+                width: 143
               }}
               onClick={(e) => {
                 e.preventDefault();
@@ -154,7 +154,7 @@ const Login = () => {
                 setInputs({
                   ...inputs,
                   email: "",
-                  password: "",
+                  password: ""
                 });
                 console.log(password);
                 navigate("/");
@@ -165,7 +165,7 @@ const Login = () => {
             <button
               type="submit"
               style={{
-                width: 143,
+                width: 143
               }}
             >
               로그인

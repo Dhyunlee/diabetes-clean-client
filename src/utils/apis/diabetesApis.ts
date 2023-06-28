@@ -2,12 +2,12 @@ import { API_PATH } from "constants/api_path";
 import { CommonResponse, IDiabetesResponse } from "models/db";
 import api from "utils/axios";
 
-const { DIABETES_API} = API_PATH;
+const { DIABETES_API } = API_PATH;
 const getDiabetes = async (userId: string | null) => {
   try {
     if (!userId) return;
     const { data } = await api.get(`${DIABETES_API}/users/${userId}`, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
@@ -19,7 +19,7 @@ const getDiabetesFindById = async (id: string | null) => {
   try {
     if (!id) return;
     const { data } = await api.get(`${DIABETES_API}/${id}`, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
@@ -33,7 +33,7 @@ const createDiabetes = async <T>(insertData: T) => {
       `${DIABETES_API}`,
       insertData,
       {
-        withCredentials: true,
+        withCredentials: true
       }
     );
     return data;
@@ -48,7 +48,7 @@ const deleteDiabetes = async (diabetesId: string) => {
     const { data } = await api.delete<CommonResponse>(
       `${DIABETES_API}/${diabetesId}`,
       {
-        withCredentials: true,
+        withCredentials: true
       }
     );
     return data;
@@ -64,7 +64,7 @@ const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
       `${DIABETES_API}/${diabetesId}`,
       insertData,
       {
-        withCredentials: true,
+        withCredentials: true
       }
     );
     return data;
@@ -79,5 +79,5 @@ export {
   getDiabetesFindById,
   createDiabetes,
   deleteDiabetes,
-  updateDiabetes,
+  updateDiabetes
 };

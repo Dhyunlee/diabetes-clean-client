@@ -2,7 +2,7 @@ import { IDiabetesInfo } from "models/db";
 import { atom } from "recoil";
 
 export interface ITextInfo {
-  text: string
+  text: string;
 }
 
 export interface IModalState {
@@ -16,6 +16,6 @@ export const modalState = atom<IModalState>({
   default: {
     type: null,
     isOpen: false,
-    props: ''
-  },
+    props: ""
+  }
 });

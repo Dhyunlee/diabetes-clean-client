@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 
 export const NavMenutWrap = styled.nav<{
   bgColor?: string;
-  borderColor?:string;
+  borderColor?: string;
   fontSize?: string | number;
 }>`
   width: 100%;
   padding: 0 0;
   margin: 30px 0;
-  background-color: ${({ bgColor }) => bgColor || 'inherit'};
+  background-color: ${({ bgColor }) => bgColor || "inherit"};
 
   ul {
     position: relative;

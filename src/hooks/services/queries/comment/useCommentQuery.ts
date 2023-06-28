@@ -5,11 +5,11 @@ import { ICommentResponse } from "models/db";
 import { getAllComment } from "utils/apis/comment";
 
 const useCommentQuery = (contentsId: string) => {
-   return useQuery<ICommentResponse | undefined, AxiosError>({
-      queryKey: [COMMENT_KEY, contentsId],
-      queryFn: () => getAllComment(contentsId),
-      enabled: !!contentsId,
-    });
+  return useQuery<ICommentResponse | undefined, AxiosError>({
+    queryKey: [COMMENT_KEY, contentsId],
+    queryFn: () => getAllComment(contentsId),
+    enabled: !!contentsId
+  });
 };
 
 export default useCommentQuery;

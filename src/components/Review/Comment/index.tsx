@@ -30,7 +30,7 @@ const Comment = ({ comment }: Iprops) => {
     createdAt,
     writer,
     isDeleted,
-    contentsId,
+    contentsId
   } = comment;
   const { STORY } = ROUTER_PATH;
   const onCloseMenu = useCallback(() => {
@@ -54,7 +54,7 @@ const Comment = ({ comment }: Iprops) => {
     if (commentId) {
       alertHandler
         .onConfirm({
-          msg: "댓글을 삭제하실건가요?",
+          msg: "댓글을 삭제하실건가요?"
         })
         .then((result) => {
           if (result.isConfirmed) {
@@ -71,14 +71,14 @@ const Comment = ({ comment }: Iprops) => {
           id: 1,
           path: null,
           label: `${isShowCommentForm ? "수정 취소" : "댓글 수정"}`,
-          handler: isShowCommentForm ? onCloseCommentForm : onToggleComment,
+          handler: isShowCommentForm ? onCloseCommentForm : onToggleComment
         },
         {
           id: 2,
           path: null,
           label: "댓글 삭제",
-          handler: onDelComment,
-        },
+          handler: onDelComment
+        }
       ];
     }
     return [
@@ -86,8 +86,8 @@ const Comment = ({ comment }: Iprops) => {
         id: 1,
         path: null,
         label: "신고",
-        handler: onHideComment,
-      },
+        handler: onHideComment
+      }
     ];
   }, [
     userId,
@@ -96,7 +96,7 @@ const Comment = ({ comment }: Iprops) => {
     isShowCommentForm,
     onCloseCommentForm,
     onToggleComment,
-    onDelComment,
+    onDelComment
   ]);
   return (
     <CommentContainer>
@@ -108,7 +108,7 @@ const Comment = ({ comment }: Iprops) => {
               ? writer?.imageSrc
               : gravatar.url(writer?.nickname, {
                   s: "32px",
-                  d: "retro",
+                  d: "retro"
                 })
           }
           imgSize={40}

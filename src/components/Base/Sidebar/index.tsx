@@ -9,24 +9,24 @@ interface IProps {
 }
 
 const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
-  const {INDEX, STORY, MYPAGE} = ROUTER_PATH;
+  const { INDEX, STORY, MYPAGE } = ROUTER_PATH;
   const userMenuItem = useMemo(
     () => [
       {
         id: 1,
         label: "기록",
-        path: `${INDEX}`,
+        path: `${INDEX}`
       },
       {
         id: 2,
         label: "스토리",
-        path: `${STORY}`,
+        path: `${STORY}`
       },
       {
         id: 3,
         label: "마이페이지",
-        path: `${MYPAGE}`,
-      },
+        path: `${MYPAGE}`
+      }
     ],
     [INDEX, MYPAGE, STORY]
   );

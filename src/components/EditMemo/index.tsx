@@ -5,10 +5,10 @@ import { ROUTER_PATH } from "constants/router_path";
 import { Container } from "styles/common";
 
 const EditMemo = () => {
-  const {SAVE_MEMO_DIABETES, SAVE_MEMO_DIET} = ROUTER_PATH;
+  const { SAVE_MEMO_DIABETES, SAVE_MEMO_DIET } = ROUTER_PATH;
   const subMenus = [
     { id: 1, text: "당수치 기록", url: `${SAVE_MEMO_DIABETES}` },
-    { id: 2, text: "식단 기록", url: `${SAVE_MEMO_DIET}` },
+    { id: 2, text: "식단 기록", url: `${SAVE_MEMO_DIET}` }
   ];
   return (
     <Container>

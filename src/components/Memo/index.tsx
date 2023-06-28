@@ -7,6 +7,7 @@ import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
 import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
+import alertHandler from "utils/functions/alertHandler";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 import { userState } from "store/userState";
@@ -22,12 +23,12 @@ const MemoList = () => {
   const {
     data: diabetesData,
     isError,
-    isLoading,
+    isLoading
   } = useQuery<IDiabetesResponse>({
     queryKey: ["diabetes", userId],
     queryFn: () => getDiabetes(userId),
     retry: 2,
-    enabled: !!userId,
+    enabled: !!userId
   });
 
   useEffect(() => {
@@ -55,7 +56,9 @@ const MemoList = () => {
     const today_ = Number(today.split("-").join(""));
     const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
     if (today_ <= curDate_) {
-      alert("이번달까지만 조회 가능합니다.");
+      alertHandler.onDefaultAlert({
+        msg: "이번달까지만 조회 가능합니다."
+      });
       return;
     }
     setCurDate(curDate.add(1, "month"));

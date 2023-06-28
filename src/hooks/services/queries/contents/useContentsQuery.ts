@@ -7,7 +7,7 @@ import { getAllContents } from "utils/apis/contents";
 const useContentsQuery = () => {
   return useQuery<IContentsResponse | undefined, AxiosError>({
     queryKey: [CONTENTS_KEY],
-    queryFn: () => getAllContents(),
+    queryFn: () => getAllContents()
   });
 };
 

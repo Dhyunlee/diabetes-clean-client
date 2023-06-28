@@ -11,7 +11,7 @@ import {
   ButtonGroup,
   FormWrap,
   InputGroup,
-  TextareaGroup,
+  TextareaGroup
 } from "components/EditMemo/FormDiabetes/styles";
 import { ROUTER_PATH } from "constants/router_path";
 
@@ -36,7 +36,7 @@ const EditContents = () => {
       writer: userId,
       content,
       imageName,
-      imageUrl,
+      imageUrl
     };
     mutation.mutate(insertData);
     navigate(STORY, { replace: true });

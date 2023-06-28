@@ -1,4 +1,9 @@
-import { forwardRef, ForwardedRef, DetailedHTMLProps, TextareaHTMLAttributes } from "react";
+import {
+  forwardRef,
+  ForwardedRef,
+  DetailedHTMLProps,
+  TextareaHTMLAttributes
+} from "react";
 import { useAutoSizeTextArea } from "hooks/common/useAutoSizeTextArea";
 import { TextareaInterface } from "./styles";
 
@@ -7,7 +12,10 @@ type commonTextAreaProps = DetailedHTMLProps<
   HTMLTextAreaElement
 >;
 
-const Textarea = ({ value, ...rest }: commonTextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) => {
+const Textarea = (
+  { value, ...rest }: commonTextAreaProps,
+  ref: ForwardedRef<HTMLTextAreaElement>
+) => {
   const textArea = ref as React.RefObject<HTMLTextAreaElement>;
   useAutoSizeTextArea(textArea?.current, value as string);
   return <TextareaInterface ref={ref} {...rest} />;

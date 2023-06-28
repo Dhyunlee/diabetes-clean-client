@@ -26,7 +26,7 @@ export const PostUserInfoInterface = styled.div`
         cursor: pointer;
       }
       &:hover {
-        color: ${palette.gray[3]}// #868e96;
+        color: ${palette.gray[3]}; // #868e96;
       }
     }
   }

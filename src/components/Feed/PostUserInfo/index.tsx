@@ -18,7 +18,7 @@ const PostUserInfo = ({
   link,
   imgSize,
   userName,
-  createdAt,
+  createdAt
 }: IProps) => {
   const navigate = useNavigate();
   return (

@@ -62,7 +62,7 @@ export const ContentsList = styled.div`
 export const ContentsItem = styled.div`
   padding: 15px;
   margin-top: 20px;
-  box-shadow: ${({theme}) => theme.boxShadow.middle};
+  box-shadow: ${({ theme }) => theme.boxShadow.middle};
   cursor: pointer;
 `;
 

@@ -25,7 +25,7 @@ export const DetailModalHeader = styled.div`
       background: transparent;
       border: none;
       cursor: pointer;
-      
+
       .btn_icon {
       }
     }

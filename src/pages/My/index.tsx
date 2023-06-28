@@ -1,9 +1,7 @@
 import My from "components/My";
 
 const MyPage = () => {
-  return (
-    <My />
-  );
+  return <My />;
 };
 
 export default MyPage;

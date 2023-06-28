@@ -1,4 +1,4 @@
-import { palette } from 'libs/palette';
+import { palette } from "libs/palette";
 import styled from "@emotion/styled";
 
 export const ReviewContainer = styled.div`

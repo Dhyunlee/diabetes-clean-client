@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const EmpathyPost = () => {
-  return (
-    <div>EmpathyPost</div>
-  )
-}
+  return <div>EmpathyPost</div>;
+};
 
-export default EmpathyPost
+export default EmpathyPost;

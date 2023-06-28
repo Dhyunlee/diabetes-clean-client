@@ -21,10 +21,10 @@ const UserMenu = () => {
     data: userData,
     error,
     isError,
-    isLoading,
+    isLoading
   } = useQuery<IUserResponse>({
     queryKey: ["user"],
-    queryFn: () => getCurrentUserApi(),
+    queryFn: () => getCurrentUserApi()
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
@@ -73,7 +73,7 @@ const UserMenu = () => {
                         ? userData?.userInfo?.imageSrc
                         : gravatar.url(userData?.userInfo?.email, {
                             s: "32px",
-                            d: "retro",
+                            d: "retro"
                           })
                     }
                   />

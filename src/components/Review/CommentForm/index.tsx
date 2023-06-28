@@ -4,7 +4,7 @@ import Button from "components/Base/Button";
 import Textarea from "components/Base/Textarea";
 import {
   useCreateCommentMutation,
-  useUpdateCommentMutation,
+  useUpdateCommentMutation
 } from "hooks/services/mutations";
 import { userState } from "store/userState";
 import alertHandler from "utils/functions/alertHandler";
@@ -23,7 +23,7 @@ const CommentForm = ({
   commentId,
   preContent,
   editMode,
-  onClose,
+  onClose
 }: IProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { _id: userId } = useRecoilValue(userState);
@@ -54,7 +54,7 @@ const CommentForm = ({
       const insertData = {
         writer: userId,
         contentsId,
-        content,
+        content
       };
 
       editMode

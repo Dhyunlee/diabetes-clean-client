@@ -8,7 +8,7 @@ export const MenuContainer = styled.ul`
   right: 10px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: ${({theme}) => theme.boxShadow.thick};
+  box-shadow: ${({ theme }) => theme.boxShadow.thick};
 `;
 
 export const Li = styled.li`
@@ -19,7 +19,8 @@ export const Li = styled.li`
   left: 0;
   cursor: pointer;
 
-  a, button {
+  a,
+  button {
     font-size: inherit;
     border: none;
     border-radius: 4px;

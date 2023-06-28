@@ -6,7 +6,7 @@ const Submenu = () => {
   const { MEMO_DIABETES, MEMO_DIET } = ROUTER_PATH;
   const subMenus = [
     { id: 1, text: "당수치 내역", url: `${MEMO_DIABETES}` },
-    { id: 2, text: "식단 내역", url: `${MEMO_DIET}` },
+    { id: 2, text: "식단 내역", url: `${MEMO_DIET}` }
   ];
 
   return (

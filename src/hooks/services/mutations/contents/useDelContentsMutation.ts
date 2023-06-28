@@ -9,17 +9,17 @@ const useDelContentsMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<CommonResponse, AxiosError, string>(deleteContents, {
     onSuccess: (data, variables, context) => {
-      console.log({data, variables, context})
-      if(data.isOk) {
+      console.log({ data, variables, context });
+      if (data.isOk) {
         alertHandler.onToast({ msg: data.msg });
       }
       queryClient.invalidateQueries<string>([CONTENTS_KEY]);
     },
-    onError: err => {
-      console.log({error: err})
+    onError: (err) => {
+      console.log({ error: err });
       return err;
     }
-  })
-}
+  });
+};
 
 export default useDelContentsMutation;

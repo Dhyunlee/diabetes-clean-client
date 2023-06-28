@@ -4,7 +4,7 @@ import React, {
   memo,
   useCallback,
   useRef,
-  useState,
+  useState
 } from "react";
 import { useEffect } from "react";
 import { CloseBtn, ModalContainer, ModalWrap } from "./styles";

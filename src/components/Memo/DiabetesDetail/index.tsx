@@ -10,7 +10,7 @@ import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import {
   DetailContainer,
   DetailModalContent,
-  DetailModalHeader,
+  DetailModalHeader
 } from "components/Base/GlobalModal/styles";
 
 interface Iprops {
@@ -24,7 +24,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
   const { data, isError } = useQuery({
     queryKey: ["diabetes", id],
     queryFn: () => getDiabetesFindById(id),
-    enabled: !!id,
+    enabled: !!id
   });
 
   const diabetes = data?.diabetesInfo;
@@ -41,8 +41,8 @@ const DiabetesDetail = ({ id }: Iprops) => {
       navigate("/", { replace: true });
     },
     onError: (error) => {
-      console.log({error});
-    },
+      console.log({ error });
+    }
   });
 
   const onDelDiabetes = useCallback(
@@ -50,7 +50,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
       if (diabetes?._id) {
         alertHandler
           .onConfirm({
-            msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?",
+            msg: "삭제하면 복구하기 어렵습니다. 그래도 삭제하실건가요?"
           })
           .then((result) => {
             if (result.isConfirmed) {

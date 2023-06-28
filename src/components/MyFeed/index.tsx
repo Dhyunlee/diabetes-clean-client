@@ -17,7 +17,7 @@ import {
   MyFeedMain,
   UserInfo,
   UserStatus,
-  ContentsMenu,
+  ContentsMenu
 } from "./styles";
 
 const MyFeed = () => {
@@ -31,7 +31,7 @@ const MyFeed = () => {
   const subMenus = [
     { id: 1, text: "내 게시글", url: `${STORY}/${username}` },
     { id: 2, text: "관심 글", url: `${STORY}/${username}/empathy` },
-    { id: 3, text: "활동 내역", url: `${STORY}/${username}/activity` },
+    { id: 3, text: "활동 내역", url: `${STORY}/${username}/activity` }
   ];
 
   return (
@@ -53,7 +53,7 @@ const MyFeed = () => {
                         ? userInfo?.imageSrc
                         : gravatar.url(userInfo?.nickname as string, {
                             s: "130px",
-                            d: "retro",
+                            d: "retro"
                           })
                     }
                   />
@@ -72,7 +72,7 @@ const MyFeed = () => {
                           height: 45,
                           fontSize: 18,
                           color: "#edf2ff",
-                          background: "#637ed3",
+                          background: "#637ed3"
                         }}
                       />
                     )}
@@ -105,7 +105,7 @@ const MyFeed = () => {
           </LeftSide>
           <MainContents>
             <ContentsMenu>
-              <NavMenu lists={subMenus}/>
+              <NavMenu lists={subMenus} />
             </ContentsMenu>
             <Outlet />
           </MainContents>

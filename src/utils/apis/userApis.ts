@@ -10,7 +10,7 @@ const logInApi = async <T>(insertData: T) => {
   console.log({ insertData });
   try {
     const { data } = await api.post<IAuthResponse>(`${LOG_IN}`, insertData, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
@@ -35,7 +35,7 @@ const getCurrentUserApi = async () => {
   const { removeStorage } = useStorage;
   try {
     const { data } = await api.get<IUserResponse>(`${USER_API}`, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
@@ -50,7 +50,7 @@ const getCurrentUserApi = async () => {
 const postUserApi = async <T>(insertData: T) => {
   try {
     const { data } = await api.post(`${USER_API}`, insertData, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
@@ -58,14 +58,14 @@ const postUserApi = async <T>(insertData: T) => {
   }
 };
 
-const updateUserApi = async () => {};
-const deleteUserApi = async () => {};
+// const updateUserApi = async () => {};
+// const deleteUserApi = async () => {};
 
 export {
   logInApi,
   getCurrentUserApi,
   postUserApi,
-  updateUserApi,
-  deleteUserApi,
-  checkemailApi,
+  // updateUserApi,
+  // deleteUserApi,
+  checkemailApi
 };

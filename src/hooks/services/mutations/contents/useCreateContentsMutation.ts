@@ -6,15 +6,18 @@ import { createContents } from "utils/apis/contents";
 
 const useDelContentsMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, IContentsRequest>(createContents<IContentsRequest>, {
-    onSuccess: () => {
-      queryClient.invalidateQueries<string>([CONTENTS_KEY]);
-    },
-    onError: err => {
-      console.log({error: err})
-      return err;
+  return useMutation<CommonResponse, AxiosError, IContentsRequest>(
+    createContents<IContentsRequest>,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries<string>([CONTENTS_KEY]);
+      },
+      onError: (err) => {
+        console.log({ error: err });
+        return err;
+      }
     }
-  })
-}
+  );
+};
 
 export default useDelContentsMutation;

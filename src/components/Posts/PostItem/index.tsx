@@ -7,7 +7,7 @@ import {
   PostBody,
   PostBodyBlock,
   ReviewBlock,
-  PostItemWrap,
+  PostItemWrap
 } from "components/Posts/styles";
 
 const PostItem = (props: IContents) => {

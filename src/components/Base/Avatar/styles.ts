@@ -1,4 +1,4 @@
-import styled  from '@emotion/styled';
+import styled from "@emotion/styled";
 
 interface IStyleProps {
   size?: number;
@@ -8,8 +8,8 @@ interface IStyleProps {
 
 export const AvatarStyle = styled.span<IStyleProps>`
   display: inline-block;
-  width: ${({size}) => size ?? 80}px;
-  height: ${({size}) => size ?? 80}px;
+  width: ${({ size }) => size ?? 80}px;
+  height: ${({ size }) => size ?? 80}px;
   img {
     border: 1px solid rgb(0 0 0 / 10%);
     padding: 2px;

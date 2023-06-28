@@ -4,10 +4,10 @@ import { NavContents } from "components/TopBar/styles";
 import { MenuItemType } from "typings/menuItem";
 
 interface IProps {
-  menuItemData: MenuItemType[]
+  menuItemData: MenuItemType[];
 }
 
-const LinkMenuItem = ({menuItemData}: IProps) => {
+const LinkMenuItem = ({ menuItemData }: IProps) => {
   return (
     <>
       {menuItemData?.map((item, index) => (

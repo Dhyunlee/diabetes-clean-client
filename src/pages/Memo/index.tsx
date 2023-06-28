@@ -20,20 +20,24 @@ const Memo = () => {
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-  const { data: userData } = useQuery<IUserResponse>(["user"], getCurrentUserApi, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: userData } = useQuery<IUserResponse>(
+    ["user"],
+    getCurrentUserApi,
+    {
+      refetchOnWindowFocus: false
+    }
+  );
   const userId = userData?.userInfo?._id || null;
   const {
     data: diabetesData,
     isError,
-    isLoading,
+    isLoading
   } = useQuery<IDiabetesResponse>(
     ["diabetes", userId],
     () => getDiabetes(userId),
     {
       retry: 2,
-      enabled: !!userId,
+      enabled: !!userId
     }
   );
 
@@ -68,7 +72,7 @@ const Memo = () => {
     if (today_ <= curDate_) {
       alertHandler.onDefaultAlert({
         msg: "이번달까지만 조회 가능합니다.",
-        pos: "top",
+        pos: "top"
       });
       return;
     }
@@ -84,13 +88,13 @@ const Memo = () => {
       {
         id: 1,
         path: `${SAVE_MEMO_DIABETES}`,
-        label: "당수치 기록",
+        label: "당수치 기록"
       },
       {
         id: 2,
         path: `${SAVE_MEMO_DIET}`,
-        label: "식단 기록",
-      },
+        label: "식단 기록"
+      }
     ],
     [SAVE_MEMO_DIABETES, SAVE_MEMO_DIET]
   );
