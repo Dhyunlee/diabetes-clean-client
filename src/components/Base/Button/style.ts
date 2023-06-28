@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { palette } from "libs/palette";
 
 export const ButtonInterface = styled.button<{
   posX?: string | number;

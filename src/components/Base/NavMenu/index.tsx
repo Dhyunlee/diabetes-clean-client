@@ -6,7 +6,7 @@ import React, {
   useState,
   FunctionComponent,
   DetailedHTMLProps,
-  HTMLAttributes,
+  HTMLAttributes
 } from "react";
 import { Link } from "react-router-dom";
 import { NavMenutWrap } from "./styles";
@@ -66,7 +66,7 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
   return (
     <NavMenutWrap {...rest}>
       <ul>
-        <li className="active" ref={activeRef} style={{left: '3%'}}></li>
+        <li className="active" ref={activeRef} style={{ left: "3%" }}></li>
         {Lists.map((list, idx) => (
           <li
             key={idx}

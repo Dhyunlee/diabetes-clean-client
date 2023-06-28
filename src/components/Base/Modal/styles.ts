@@ -45,14 +45,14 @@ export const ModalWrap = styled.div<{ disappear: boolean }>`
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   transition: opacity 0.3s ease-in-out;
-  
+
   //--- animation: test
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
 
-  ${({disappear}) => {
+  ${({ disappear }) => {
     return (
       disappear &&
       css`
@@ -69,7 +69,7 @@ export const ModalContainer = styled.div`
   border: 1px solid gray;
   border-radius: 5px;
   background: #fff;
-  `;
+`;
 
 export const CloseBtn = styled.button`
   width: 25px;

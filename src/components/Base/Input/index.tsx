@@ -1,7 +1,7 @@
 import {
   DetailedHTMLProps,
   FunctionComponent,
-  InputHTMLAttributes,
+  InputHTMLAttributes
 } from "react";
 import { InputInterface } from "./styles";
 
