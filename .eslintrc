@@ -10,7 +10,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint", "eslint-plugin-prettier", "react", "jsx-a11y", "import"],
+  "plugins": ["@typescript-eslint", "eslint-plugin-prettier", "react", "import"],
   "extends": [
     "eslint:recommended",
     "eslint-config-prettier",
