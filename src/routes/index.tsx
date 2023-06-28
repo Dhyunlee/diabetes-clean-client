@@ -10,11 +10,24 @@ import My from "pages/My";
 import WriteMemo from "pages/WriteMemo";
 import FormDiabetes from "components/EditMemo/FormDiabetes";
 import FormDiet from "components/EditMemo/FormDiet";
-import MyFeed from "pages/MyFeed";
+import MyStory from "pages/MyStory";
 import WriteContents from "pages/WriteContents";
+import MyPost from "components/MyFeed/MyPost";
+import ActivityPost from "components/MyFeed/ActivityPost";
+import EmpathyPost from "components/MyFeed/EmpathyPost";
 
-const { INDEX, LOGIN, SIGNUP, SAVE_MEMO, MEMO, MEMO_DIABETES, STORY, MYPAGE, SAVE_CONTENTS, MY_FEED } =
-  ROUTER_PATH;
+const {
+  INDEX,
+  LOGIN,
+  SIGNUP,
+  SAVE_MEMO,
+  MEMO,
+  MEMO_DIABETES,
+  STORY,
+  MYPAGE,
+  SAVE_CONTENTS,
+  MY_FEED
+} = ROUTER_PATH;
 const PublicRouter = () => {
   return (
     <Routes>
@@ -32,16 +45,14 @@ const PublicRouter = () => {
         <Route path={SAVE_CONTENTS} element={<WriteContents />} />
         <Route path={MYPAGE} element={<My />} />
       </Route>
-      <Route
-        path={LOGIN}
-        element={<Login />}
-      />
-      <Route
-        path={SIGNUP}
-        element={<SignUp />}
-      />
+      <Route path={LOGIN} element={<Login />} />
+      <Route path={SIGNUP} element={<SignUp />} />
       <Route path={STORY} element={<Story />} />
-      <Route path={MY_FEED} element={<MyFeed />}/>
+      <Route path={MY_FEED} element={<MyStory />}>
+        <Route index element={<MyPost />} />
+        <Route path="empathy" element={<EmpathyPost />} />
+        <Route path="activity" element={<ActivityPost />} />
+      </Route>
       <Route path={"*"} element={<NotFound />} />
     </Routes>
   );

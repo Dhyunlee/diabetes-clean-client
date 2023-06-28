@@ -3,12 +3,13 @@ import { useRecoilValue } from "recoil";
 import { FiMoreHorizontal } from "react-icons/fi";
 import gravatar from "gravatar";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
-import { PostHeaderBlock, Icons } from "components/Feed/PostCards/styles";
+
+import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
 import { IWriterInfo } from "models/db";
 import { useDelContentsMutation } from "hooks/services/mutations";
 import alertHandler from "utils/functions/alertHandler";
+import PostUserInfo from "components/Feed/PostUserInfo";
 
 interface IProps {
   writer: IWriterInfo;
@@ -19,6 +20,7 @@ interface IProps {
 const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   const { _id: userId } = useRecoilValue(userState);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+  const [toggleFollowBtn, setToggleFollowBtn] = useState<boolean>(false);
   const mutation = useDelContentsMutation();
   const onToggleMenu = useCallback(() => {
     setShowSubMenu((prev) => !prev);
@@ -32,7 +34,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
     if (contentId) {
       alertHandler
         .onConfirm({
-          msg: "포스팅을 삭제하실건가요?",
+          msg: "포스팅을 삭제하실건가요?"
         })
         .then((result) => {
           if (result.isConfirmed) {
@@ -60,47 +62,47 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
         {
           id: 1,
           path: "/mypage",
-          label: "게시물 수정",
+          label: "게시물 수정"
         },
         {
           id: 2,
           path: null,
           label: "게시물 삭제",
-          handler: onDelPost,
+          handler: onDelPost
         },
         {
           id: 3,
           path: null,
           label: "취소",
-          handler: onCloseMenu,
-        },
+          handler: onCloseMenu
+        }
       ];
     }
     return [
       {
         id: 1,
         path: null,
-        label: `${true ? "팔로우" : "팔로우 취소"}`,
-        handler: onFollow,
+        label: `${!toggleFollowBtn ? "팔로우" : "팔로우 취소"}`,
+        handler: onFollow
       },
       {
         id: 2,
         path: null,
         label: "게시물 숨기기",
-        handler: onHidePost,
+        handler: onHidePost
       },
       {
         id: 3,
         path: null,
         label: "게시물 신고",
-        handler: onReportPost,
+        handler: onReportPost
       },
       {
         id: 4,
         path: null,
         label: "취소",
-        handler: onCloseMenu,
-      },
+        handler: onCloseMenu
+      }
     ];
   }, [
     onCloseMenu,
@@ -109,13 +111,13 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
     onHidePost,
     onReportPost,
     userId,
-    writer._id,
+    writer._id
   ]);
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
       <PostHeaderBlock>
-        <ContentsInfo
+        <PostUserInfo
           createdAt={createdAt}
           userName={writer.nickname}
           imgUrl={
@@ -123,7 +125,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
               ? writer?.imageSrc
               : gravatar.url(writer.nickname, {
                   s: "32px",
-                  d: "retro",
+                  d: "retro"
                 })
           }
           link={`/story/${writer.nickname}`}

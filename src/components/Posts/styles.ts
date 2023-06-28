@@ -1,16 +1,15 @@
 import styled from "@emotion/styled";
 
-export const PostCardContainer = styled.div`
+export const PostCardWrap = styled.div`
   width: 100%;
-  height: calc(100vh - 132px);
-  padding: 0 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
   border-radius: 5px;
   color: #343a40;
-  overflow: auto;
 `;
 
-export const PostCardWrap = styled.div`
-  margin: 20px 0;
+export const PostItemWrap = styled.div`
   padding: 20px 15px;
   background-color: #fff;
   border-radius: 5px;
@@ -75,7 +74,6 @@ export const PostBodyBlock = styled.div`
       width: 100%;
       height: 100%;
       border-radius: 5px;
-      object-fit: cover;
     }
   }
   .content-wrap {

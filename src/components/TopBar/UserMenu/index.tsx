@@ -7,24 +7,24 @@ import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
-import { getUserApi } from "utils/apis/userApis";
+import { getCurrentUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
-import { MenuList, ProfileWrap, UserItem } from "./styles";
+import { MenuList, UserInfoWrap, UserItem } from "./styles";
 
 const UserMenu = () => {
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [, setUserInfo] = useRecoilState(userState);
   const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES } = ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
   const {
     data: userData,
     error,
     isError,
-    isLoading,
+    isLoading
   } = useQuery<IUserResponse>({
     queryKey: ["user"],
-    queryFn: () => getUserApi(),
+    queryFn: () => getCurrentUserApi()
   });
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
@@ -60,7 +60,7 @@ const UserMenu = () => {
           <MenuList>
             <UserItem>
               {userData && (
-                <ProfileWrap
+                <UserInfoWrap
                   onClick={onShowUserSubMenu}
                   onMouseDown={(e) => {
                     e.stopPropagation();
@@ -68,20 +68,19 @@ const UserMenu = () => {
                 >
                   <Avatar
                     size={32}
-                    imgName="profile-img"
                     imgUrl={
                       userData?.userInfo?.imageSrc
                         ? userData?.userInfo?.imageSrc
                         : gravatar.url(userData?.userInfo?.email, {
                             s: "32px",
-                            d: "retro",
+                            d: "retro"
                           })
                     }
                   />
                   <span className="menuIcon">
                     {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
                   </span>
-                </ProfileWrap>
+                </UserInfoWrap>
               )}
             </UserItem>
           </MenuList>

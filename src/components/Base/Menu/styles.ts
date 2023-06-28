@@ -8,8 +8,8 @@ export const SubMenuWrap = styled.div<{
   posY?: string;
 }>`
   position: absolute;
-  top: ${(props) => props?.posY || '40px'};
-  right: ${(props) => props?.posX || '5px'};
+  top: ${(props) => props?.posY || "40px"};
+  right: ${(props) => props?.posX || "5px"};
   width: ${(props) => props?.width || "5px"};
   height: ${(props) => props?.height || "5px"};
   z-index: 2;

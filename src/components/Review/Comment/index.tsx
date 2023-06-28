@@ -4,14 +4,15 @@ import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
-import ContentsInfo from "components/Base/ContentsInfo";
-import { Icons } from "components/Feed/PostCards/styles";
+import ContentsInfo from "components/Feed/PostUserInfo";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
 import { useDelCommentMutation } from "hooks/services/mutations";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
+import { ROUTER_PATH } from "constants/router_path";
+import { Icons } from "components/Posts/styles";
 
 interface Iprops {
   comment: IComment;
@@ -23,8 +24,15 @@ const Comment = ({ comment }: Iprops) => {
   const [isShowCommentForm, setIsShowCommentForm, onToggleComment] =
     useToggle();
   const mutation = useDelCommentMutation();
-  const { _id: commentId, content, createdAt, writer, isDeleted, contentsId } = comment;
-
+  const {
+    _id: commentId,
+    content,
+    createdAt,
+    writer,
+    isDeleted,
+    contentsId
+  } = comment;
+  const { STORY } = ROUTER_PATH;
   const onCloseMenu = useCallback(() => {
     setIsShowSubMenu(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +54,7 @@ const Comment = ({ comment }: Iprops) => {
     if (commentId) {
       alertHandler
         .onConfirm({
-          msg: "댓글을 삭제하실건가요?",
+          msg: "댓글을 삭제하실건가요?"
         })
         .then((result) => {
           if (result.isConfirmed) {
@@ -57,20 +65,20 @@ const Comment = ({ comment }: Iprops) => {
   }, [commentId, mutation]);
 
   const menuItem = useMemo(() => {
-    if (userId === writer._id) {
+    if (userId === writer?._id) {
       return [
         {
           id: 1,
           path: null,
           label: `${isShowCommentForm ? "수정 취소" : "댓글 수정"}`,
-          handler: isShowCommentForm ? onCloseCommentForm : onToggleComment,
+          handler: isShowCommentForm ? onCloseCommentForm : onToggleComment
         },
         {
           id: 2,
           path: null,
           label: "댓글 삭제",
-          handler: onDelComment,
-        },
+          handler: onDelComment
+        }
       ];
     }
     return [
@@ -78,19 +86,18 @@ const Comment = ({ comment }: Iprops) => {
         id: 1,
         path: null,
         label: "신고",
-        handler: onHideComment,
-      },
+        handler: onHideComment
+      }
     ];
   }, [
     userId,
-    writer._id,
+    writer?._id,
     onHideComment,
     isShowCommentForm,
     onCloseCommentForm,
     onToggleComment,
-    onDelComment,
+    onDelComment
   ]);
-
   return (
     <CommentContainer>
       <CommentHeader>
@@ -99,14 +106,14 @@ const Comment = ({ comment }: Iprops) => {
           imgUrl={
             writer?.imageSrc
               ? writer?.imageSrc
-              : gravatar.url(writer.nickname, {
+              : gravatar.url(writer?.nickname, {
                   s: "32px",
-                  d: "retro",
+                  d: "retro"
                 })
           }
           imgSize={40}
           userName={writer.nickname}
-          link={"/story/sugarclean119"}
+          link={`${STORY}/${writer.nickname}`}
         />
         {!isDeleted && (
           <Icons
@@ -143,7 +150,9 @@ const Comment = ({ comment }: Iprops) => {
                   onClose={onCloseCommentForm}
                   editMode
                 />
-              ): <p>{content}</p>}
+              ) : (
+                <p>{content}</p>
+              )}
             </>
           )}
         </>

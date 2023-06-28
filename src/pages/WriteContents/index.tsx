@@ -1,9 +1,7 @@
-import EditContents from 'components/EditContents'
+import EditContents from "components/EditContents";
 
 const WriteContents = () => {
-  return (
-    <EditContents/>
-  )
-}
+  return <EditContents />;
+};
 
-export default WriteContents
+export default WriteContents;

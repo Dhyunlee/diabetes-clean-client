@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { useRecoilValue } from "recoil";
 import Button from "components/Base/Button";
 import Textarea from "components/Base/Textarea";
-import { useCreateCommentMutation } from "hooks/services/mutations";
-import useUpdateCommentMutation from "hooks/services/mutations/comment/useUpdateCommentMutation";
+import {
+  useCreateCommentMutation,
+  useUpdateCommentMutation
+} from "hooks/services/mutations";
 import { userState } from "store/userState";
 import alertHandler from "utils/functions/alertHandler";
 import { CommentsFormContainer } from "./styles";
@@ -21,7 +23,7 @@ const CommentForm = ({
   commentId,
   preContent,
   editMode,
-  onClose,
+  onClose
 }: IProps) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { _id: userId } = useRecoilValue(userState);
@@ -52,7 +54,7 @@ const CommentForm = ({
       const insertData = {
         writer: userId,
         contentsId,
-        content,
+        content
       };
 
       editMode

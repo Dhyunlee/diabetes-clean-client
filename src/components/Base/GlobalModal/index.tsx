@@ -9,12 +9,10 @@ interface IDetail {
 
 const GlobalModal = ({ isOpenModal }: IDetail) => {
   const modalValue = useRecoilValue(modalState);
-  
+
   return (
     <Modal isOpenModal={isOpenModal}>
-      <Container>
-        {modalValue.props}
-      </Container>
+      <Container>{modalValue.props}</Container>
     </Modal>
   );
 };

@@ -35,7 +35,7 @@ const SideBtnMenu = ({ menuItem }: IProps) => {
           menuItem={menuItem}
           showSubMenu={showUserSubMenu}
           onCloseMenu={onCloseMenu}
-          customCss={{posX: '55px', posY: '-50px', width: '90px' }}
+          customCss={{ posX: "55px", posY: "-50px", width: "90px" }}
         />
       )}
     </SubMenuBtnContainer>

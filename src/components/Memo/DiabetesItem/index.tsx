@@ -6,11 +6,17 @@ import { IDiabetesInfo } from "models/db";
 import {
   ContentsItem,
   ContentsItemBody,
-  ContentsItemHeader,
+  ContentsItemHeader
 } from "components/Memo/styles";
 dayjs.locale("ko");
 
-const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo) => {
+const DiabetesItem = ({
+  _id,
+  sugar_level,
+  slot,
+  createdAt,
+  note
+}: IDiabetesInfo) => {
   const { openModal } = useModal();
 
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
@@ -24,7 +30,7 @@ const DiabetesItem = ({ _id, sugar_level, slot, createdAt, note }: IDiabetesInfo
         openModal({
           type: _id,
           isOpen: true,
-          props: <DiabetesDetail id={_id}/>,
+          props: <DiabetesDetail id={_id} />
         });
       }}
     >

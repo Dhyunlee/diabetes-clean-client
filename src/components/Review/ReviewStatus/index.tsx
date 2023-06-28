@@ -1,15 +1,15 @@
-import {useState} from 'react';
+import { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 
 interface IProps {
-  commentLength?: number
+  commentLength?: number;
 }
-const ReviewStatus = ({commentLength}: IProps) => {
+const ReviewStatus = ({ commentLength }: IProps) => {
   const [likes, setLikes] = useState(false);
   const onClickLikes = () => {
-    setLikes(prev => !prev);
-  }
+    setLikes((prev) => !prev);
+  };
 
   return (
     <div className="review-status">

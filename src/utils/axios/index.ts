@@ -7,8 +7,8 @@ const api = axios.create({
   baseURL: API_BASE_URL || "http://localhost:5000",
   withCredentials: true,
   headers: {
-    "Content-Type": "application/json",
-  },
+    "Content-Type": "application/json"
+  }
 });
 
 api.interceptors.request.use(
@@ -19,16 +19,16 @@ api.interceptors.request.use(
         ...config,
         headers: {
           ...config.headers,
-          Authorization: null,
-        },
+          Authorization: null
+        }
       };
     }
     return {
       ...config,
       headers: {
         ...config.headers,
-        Authorization: `Bearer ${token}`,
-      },
+        Authorization: `Bearer ${token}`
+      }
     };
   },
   async (error: any) => {

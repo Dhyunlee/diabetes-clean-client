@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { checkemailApi, postUserApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
+import alertHandler from "utils/functions/alertHandler";
 import { IAuthResponse } from "models/db";
 import {
   FormBtn,
@@ -13,7 +14,7 @@ import {
   InputName,
   InputWrap,
   Valid,
-  FrmBtnContainer,
+  FrmBtnContainer
 } from "./styles";
 
 const SignUp = () => {
@@ -24,14 +25,14 @@ const SignUp = () => {
     email: "",
     nickname: "",
     password: "",
-    passwordCheck: "",
+    passwordCheck: ""
   });
 
   const [isEmail, setIsEmail] = useState(false);
   const [isPw, setIsPw] = useState(false);
   const [isFocus, setIsFocus] = useState({
     isEmail: false,
-    isPw: false,
+    isPw: false
   });
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
@@ -44,7 +45,7 @@ const SignUp = () => {
   const [isComplete, setIsComplete] = useState({
     isCompleteEmail: false,
     isCompletePw: false,
-    isCompleteNickname: false,
+    isCompleteNickname: false
   });
 
   const { email, password, passwordCheck, nickname } = inputs;
@@ -58,7 +59,7 @@ const SignUp = () => {
     (e: any) => {
       setInputs({
         ...inputs,
-        [e.target.name]: e.target.value.trim(),
+        [e.target.name]: e.target.value.trim()
       });
       isFormValue.current = true;
     },
@@ -71,36 +72,36 @@ const SignUp = () => {
         try {
           const res = await checkemailApi<string>(email);
           console.log(res);
-          alert(res.msg);
+          alertHandler.onToast({ msg: res.msg });
           setIsCheckEmail(true);
           setIsComplete({
             ...isComplete,
-            isCompleteEmail: true,
+            isCompleteEmail: true
           });
         } catch (error: any) {
           if (error.status === 409) {
             console.log(409);
-            alert(error.data.msg);
+            alertHandler.onToast({ msg: error.data.msg });
             setIsCheckEmail(false);
             setIsComplete({
               ...isComplete,
-              isCompleteEmail: false,
+              isCompleteEmail: false
             });
           } else {
-            alert("서버 오류, 잠시후 시도해주세요");
+            alertHandler.onToast({ msg: "서버 오류, 잠시후 시도해주세요" });
             setIsCheckEmail(false);
             setIsComplete({
               ...isComplete,
-              isCompleteEmail: false,
+              isCompleteEmail: false
             });
           }
           return;
         }
       } else {
-        alert("이메일을 입력해주세요!");
+        alertHandler.onToast({ msg: "이메일을 입력해주세요!" });
         setIsComplete({
           ...isComplete,
-          isCompleteEmail: false,
+          isCompleteEmail: false
         });
       }
     },
@@ -108,32 +109,29 @@ const SignUp = () => {
   );
 
   const checkPw = (p1: string, p2: string) => p1 === p2;
-  const onClickCheckPw = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      let isCheck = password && checkPw(password, passwordCheck);
-      if (isCheck) {
-        alert("비밀번호가 일치합니다.");
-        setIsCheckPw(true);
-        setIsComplete({
-          ...isComplete,
-          isCompletePw: true,
-        });
-      } else {
-        alert("비밀번호가 일치하지 않습니다.");
-        setIsCheckPw(false);
-        setIsComplete({
-          ...isComplete,
-          isCompletePw: false,
-        });
-        setInputs({
-          ...inputs,
-          password: "",
-          passwordCheck: "",
-        });
-      }
-    },
-    [inputs, isComplete, password, passwordCheck]
-  );
+  const onClickCheckPw = useCallback(() => {
+    const isCheck = password && checkPw(password, passwordCheck);
+    if (isCheck) {
+      alertHandler.onToast({ msg: "비밀번호가 일치합니다." });
+      setIsCheckPw(true);
+      setIsComplete({
+        ...isComplete,
+        isCompletePw: true
+      });
+    } else {
+      alertHandler.onToast({ msg: "비밀번호가 일치하지 않습니다." });
+      setIsCheckPw(false);
+      setIsComplete({
+        ...isComplete,
+        isCompletePw: false
+      });
+      setInputs({
+        ...inputs,
+        password: "",
+        passwordCheck: ""
+      });
+    }
+  }, [inputs, isComplete, password, passwordCheck]);
 
   const mutation = useMutation<
     IAuthResponse,
@@ -152,7 +150,7 @@ const SignUp = () => {
       } else if (error.status === 504) {
         setIsSucessSignUp(true);
       }
-    },
+    }
   });
 
   const onSubmit = useCallback(
@@ -161,7 +159,7 @@ const SignUp = () => {
       const userInfo = {
         email,
         password,
-        nickname,
+        nickname
       };
       if (isCheckEmail && isCheckPw && nickname) {
         console.log("회원가입하기");
@@ -190,10 +188,10 @@ const SignUp = () => {
                 placeholder="이메일을 입력해주세요"
                 autoComplete="off"
                 onChange={onFormChange}
-                onFocus={(e) =>
+                onFocus={() =>
                   setIsFocus({
                     ...isFocus,
-                    isEmail: true,
+                    isEmail: true
                   })
                 }
                 onBlur={(e) => setIsEmail(checkValidation(e))}
@@ -235,7 +233,7 @@ const SignUp = () => {
                 onFocus={(e) =>
                   setIsFocus({
                     ...isFocus,
-                    isPw: true,
+                    isPw: true
                   })
                 }
                 value={password}
@@ -288,11 +286,11 @@ const SignUp = () => {
                   String(e.target.value).length !== 0
                     ? setIsComplete({
                         ...isComplete,
-                        isCompleteNickname: true,
+                        isCompleteNickname: true
                       })
                     : setIsComplete({
                         ...isComplete,
-                        isCompleteNickname: false,
+                        isCompleteNickname: false
                       })
                 }
                 onChange={onFormChange}
@@ -312,7 +310,7 @@ const SignUp = () => {
                   email: "",
                   password: "",
                   passwordCheck: "",
-                  nickname: "",
+                  nickname: ""
                 });
                 console.log(password);
                 navigate("/");

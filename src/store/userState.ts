@@ -1,12 +1,12 @@
 import { atom } from "recoil";
 
 interface IUserState {
-  _id: string,
-  createdAt: string,
-  email: string,
-  imageSrc: string,
-  nickname: string,
-  updatedAt: string,
+  _id: string;
+  createdAt: string;
+  email: string;
+  imageSrc: string;
+  nickname: string;
+  updatedAt: string;
 }
 
 export const userState = atom<IUserState>({
@@ -17,6 +17,6 @@ export const userState = atom<IUserState>({
     email: "",
     imageSrc: "",
     nickname: "",
-    updatedAt: "",
-  },
+    updatedAt: ""
+  }
 });

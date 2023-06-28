@@ -3,7 +3,7 @@ export const API_PATH = {
   LOG_IN: "/api/v1/auth/login",
   LOG_OUT: "/api/v1/auth/logout",
   USER_API: "/api/v1/users",
-  DIABETES_API: '/api/v1/diabetes',
+  DIABETES_API: "/api/v1/diabetes",
   CONTENTS_API: "/api/v1/contents",
   COMMENT_API: "/api/v1/comment"
 };

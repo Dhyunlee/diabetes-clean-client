@@ -1,19 +1,21 @@
 import { memo } from "react";
 import Review from "components/Review";
+import { IContents } from "models/db";
+import PostHeader from "components/Posts/PostHeader";
+
 import {
-  PostCardWrap,
   PostBody,
   PostBodyBlock,
   ReviewBlock,
-} from "../PostCards/styles";
-import PostHeader from "../PostHeader";
-import { IContents } from "models/db";
+  PostItemWrap
+} from "components/Posts/styles";
+
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
 
   return (
-    <PostCardWrap key={_id}>
+    <PostItemWrap key={_id}>
       <PostHeader
         createdAt={createdAt}
         writer={writer}
@@ -43,7 +45,7 @@ const PostItem = (props: IContents) => {
           </PostBody>
         </>
       )}
-    </PostCardWrap>
+    </PostItemWrap>
   );
 };
 

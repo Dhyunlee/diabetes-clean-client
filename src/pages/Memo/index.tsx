@@ -8,7 +8,7 @@ import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { ROUTER_PATH } from "constants/router_path";
-import { getUserApi } from "utils/apis/userApis";
+import { getCurrentUserApi } from "utils/apis/userApis";
 import { IDiabetesInfo, IDiabetesResponse, IUserResponse } from "models/db";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import alertHandler from "utils/functions/alertHandler";
@@ -16,24 +16,28 @@ import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 
 const Memo = () => {
-  const { STORY, SAVE_MEMO_DIABETES } = ROUTER_PATH;
+  const { SAVE_MEMO_DIABETES, SAVE_MEMO_DIET } = ROUTER_PATH;
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
-  const { data: userData } = useQuery<IUserResponse>(["user"], getUserApi, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: userData } = useQuery<IUserResponse>(
+    ["user"],
+    getCurrentUserApi,
+    {
+      refetchOnWindowFocus: false
+    }
+  );
   const userId = userData?.userInfo?._id || null;
   const {
     data: diabetesData,
     isError,
-    isLoading,
+    isLoading
   } = useQuery<IDiabetesResponse>(
     ["diabetes", userId],
     () => getDiabetes(userId),
     {
       retry: 2,
-      enabled: !!userId,
+      enabled: !!userId
     }
   );
 
@@ -68,7 +72,7 @@ const Memo = () => {
     if (today_ <= curDate_) {
       alertHandler.onDefaultAlert({
         msg: "이번달까지만 조회 가능합니다.",
-        pos: "top",
+        pos: "top"
       });
       return;
     }
@@ -84,15 +88,15 @@ const Memo = () => {
       {
         id: 1,
         path: `${SAVE_MEMO_DIABETES}`,
-        label: "당수치 기록",
+        label: "당수치 기록"
       },
       {
         id: 2,
-        path: `${STORY}`,
-        label: "식단 기록",
-      },
+        path: `${SAVE_MEMO_DIET}`,
+        label: "식단 기록"
+      }
     ],
-    [SAVE_MEMO_DIABETES, STORY]
+    [SAVE_MEMO_DIABETES, SAVE_MEMO_DIET]
   );
 
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;

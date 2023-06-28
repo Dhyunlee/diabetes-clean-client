@@ -7,21 +7,20 @@ const { CONTENTS_API } = API_PATH;
 const getAllContents = async () => {
   try {
     const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`, {
-      withCredentials: true,
+      withCredentials: true
     });
     return data;
   } catch (error: any) {
     throw error.response;
   }
 };
-
-const getUserContents = async (userId: string | null) => {
+const getUserContents = async (nickname: string | null) => {
   try {
-    if (!userId) return;
+    if (!nickname) return;
     const { data } = await api.get<IContentsResponse>(
-      `${CONTENTS_API}/users/${userId}`,
+      `${CONTENTS_API}/users/${nickname}`,
       {
-        withCredentials: true,
+        withCredentials: true
       }
     );
     return data;
@@ -32,9 +31,13 @@ const getUserContents = async (userId: string | null) => {
 
 const createContents = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<CommonResponse>(`${CONTENTS_API}`, insertData, {
-      withCredentials: true,
-    });
+    const { data } = await api.post<CommonResponse>(
+      `${CONTENTS_API}`,
+      insertData,
+      {
+        withCredentials: true
+      }
+    );
     return data;
   } catch (error: any) {
     console.log(error);
@@ -47,10 +50,10 @@ const deleteContents = async (contentId: string) => {
     const { data } = await api.delete<CommonResponse>(
       `${CONTENTS_API}/${contentId}`,
       {
-        withCredentials: true,
+        withCredentials: true
       }
     );
-    console.log({res: data})
+    console.log({ res: data });
     return data;
   } catch (error: any) {
     console.log(error);

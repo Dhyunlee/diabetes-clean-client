@@ -4,7 +4,7 @@ import {
   ImgUploadBox,
   DrapFileArea,
   ImageUploadForm,
-  ThumbnailImg,
+  ThumbnailImg
 } from "./styles";
 
 interface IProps {

@@ -34,19 +34,19 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
       {
         id: 1,
         path: `${MYPAGE}`,
-        label: "마이페이지",
+        label: "마이페이지"
       },
       {
         id: 2,
         path: `${STORY}/${userInfo.nickname}`,
-        label: "내피드",
+        label: "내피드"
       },
       {
         id: 3,
         path: null,
         label: "로그아웃",
-        handler: handleLogOut,
-      },
+        handler: handleLogOut
+      }
     ],
     [MYPAGE, STORY, handleLogOut, userInfo.nickname]
   );
@@ -59,8 +59,8 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
           showSubMenu={showSubMenu}
           onCloseMenu={onCloseMenu}
           customCss={{
-            posX: '135px',
-            posY: '60px',
+            posX: "135px",
+            posY: "60px"
           }}
         />
       )}

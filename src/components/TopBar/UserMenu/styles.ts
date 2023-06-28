@@ -15,7 +15,7 @@ export const MenuList = styled.ul`
   }
 `;
 
-export const ProfileWrap = styled.span`
+export const UserInfoWrap = styled.span`
   cursor: pointer;
   position: relative;
   top: 0;
@@ -25,23 +25,6 @@ export const ProfileWrap = styled.span`
     position: absolute;
     top: -12px;
     left: 38px;
-  }
-`;
-
-export const Avatar = styled.span`
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  
-  img {
-    position: absolute;
-    top: -20px;
-    left: -7px;
-    border: 1px solid rgb(0 0 0 / 10%);
-    padding: 2px;
-    border-radius: 50%;
-    width: inherit;
-    height: inherit;
   }
 `;
 

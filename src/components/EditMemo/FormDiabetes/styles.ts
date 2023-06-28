@@ -40,7 +40,7 @@ export const UnitTextWrap = styled.div`
   }
 `;
 
-export const TextareaGroup = styled.div<{height?: number}>`
+export const TextareaGroup = styled.div<{ height?: number }>`
   margin-top: 13px;
   padding: 10px;
   width: 100%;
