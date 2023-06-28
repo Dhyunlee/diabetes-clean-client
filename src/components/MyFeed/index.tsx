@@ -3,6 +3,7 @@ import { useParams, Outlet } from "react-router-dom";
 import gravatar from "gravatar";
 import { useRecoilValue } from "recoil";
 import Avatar from "components/Base/Avatar";
+import NavMenu from "components/Base/NavMenu";
 import Button from "components/Base/Button";
 import { ROUTER_PATH } from "constants/router_path";
 import { userState } from "store/userState";
@@ -18,7 +19,6 @@ import {
   UserStatus,
   ContentsMenu,
 } from "./styles";
-import NavMenu from "components/Base/NavMenu";
 
 const MyFeed = () => {
   const { STORY } = ROUTER_PATH;

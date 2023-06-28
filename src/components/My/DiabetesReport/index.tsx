@@ -17,7 +17,7 @@ const DiabetesReport = () => {
         <span>당수치 통계</span>
       </Title>
       <div>
-       <NavMenu lists={periods} bgColor={palette.indigo[3]} fontSize={'18px'} /> 
+       <NavMenu lists={periods} borderColor={palette.indigo[3]} fontSize={'18px'} /> 
       <ReportChart/>
       </div>
     </div>
