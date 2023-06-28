@@ -4,21 +4,33 @@ import React, {
   useMemo,
   useRef,
   useState,
+  FunctionComponent,
+  DetailedHTMLProps,
+  HTMLAttributes,
 } from "react";
 import { Link } from "react-router-dom";
 import { NavMenutWrap } from "./styles";
 
-interface Iprops {
+type commonProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
+
+interface customType {
   lists: {
     id: number;
     text: string;
     url?: string | null;
   }[];
+  borderColor?: string;
   bgColor?: string;
   fontSize?: string | number;
 }
 
-const NavMenu = ({ lists, bgColor, fontSize }: Iprops) => {
+const NavMenu: FunctionComponent<customType & commonProps> = ({
+  lists,
+  ...rest
+}) => {
   const listChildrenRefs = useRef<HTMLElement[]>([]);
   const activeRef = useRef<HTMLLIElement | null>(null);
   const selectedElRef = useRef<HTMLElement | null>(null);
@@ -39,7 +51,6 @@ const NavMenu = ({ lists, bgColor, fontSize }: Iprops) => {
 
   useEffect(() => {
     if (selectedElRef.current && activeRef.current) {
-      activeRef.current.style.left = "15px";
       const curElementWith = selectedElRef.current.parentElement?.offsetWidth;
       const curElementPos = selectedElRef.current.parentElement?.offsetLeft;
       activeRef.current.style.width = `${curElementWith}px`;
@@ -53,9 +64,9 @@ const NavMenu = ({ lists, bgColor, fontSize }: Iprops) => {
   );
 
   return (
-    <NavMenutWrap bgColor={bgColor} fontSize={fontSize}>
+    <NavMenutWrap {...rest}>
       <ul>
-        <li className="active" ref={activeRef}></li>
+        <li className="active" ref={activeRef} style={{left: '3%'}}></li>
         {Lists.map((list, idx) => (
           <li
             key={idx}

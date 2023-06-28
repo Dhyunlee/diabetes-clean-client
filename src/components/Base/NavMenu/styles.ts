@@ -2,11 +2,14 @@ import styled from "@emotion/styled";
 
 export const NavMenutWrap = styled.nav<{
   bgColor?: string;
+  borderColor?:string;
   fontSize?: string | number;
 }>`
   width: 100%;
   padding: 0 0;
   margin: 30px 0;
+  background-color: ${({ bgColor }) => bgColor || 'inherit'};
+
   ul {
     position: relative;
     padding: 10px 15px;
@@ -29,7 +32,7 @@ export const NavMenutWrap = styled.nav<{
       bottom: 0;
       transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1.05);
       z-index: 2;
-      background-color: ${({ bgColor }) => bgColor || "#adb5bd"};
+      background-color: ${({ borderColor }) => borderColor || "#adb5bd"};
     }
     & > a,
     & > span {
