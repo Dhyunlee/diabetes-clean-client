@@ -16,7 +16,7 @@ import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
 
 const Memo = () => {
-  const { STORY, SAVE_MEMO_DIABETES } = ROUTER_PATH;
+  const { SAVE_MEMO_DIABETES, SAVE_MEMO_DIET } = ROUTER_PATH;
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
@@ -88,11 +88,11 @@ const Memo = () => {
       },
       {
         id: 2,
-        path: `${STORY}`,
+        path: `${SAVE_MEMO_DIET}`,
         label: "식단 기록",
       },
     ],
-    [SAVE_MEMO_DIABETES, STORY]
+    [SAVE_MEMO_DIABETES, SAVE_MEMO_DIET]
   );
 
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
