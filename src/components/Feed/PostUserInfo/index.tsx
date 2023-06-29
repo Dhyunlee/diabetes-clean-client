@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Avatar from "../../Base/Avatar";
 import { PostUserInfoInterface } from "./styles";
-import { tiemBefore } from "utils/functions/tiemBefore";
+import { tiemBefore } from "utils/functions/timeBefore";
 
 interface IProps {
   userName: string;

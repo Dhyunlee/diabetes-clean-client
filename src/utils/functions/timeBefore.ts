@@ -17,7 +17,7 @@ export const tiemBefore = (date: string | Date) => {
   if (betweenTimeDay < 30) return `${betweenTimeDay}일 전`;
 
   const betweenTimeMonth = today.diff(updateTime, "month");
-  if (betweenTimeMonth < 12) return `${betweenTimeMonth}달전`;
+  if (betweenTimeMonth < 11) return `${betweenTimeMonth + 1}달전`;
 
   return `${today.diff(updateTime, "year")}년전`;
 };
