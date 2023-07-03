@@ -10,14 +10,12 @@ const Submenu = () => {
   ];
 
   return (
-    <SubmenuContainer>
-      <NavMenu
-        lists={subMenus}
-        borderColor="gray"
-        bgColor="#f1f3f5"
-        style={{ boxShadow: "0px 0px 12px -3px rgb(0 0 0 / 30%)" }}
-      />
-    </SubmenuContainer>
+    <NavMenu
+      lists={subMenus}
+      borderColor="gray"
+      bgColor="#f1f3f5"
+      style={{ boxShadow: "0px 0px 12px -3px rgb(0 0 0 / 30%)" }}
+    />
   );
 };
 

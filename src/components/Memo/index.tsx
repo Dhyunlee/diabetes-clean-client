@@ -1,35 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import dayjs from "dayjs";
-import { useQuery } from "@tanstack/react-query";
 import DateArea from "components/Memo/Base/DateArea";
 import Submenu from "components/Memo/Base/Submenu";
 import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
+import SideBtnMenu from "components/Base/SideBtnMenu";
 import alertHandler from "utils/functions/alertHandler";
-import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetesInfo, IDiabetesResponse } from "models/db";
+import { IDiabetesInfo } from "models/db";
 import { userState } from "store/userState";
+import { useDiabetesQuery } from "hooks/services/queries";
 import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
+import { ROUTER_PATH } from "constants/router_path";
 
 const MemoList = () => {
+  const { SAVE_MEMO_DIABETES, SAVE_MEMO_DIET } = ROUTER_PATH;
   const { _id: userId } = useRecoilValue(userState);
   const [curDate, setCurDate] = useState(dayjs());
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
 
-  const {
-    data: diabetesData,
-    isError,
-    isLoading
-  } = useQuery<IDiabetesResponse>({
-    queryKey: ["diabetes", userId],
-    queryFn: () => getDiabetes(userId),
-    retry: 2,
-    enabled: !!userId
-  });
+  const { data: diabetesData, isError, isLoading } = useDiabetesQuery(userId);
 
   useEffect(() => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
@@ -68,6 +61,22 @@ const MemoList = () => {
     setCurDate(curDate.subtract(1, "month"));
   };
 
+  const menuItem = useMemo(
+    () => [
+      {
+        id: 1,
+        path: `${SAVE_MEMO_DIABETES}`,
+        label: "당수치 기록"
+      },
+      {
+        id: 2,
+        path: `${SAVE_MEMO_DIET}`,
+        label: "식단 기록"
+      }
+    ],
+    [SAVE_MEMO_DIABETES, SAVE_MEMO_DIET]
+  );
+
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
   if (isError) return <div>데이터를 가져오는 실패했어요</div>;
 
@@ -94,6 +103,7 @@ const MemoList = () => {
           <Route path="diet" element={<Diet />} />
         </Routes>
       </MemoContents>
+      <SideBtnMenu menuItem={menuItem} />
     </Container>
   );
 };

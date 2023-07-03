@@ -29,7 +29,6 @@ export const NavMenutWrap = styled.nav<{
       bottom: 0;
       transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1.05);
       background-color: ${({ borderColor }) => borderColor || "#000"};
-      z-index: 2;
     }
     & a,
     & span {

@@ -29,7 +29,7 @@ const getDiabetesFindById = async (id: string | null) => {
 
 const createDiabetes = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<IDiabetesResponse>(
+    const { data } = await api.post<CommonResponse>(
       `${DIABETES_API}`,
       insertData,
       {

@@ -3,3 +3,6 @@ export { default as useDelContentsMutation } from "./contents/useDelContentsMuta
 export { default as useCreateCommentMutation } from "./comment/useCreateCommentMutation";
 export { default as useDelCommentMutation } from "./comment/useDelCommentMutation";
 export { default as useUpdateCommentMutation } from "./comment/useUpdateCommentMutation";
+
+export { default as useCreateDiabetes } from "./memo/useCreateDiabetes";
+export { default as useDelDiabetes } from "./memo/useDelDiabetes";

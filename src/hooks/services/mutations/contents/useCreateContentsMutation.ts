@@ -4,7 +4,7 @@ import { CONTENTS_KEY } from "constants/query_key";
 import { CommonResponse, IContentsRequest } from "models/db";
 import { createContents } from "utils/apis/contents";
 
-const useDelContentsMutation = () => {
+const useCreateContentsMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<CommonResponse, AxiosError, IContentsRequest>(
     createContents<IContentsRequest>,
@@ -20,4 +20,4 @@ const useDelContentsMutation = () => {
   );
 };
 
-export default useDelContentsMutation;
+export default useCreateContentsMutation;

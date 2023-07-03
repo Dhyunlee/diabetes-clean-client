@@ -10,13 +10,7 @@ import {
 } from "components/Memo/styles";
 dayjs.locale("ko");
 
-const DiabetesItem = ({
-  _id,
-  sugar_level,
-  slot,
-  createdAt,
-  note
-}: IDiabetesInfo) => {
+const DiabetesItem = ({ _id, sugar_level, slot, createdAt }: IDiabetesInfo) => {
   const { openModal } = useModal();
 
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
@@ -26,7 +20,7 @@ const DiabetesItem = ({
     <ContentsItem
       key={_id}
       className={`${_id}`}
-      onClick={(e) => {
+      onClick={() => {
         openModal({
           type: _id,
           isOpen: true,
