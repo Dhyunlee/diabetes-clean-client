@@ -4,10 +4,10 @@ import { Title } from "../styles";
 import { palette } from "libs/palette";
 
 const periods = [
-  { id: 1, text: "오늘" },
-  { id: 2, text: "한 주" },
-  { id: 3, text: "한 달" },
-  { id: 4, text: "3개월" }
+  { id: 1, label: "오늘", url: "/mypage" },
+  { id: 2, label: "한 주", url: "/mypage" },
+  { id: 3, label: "한 달", url: "/mypage" },
+  { id: 4, label: "3개월", url: "/mypage" }
 ];
 
 const DiabetesReport = () => {

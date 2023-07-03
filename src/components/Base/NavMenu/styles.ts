@@ -6,40 +6,39 @@ export const NavMenutWrap = styled.nav<{
   fontSize?: string | number;
 }>`
   width: 100%;
+  display: flex;
+  justify-content: center;
   padding: 0 0;
   margin: 30px 0;
   background-color: ${({ bgColor }) => bgColor || "inherit"};
 
   ul {
     position: relative;
-    padding: 10px 15px;
     display: flex;
-    border-radius: 5px;
-    gap: 15px;
   }
 
   li {
-    width: 100px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
+    display: block;
+    border-radius: 3px;
     transition: all 0.3s ease-in-out;
     &.active {
       position: absolute;
-      display: inline-flex;
+      width: 128px;
       height: 3px;
       border-radius: 2px;
       bottom: 0;
       transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1.05);
+      background-color: ${({ borderColor }) => borderColor || "#000"};
       z-index: 2;
-      background-color: ${({ borderColor }) => borderColor || "#adb5bd"};
     }
-    & > a,
-    & > span {
-      display: block;
-      padding: 5px 10px;
-      font-size: ${({ fontSize }) =>
-        (typeof fontSize === "number" ? fontSize + "px" : fontSize) || "16px"};
+    & a,
+    & span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 128px;
+      height: 43px;
+      font-size: 18px;
     }
   }
 `;
