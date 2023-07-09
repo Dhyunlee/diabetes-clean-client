@@ -8,11 +8,16 @@ export const Navbar = styled.div`
   align-items: center;
 
   .menu-left {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+  .search-center {
+    flex: 2;
+  }
   .menu-right {
+    flex: 1;
     display: flex;
     justify-content: center;
     padding: 5px 12px;

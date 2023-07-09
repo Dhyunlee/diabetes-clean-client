@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import Sidebar from "components/Base/Sidebar";
 import { Navbar, OverWrap } from "./styles";
 import UserMenu from "./UserMenu";
+import SearchArea from "./Search";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ const Topbar = () => {
             </Link>
           </div>
         </div>
-        <div>{targetPath && <div>검색어 기능 구현중</div>}</div>
+        <div className="search-center">{targetPath && <SearchArea />}</div>
         <div className="menu-right">
           <UserMenu />
         </div>
