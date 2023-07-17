@@ -103,7 +103,7 @@ const MyFeed = () => {
             </div>
           </LeftSide>
           <MainContents>
-            <NavMenu lists={subMenus} />
+            <NavMenu lists={subMenus} borderColor="#868e96" />
             <Outlet />
           </MainContents>
         </MyFeedMain>
