@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { checkemailApi, postUserApi } from "utils/apis/userApis";
+import { checkemailApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
 import alertHandler from "utils/functions/alertHandler";
-import { IAuthResponse } from "models/db";
+import useCreateUserMutation from "hooks/service/mutator/auth/useCreateUserMutation";
 import {
   FormBtn,
   Container,
@@ -37,10 +35,6 @@ const SignUp = () => {
 
   const [isCheckEmail, setIsCheckEmail] = useState(false);
   const [isCheckPw, setIsCheckPw] = useState(false);
-  const [isSucessSignUp, setIsSucessSignUp] = useState(false);
-  const [,] = useState(false);
-  const [,] = useState(false);
-
   const [isCompleteState, setIsCompleteState] = useState(false);
   const [isComplete, setIsComplete] = useState({
     isCompleteEmail: false,
@@ -135,25 +129,7 @@ const SignUp = () => {
     }
   }, [inputs, isComplete, password, passwordCheck]);
 
-  const mutation = useMutation<
-    IAuthResponse,
-    AxiosError,
-    { email: string; password: string; nickname: string }
-  >(postUserApi, {
-    onMutate() {
-      setIsSucessSignUp(false);
-    },
-    onSuccess() {
-      setIsSucessSignUp(true);
-    },
-    onError(error: any) {
-      if (error.status === 401) {
-        setIsSucessSignUp(error.data);
-      } else if (error.status === 504) {
-        setIsSucessSignUp(true);
-      }
-    }
-  });
+  const mutation = useCreateUserMutation();
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -166,9 +142,10 @@ const SignUp = () => {
       if (isCheckEmail && isCheckPw && nickname) {
         console.log("회원가입하기");
         mutation.mutate(userInfo);
+        navigate("/");
       }
     },
-    [email, isCheckEmail, isCheckPw, mutation, nickname, password]
+    [email, isCheckEmail, isCheckPw, mutation, nickname, password, navigate]
   );
 
   return (
@@ -239,6 +216,7 @@ const SignUp = () => {
                   })
                 }
                 value={password}
+                autoComplete="off"
               />
               {isFocus.isPw && (
                 <Valid className={`valid ${isPw ? "success" : "error"}`}>
@@ -261,6 +239,7 @@ const SignUp = () => {
                 disabled={isCheckPw}
                 onChange={onFormChange}
                 value={passwordCheck}
+                autoComplete="off"
               />
               <FormBtn
                 className={`${isCheckPw && "not-allowed"}`}
@@ -283,7 +262,6 @@ const SignUp = () => {
                 className="input-width"
                 name="nickname"
                 placeholder="닉네임을 입력해주세요"
-                autoComplete="off"
                 onBlur={(e) =>
                   String(e.target.value).length !== 0
                     ? setIsComplete({
@@ -297,6 +275,7 @@ const SignUp = () => {
                 }
                 onChange={onFormChange}
                 value={nickname}
+                autoComplete="off"
               />
             </InputWrap>
           </InputGroup>
@@ -333,11 +312,6 @@ const SignUp = () => {
                 회원이 이신가요? &nbsp;
                 <Link to="/login">로그인</Link>하기
               </span>
-              {isSucessSignUp && (
-                <span style={{ display: "block", color: "#39d46f" }}>
-                  가입되었어요^^ 로그인해주세요!
-                </span>
-              )}
             </div>
           </FrmBtnContainer>
         </form>

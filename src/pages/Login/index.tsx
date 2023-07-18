@@ -1,32 +1,22 @@
 import React from "react";
 import { useState, useCallback } from "react";
-import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logInApi } from "utils/apis/userApis";
-import { IAuthResponse } from "models/db";
-import useStorage from "utils/functions/useStorage";
 import {
   Container,
   FormWrap,
   InputGroup,
   InputName,
   InputWrap,
-  FrmBtnContainer,
-  Valid
+  FrmBtnContainer
 } from "pages/SignUp/styles";
+import useLoginMutation from "hooks/service/mutator/auth/useLoginMutation";
 
 const Login = () => {
-  const { setStorage } = useStorage;
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [inputs, setInputs] = useState({
     email: "",
     password: ""
   });
-
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isSucessLogIn, setIsSucessLogIn] = useState(false);
 
   const { email, password } = inputs;
 
@@ -39,32 +29,7 @@ const Login = () => {
     },
     [inputs]
   );
-  const mutation = useMutation<
-    IAuthResponse,
-    AxiosError,
-    { email: string; password: string }
-  >(logInApi, {
-    onMutate() {
-      setIsSucessLogIn(true);
-    },
-    onSuccess(data) {
-      if (data) {
-        setStorage("accessToken", data.accessToken);
-        navigate("/");
-      }
-      queryClient.refetchQueries({ queryKey: ["user"] });
-    },
-    onError(error: any) {
-      console.log({ login: error });
-      if (error.status === 401) {
-        setErrorMsg(error.data.msg);
-        setIsSucessLogIn(false);
-      } else if (error.status === 500) {
-        setErrorMsg("서버 오류, 잠시후 시도해주세요");
-        setIsSucessLogIn(false);
-      }
-    }
-  });
+  const mutation = useLoginMutation();
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -110,6 +75,7 @@ const Login = () => {
                 placeholder="이메일을 입력해주세요"
                 onChange={onFormChange}
                 value={email}
+                autoComplete="off"
               />
             </InputWrap>
           </InputGroup>
@@ -131,16 +97,9 @@ const Login = () => {
                 placeholder="비밀번호를 입력해주세요"
                 onChange={onFormChange}
                 value={password}
+                autoComplete="off"
               />
             </InputWrap>
-            {!isSucessLogIn && (
-              <Valid
-                className="error"
-                style={{ width: "100%", marginTop: 10, textAlign: "center" }}
-              >
-                {errorMsg}
-              </Valid>
-            )}
           </InputGroup>
           <FrmBtnContainer>
             <button

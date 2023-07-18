@@ -6,10 +6,12 @@ export interface CommonResponse {
 export interface IAuthRequest {
   email: string;
   password: string;
+  nickname: string;
 }
 
-export interface IAuthResponse {
-  isOk: boolean;
+export type TAuthRequest = Omit<IAuthRequest, "nickname">;
+
+export interface IAuthResponse extends CommonResponse {
   accessToken: string;
 }
 

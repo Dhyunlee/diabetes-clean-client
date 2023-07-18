@@ -1,22 +1,36 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { COMMENT_KEY } from "constants/query_key";
-import { CommonResponse, ICommentRequest } from "models/db";
-import { createComment } from "utils/apis/comment";
+import { USER_KEY } from "constants/query_key";
+import { IAuthResponse, TAuthRequest } from "models/db";
+import { useNavigate } from "react-router-dom";
+import { logInApi } from "utils/apis/userApis";
 import alertHandler from "utils/functions/alertHandler";
+import useStorage from "utils/functions/useStorage";
 
 const useLoginMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, ICommentRequest>(
-    createComment<ICommentRequest>,
+  const navigate = useNavigate();
+  const { setStorage } = useStorage;
+
+  return useMutation<IAuthResponse, AxiosError, TAuthRequest>(
+    logInApi<TAuthRequest>,
     {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries<string>([COMMENT_KEY]);
-        alertHandler.onToast({ msg: data.msg });
+      onSuccess(data) {
+        if (data) {
+          setStorage("accessToken", data.accessToken);
+          navigate("/");
+        }
+        queryClient.refetchQueries({ queryKey: [USER_KEY] });
       },
-      onError: (err) => {
-        console.log({ error: err });
-        return err;
+      onError(error: any) {
+        if (error.status === 401) {
+          alertHandler.onToast({ msg: error.data.msg, icon: "error" });
+        } else if (error.status === 500) {
+          alertHandler.onToast({
+            msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+            icon: "error"
+          });
+        }
       }
     }
   );

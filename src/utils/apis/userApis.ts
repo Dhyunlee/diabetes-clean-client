@@ -2,19 +2,19 @@ import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
 import { CommonResponse, IAuthResponse, IUserResponse } from "models/db";
 import { API_PATH } from "constants/api_path";
+import alertHandler from "utils/functions/alertHandler";
 
 /* 유저 및 인증 */
 const { USER_API, CHECK_MEAIL, LOG_IN } = API_PATH;
 
 const logInApi = async <T>(insertData: T) => {
-  console.log({ insertData });
   try {
     const { data } = await api.post<IAuthResponse>(`${LOG_IN}`, insertData, {
       withCredentials: true
     });
     return data;
   } catch (error: any) {
-    console.log(error);
+    alertHandler.onToast({ msg: "서버 오류, 잠시후 다시 시도해주세요!" });
     throw error;
   }
 };
@@ -25,10 +25,12 @@ const checkemailApi = async <T>(insertData: T) => {
       { email: insertData },
       { withCredentials: true }
     );
-    console.log({ 이메일중복결과: data });
     return data;
   } catch (error: any) {
-    console.log(error);
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
     throw error;
   }
 };

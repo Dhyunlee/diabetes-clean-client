@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { COMMENT_KEY } from "constants/query_key";
-import { CommonResponse, ICommentRequest } from "models/db";
-import { createComment } from "utils/apis/comment";
+import { USER_KEY } from "constants/query_key";
+import { CommonResponse, IAuthRequest } from "models/db";
+import { postUserApi } from "utils/apis/userApis";
 import alertHandler from "utils/functions/alertHandler";
 
 const useCreateUserMutation = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, ICommentRequest>(
-    createComment<ICommentRequest>,
+  return useMutation<CommonResponse, AxiosError, IAuthRequest>(
+    postUserApi<IAuthRequest>,
     {
       onSuccess: (data) => {
-        queryClient.invalidateQueries<string>([COMMENT_KEY]);
+        queryClient.invalidateQueries<string>([USER_KEY]);
         alertHandler.onToast({ msg: data.msg });
       },
       onError: (err) => {
