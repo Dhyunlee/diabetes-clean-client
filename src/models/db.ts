@@ -52,7 +52,7 @@ export interface IDiabetesInfo {
 
 export interface IDiabetesResponse {
   isOk: boolean;
-  diabetesInfo: IDiabetesInfo[];
+  diabetesInfo: IDiabetesInfo[] | IDiabetesInfo;
 }
 
 export interface IContentsRequest {

@@ -25,9 +25,11 @@ const checkemailApi = async <T>(insertData: T) => {
       { email: insertData },
       { withCredentials: true }
     );
+    console.log({ 이메일중복결과: data });
     return data;
   } catch (error: any) {
-    throw error.response;
+    console.log(error);
+    throw error;
   }
 };
 

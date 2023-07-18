@@ -3,14 +3,17 @@ import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
 import dayjs from "dayjs";
 import { timeIcons } from "libs/time-icons";
 import { useModal } from "hooks/common/useModal";
-import { useDiabetesDetail } from "hooks/services/queries";
-import { useDelDiabetes } from "hooks/services/mutations";
+import { useAPIWithIdQuery } from "hooks/service/queries";
+import { useDelDiabetes } from "hooks/service/mutator";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { getDiabetesFindById } from "utils/apis/diabetesApis";
 import {
   DetailContainer,
   DetailModalContent,
   DetailModalHeader
 } from "components/Base/GlobalModal/styles";
+import { DIABETES_KEY } from "constants/query_key";
+import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 
 interface Iprops {
   id: string;
@@ -18,12 +21,17 @@ interface Iprops {
 
 const DiabetesDetail = ({ id }: Iprops) => {
   const { closeModal } = useModal();
-  const { data, isError } = useDiabetesDetail(id);
-  const diabetes = data?.diabetesInfo;
+  const { data, isError } = useAPIWithIdQuery<IDiabetesResponse>(
+    id,
+    DIABETES_KEY,
+    getDiabetesFindById
+  );
+  const diabetes = data?.diabetesInfo as IDiabetesInfo;
 
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
     diabetes?.slot?.includes(itemIcons_desc)
   );
+  console.log(diabetes);
   const useMutate = useDelDiabetes();
 
   const onDelDiabetes = useCallback(() => {

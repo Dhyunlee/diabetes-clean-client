@@ -1,15 +1,23 @@
 import ReviewStatus from "./ReviewStatus";
+import { useAPIWithIdQuery } from "hooks/service/queries";
+import { ICommentResponse } from "models/db";
+import { COMMENT_KEY } from "constants/query_key";
+import { getAllComment } from "utils/apis/comment";
 import Comment from "components/Review/Comment";
 import CommentForm from "components/Review/CommentForm";
-import { useCommentQuery } from "hooks/services/queries/";
-import { CommentsContainer, ReviewContainer } from "./styles";
+
 import { Contour } from "styles/common";
+import { CommentsContainer, ReviewContainer } from "./styles";
 
 interface IProps {
   postId: string;
 }
 const Review = ({ postId }: IProps) => {
-  const { data } = useCommentQuery(postId);
+  const { data } = useAPIWithIdQuery<ICommentResponse>(
+    postId,
+    COMMENT_KEY,
+    getAllComment
+  );
   const comments = data?.comment;
   const commentLength = data?.comment.length;
 

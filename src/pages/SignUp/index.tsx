@@ -66,47 +66,46 @@ const SignUp = () => {
     [inputs]
   );
 
-  const onClickCheckEmail = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      if (isEmail) {
-        try {
-          const res = await checkemailApi<string>(email);
-          console.log(res);
-          alertHandler.onToast({ msg: res.msg });
-          setIsCheckEmail(true);
-          setIsComplete({
-            ...isComplete,
-            isCompleteEmail: true
-          });
-        } catch (error: any) {
-          if (error.status === 409) {
-            console.log(409);
-            alertHandler.onToast({ msg: error.data.msg });
-            setIsCheckEmail(false);
-            setIsComplete({
-              ...isComplete,
-              isCompleteEmail: false
-            });
-          } else {
-            alertHandler.onToast({ msg: "서버 오류, 잠시후 시도해주세요" });
-            setIsCheckEmail(false);
-            setIsComplete({
-              ...isComplete,
-              isCompleteEmail: false
-            });
-          }
-          return;
-        }
-      } else {
-        alertHandler.onToast({ msg: "이메일을 입력해주세요!" });
+  const onClickCheckEmail = useCallback(async () => {
+    if (isEmail) {
+      try {
+        const res = await checkemailApi<string>(email);
+        console.log(res);
+        alertHandler.onToast({ msg: res.msg });
+        setIsCheckEmail(true);
         setIsComplete({
           ...isComplete,
-          isCompleteEmail: false
+          isCompleteEmail: true
         });
+      } catch (error: any) {
+        if (error.status === 409) {
+          alertHandler.onToast({ msg: error.data.msg, icon: "warning" });
+          setIsCheckEmail(false);
+          setIsComplete({
+            ...isComplete,
+            isCompleteEmail: false
+          });
+        } else {
+          alertHandler.onToast({
+            msg: "서버 오류, 잠시후 시도해주세요",
+            icon: "error"
+          });
+          setIsCheckEmail(false);
+          setIsComplete({
+            ...isComplete,
+            isCompleteEmail: false
+          });
+        }
+        return;
       }
-    },
-    [email, isComplete, isEmail]
-  );
+    } else {
+      alertHandler.onToast({ msg: "이메일을 입력해주세요!" });
+      setIsComplete({
+        ...isComplete,
+        isCompleteEmail: false
+      });
+    }
+  }, [email, isComplete, isEmail]);
 
   const checkPw = (p1: string, p2: string) => p1 === p2;
   const onClickCheckPw = useCallback(() => {
@@ -119,7 +118,10 @@ const SignUp = () => {
         isCompletePw: true
       });
     } else {
-      alertHandler.onToast({ msg: "비밀번호가 일치하지 않습니다." });
+      alertHandler.onToast({
+        msg: "비밀번호가 일치하지 않습니다.",
+        icon: "warning"
+      });
       setIsCheckPw(false);
       setIsComplete({
         ...isComplete,
@@ -230,7 +232,7 @@ const SignUp = () => {
                 disabled={isCheckPw}
                 onChange={onFormChange}
                 onBlur={(e) => setIsPw(checkValidation(e))}
-                onFocus={(e) =>
+                onFocus={() =>
                   setIsFocus({
                     ...isFocus,
                     isPw: true

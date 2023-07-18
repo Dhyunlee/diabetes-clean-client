@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 import Input from "components/Base/Input";
 import { userState } from "store/userState";
 import { useModal } from "hooks/common/useModal";
-import { useCreateDiabetes } from "hooks/services/mutations";
+import { useCreateDiabetes } from "hooks/service/mutator";
 import { ISelectedSlotItem, selectedSlotItem } from "libs/slotItem";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import { ROUTER_PATH } from "constants/router_path";

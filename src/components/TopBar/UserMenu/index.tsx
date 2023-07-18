@@ -11,21 +11,20 @@ import { getCurrentUserApi } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
+import { USER_KEY } from "constants/query_key";
+
 import { MenuList, UserInfoWrap, UserItem } from "./styles";
+import { useAPIQuery } from "hooks/service/queries";
 
 const UserMenu = () => {
   const [, setUserInfo] = useRecoilState(userState);
-  const { LOGIN, SIGNUP, SAVE_MEMO_DIABETES } = ROUTER_PATH;
+  const { LOGIN, SIGNUP } = ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
-  const {
-    data: userData,
-    error,
-    isError,
-    isLoading
-  } = useQuery<IUserResponse>({
-    queryKey: ["user"],
-    queryFn: () => getCurrentUserApi()
-  });
+
+  const { data: userData } = useAPIQuery<IUserResponse>(
+    USER_KEY,
+    getCurrentUserApi
+  );
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const onShowUserSubMenu = useCallback(() => {
@@ -71,7 +70,7 @@ const UserMenu = () => {
                     imgUrl={
                       userData?.userInfo?.imageSrc
                         ? userData?.userInfo?.imageSrc
-                        : gravatar.url(userData?.userInfo?.email, {
+                        : gravatar.url(userData?.userInfo?.nickname, {
                             s: "32px",
                             d: "retro"
                           })

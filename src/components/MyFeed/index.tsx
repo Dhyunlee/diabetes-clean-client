@@ -7,7 +7,10 @@ import NavMenu from "components/Base/NavMenu";
 import Button from "components/Base/Button";
 import { ROUTER_PATH } from "constants/router_path";
 import { userState } from "store/userState";
-import { useUserContentsQuery } from "hooks/services/queries";
+import { useAPIWithIdQuery } from "hooks/service/queries";
+import { getUserContents } from "utils/apis/contents";
+import { CONTENTS_KEY } from "constants/query_key";
+
 import {
   MyFeedContainer,
   MyFeedWrap,
@@ -18,14 +21,22 @@ import {
   UserInfo,
   UserStatus
 } from "./styles";
+import { IContentsResponse } from "models/db";
 
 const MyFeed = () => {
   const { STORY } = ROUTER_PATH;
   const { username } = useParams();
-  const { data } = useUserContentsQuery(username as string);
-  const userInfo = useMemo(() => data?.contents[0]?.writer, [data?.contents]);
-
+  const queryKey = `${CONTENTS_KEY}/${username}`;
+  const { data: userContents } = useAPIWithIdQuery<IContentsResponse>(
+    username as string,
+    queryKey,
+    getUserContents
+  );
   const currentUser = useRecoilValue(userState);
+  const userInfo = useMemo(
+    () => userContents?.contents[0]?.writer,
+    [userContents?.contents]
+  );
 
   const subMenus = [
     { id: 1, label: "내 게시글", url: `${STORY}/${username}` },
@@ -83,19 +94,23 @@ const MyFeed = () => {
                   <li>
                     <span className="status-inner">
                       <span className="status">팔로잉</span>
-                      <span>0</span>
+                      <span>
+                        0{/* {currentUser && currentUser.followings?.length} */}
+                      </span>
                     </span>
                   </li>
                   <li>
                     <span className="status-inner">
                       <span className="status">팔로워</span>
-                      <span>0</span>
+                      <span>
+                        0{/* {currentUser && currentUser.followers?.length} */}
+                      </span>
                     </span>
                   </li>
                   <li>
                     <span className="status-inner">
                       <span className="status">게시글</span>
-                      <span>{data?.contents.length}</span>
+                      <span>{userContents?.contents.length}</span>
                     </span>
                   </li>
                 </ul>
