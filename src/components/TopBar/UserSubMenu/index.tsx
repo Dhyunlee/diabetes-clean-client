@@ -19,7 +19,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const navigate = useNavigate();
   const { removeStorage } = useStorage;
   const handleLogOut = useCallback(() => {
-    api.get("/api/v1/auth/logout", { withCredentials: true }).then((res) => {
+    api.get("/api/v1/auth/logout", { withCredentials: true }).then(() => {
       removeStorage("accessToken");
       queryClient.setQueryData(["user"], false);
       navigate("/login", { replace: true });

@@ -5,7 +5,7 @@ import Textarea from "components/Base/Textarea";
 import {
   useCreateCommentMutation,
   useUpdateCommentMutation
-} from "hooks/services/mutations";
+} from "hooks/service/mutator";
 import { userState } from "store/userState";
 import alertHandler from "utils/functions/alertHandler";
 import { CommentsFormContainer } from "./styles";

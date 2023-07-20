@@ -6,26 +6,42 @@ export interface CommonResponse {
 export interface IAuthRequest {
   email: string;
   password: string;
+  nickname: string;
 }
 
-export interface IAuthResponse {
-  isOk: boolean;
+export type TAuthRequest = Omit<IAuthRequest, "nickname">;
+
+export interface IAuthResponse extends CommonResponse {
   accessToken: string;
 }
-
 export interface IUserInfo {
   readonly _id: string;
-  createdAt: string;
   email: string;
-  followers: [];
-  followings: [];
-  imageSrc: string;
   nickname: string;
+  aboutMe?: string;
+  followers: Array<string>;
+  followings: Array<string>;
+  imageSrc: string;
+  createdAt: string;
   updatedAt: string;
 }
-export type IWriterInfo = Pick<
+
+export type TMyInfo = Pick<
   IUserInfo,
-  "_id" | "nickname" | "imageSrc" | "email"
+  | "_id"
+  | "email"
+  | "nickname"
+  | "imageSrc"
+  | "followers"
+  | "followings"
+  | "aboutMe"
+>;
+
+export type TBriefWriter = Pick<TMyInfo, "_id" | "nickname" | "imageSrc">;
+
+export type TWriterInfo = Omit<
+  TMyInfo,
+  "followers" | "followings" | "imageSrc" | "aboutMe"
 >;
 
 export interface IUserResponse {
@@ -43,7 +59,7 @@ export interface IDiabetesRequest {
 
 export interface IDiabetesInfo {
   readonly _id: string;
-  writer?: string;
+  writer?: Pick<TBriefWriter, "_id" | "nickname">;
   sugar_level: number;
   slot: string;
   createdAt: Date | string;
@@ -52,7 +68,7 @@ export interface IDiabetesInfo {
 
 export interface IDiabetesResponse {
   isOk: boolean;
-  diabetesInfo: IDiabetesInfo[];
+  diabetesInfo: IDiabetesInfo[] | IDiabetesInfo;
 }
 
 export interface IContentsRequest {
@@ -64,7 +80,7 @@ export interface IContentsRequest {
 
 export interface IContents {
   _id: string;
-  writer: IWriterInfo;
+  writer: TMyInfo;
   content: string;
   imageName: string;
   imageUrl: string;
@@ -86,7 +102,7 @@ export interface ICommentRequest {
 
 export interface IComment {
   _id: string;
-  writer: IWriterInfo;
+  writer: TBriefWriter;
   contentsId: string;
   parentCommentId: string;
   content: string;
@@ -98,4 +114,14 @@ export interface IComment {
 export interface ICommentResponse {
   isOk: boolean;
   comment: IComment[];
+}
+
+type TFollowUser = Omit<TBriefWriter, "imageSrc">;
+export interface IFollowResponse {
+  isOk: boolean;
+  followInfo: {
+    writer: TFollowUser;
+    followers: Array<string>;
+    followings: Array<string>;
+  };
 }

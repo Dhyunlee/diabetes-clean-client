@@ -9,7 +9,6 @@ interface Iprops {
 }
 
 const Posts = (props: Iprops) => {
-  console.log(props);
   const { data: contents, isError, isLoading } = props;
 
   if (contents === undefined && isLoading) {

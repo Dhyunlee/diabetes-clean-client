@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { FiMoreHorizontal } from "react-icons/fi";
 import gravatar from "gravatar";
@@ -6,22 +6,34 @@ import SubMenu from "components/Base/SubMenu";
 
 import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
-import { IWriterInfo } from "models/db";
-import { useDelContentsMutation } from "hooks/services/mutations";
+import { TMyInfo } from "models/db";
+import { useDelContentsMutation } from "hooks/service/mutator";
 import alertHandler from "utils/functions/alertHandler";
 import PostUserInfo from "components/Feed/PostUserInfo";
+import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutation";
+import useFollowMutation from "hooks/service/mutator/follow/useFollowMutation";
 
 interface IProps {
-  writer: IWriterInfo;
+  writer: TMyInfo;
   contentId: string;
   isDeleted: boolean;
   createdAt: string | Date;
 }
 const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
-  const { _id: userId } = useRecoilValue(userState);
+  const currentUser = useRecoilValue(userState);
+  const [isFollow, setIsFollow] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
-  const [toggleFollowBtn, setToggleFollowBtn] = useState<boolean>(false);
-  const mutation = useDelContentsMutation();
+  const followMutate = useFollowMutation();
+  const unFollowMutate = useUnFollowMutation();
+  const contentsMutation = useDelContentsMutation();
+
+  useEffect(() => {
+    if (writer) {
+      // 팔로우 버튼: 로그인한 유저의 팔로잉 목록에 현재 유저가 존재하는가?
+      setIsFollow(currentUser.followings.includes(writer._id));
+    }
+  }, [currentUser, writer]);
+
   const onToggleMenu = useCallback(() => {
     setShowSubMenu((prev) => !prev);
   }, []);
@@ -38,15 +50,16 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            mutation.mutate(contentId);
+            contentsMutation.mutate(contentId);
           }
         });
     }
-  }, [mutation, contentId]);
-
+  }, [contentsMutation, contentId]);
   const onFollow = useCallback(() => {
-    console.log("팔로우하기");
-  }, []);
+    isFollow
+      ? unFollowMutate.mutate(writer?._id as string)
+      : followMutate.mutate(writer?._id as string);
+  }, [isFollow, writer, followMutate, unFollowMutate]);
 
   const onReportPost = useCallback(() => {
     console.log("ReportPost");
@@ -57,7 +70,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   }, []);
 
   const menuItem = useMemo(() => {
-    if (userId === writer._id) {
+    if (currentUser._id === writer._id) {
       return [
         {
           id: 1,
@@ -78,11 +91,12 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
         }
       ];
     }
+
     return [
       {
         id: 1,
         path: null,
-        label: `${!toggleFollowBtn ? "팔로우" : "팔로우 취소"}`,
+        label: `${isFollow ? "팔로우 취소" : "팔로우"}`,
         handler: onFollow
       },
       {
@@ -105,12 +119,13 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       }
     ];
   }, [
+    currentUser._id,
+    isFollow,
     onCloseMenu,
     onDelPost,
     onFollow,
     onHidePost,
     onReportPost,
-    userId,
     writer._id
   ]);
 

@@ -8,12 +8,15 @@ import Diabetes from "components/Memo/DiabetesList";
 import Diet from "components/Memo/Diet";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import alertHandler from "utils/functions/alertHandler";
-import { IDiabetesInfo } from "models/db";
+import { getDiabetes } from "utils/apis/diabetesApis";
+import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 import { userState } from "store/userState";
-import { useDiabetesQuery } from "hooks/services/queries";
+import { useAPIByIdQuery } from "hooks/service/queries";
+import { ROUTER_PATH } from "constants/router_path";
+import { DIABETES_KEY } from "constants/query_key";
+
 import { Container } from "styles/common";
 import { MemoContents, MemoHeader } from "./styles";
-import { ROUTER_PATH } from "constants/router_path";
 
 const MemoList = () => {
   const { SAVE_MEMO_DIABETES, SAVE_MEMO_DIET } = ROUTER_PATH;
@@ -22,14 +25,19 @@ const MemoList = () => {
   const [today] = useState(dayjs().format("YYYY-MM"));
   const [processData, setProcessData] = useState<IDiabetesInfo[]>([]);
 
-  const { data: diabetesData, isError, isLoading } = useDiabetesQuery(userId);
+  const {
+    data: diabetesData,
+    isError,
+    isLoading
+  } = useAPIByIdQuery<IDiabetesResponse>(userId, DIABETES_KEY, getDiabetes);
 
   useEffect(() => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
     const endOfDate = dayjs(curDate).endOf("month").format("YYYYMMDD");
 
-    // eslint-disable-next-line array-callback-return
-    const thisMonthDate = diabetesData?.diabetesInfo.filter((item) => {
+    const thisMonthDate = (
+      diabetesData?.diabetesInfo as IDiabetesInfo[]
+    )?.filter((item: IDiabetesInfo) => {
       const fomattedCreatedAt = dayjs(item.createdAt).format("YYYY-MM-DD");
       const date = parseInt(fomattedCreatedAt.split("-").join(""), 10);
       if (Number(startOfDate) <= date && date <= Number(endOfDate)) {

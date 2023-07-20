@@ -1,31 +1,9 @@
 import { API_PATH } from "constants/api_path";
 import { CommonResponse, IDiabetesResponse } from "models/db";
 import api from "utils/axios";
+import alertHandler from "utils/functions/alertHandler";
 
 const { DIABETES_API } = API_PATH;
-const getDiabetes = async (userId: string | null) => {
-  try {
-    if (!userId) return;
-    const { data } = await api.get(`${DIABETES_API}/users/${userId}`, {
-      withCredentials: true
-    });
-    return data;
-  } catch (error: any) {
-    throw error.response;
-  }
-};
-
-const getDiabetesFindById = async (id: string | null) => {
-  try {
-    if (!id) return;
-    const { data } = await api.get(`${DIABETES_API}/${id}`, {
-      withCredentials: true
-    });
-    return data;
-  } catch (error: any) {
-    throw error.response;
-  }
-};
 
 const createDiabetes = async <T>(insertData: T) => {
   try {
@@ -38,7 +16,10 @@ const createDiabetes = async <T>(insertData: T) => {
     );
     return data;
   } catch (error: any) {
-    console.log(error);
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
     throw error;
   }
 };
@@ -53,7 +34,10 @@ const deleteDiabetes = async (diabetesId: string) => {
     );
     return data;
   } catch (error: any) {
-    console.log(error);
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
     throw error;
   }
 };
@@ -69,8 +53,43 @@ const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
     );
     return data;
   } catch (error: any) {
-    console.log(error);
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
     throw error;
+  }
+};
+
+const getDiabetes = async (userId: string | null) => {
+  try {
+    if (!userId) return;
+    const { data } = await api.get(`${DIABETES_API}/users/${userId}`, {
+      withCredentials: true
+    });
+    return data;
+  } catch (error: any) {
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
+    throw error.response;
+  }
+};
+
+const getDiabetesFindById = async (id: string | null) => {
+  try {
+    if (!id) return;
+    const { data } = await api.get(`${DIABETES_API}/${id}`, {
+      withCredentials: true
+    });
+    return data;
+  } catch (error: any) {
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
+    throw error.response;
   }
 };
 

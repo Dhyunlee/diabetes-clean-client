@@ -1,10 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useUserContentsQuery } from "hooks/services/queries";
 import MyPosts from "components/Posts";
+import useAPIByIdQuery from "hooks/service/queries/useAPIByIdQuery";
+import { IContentsResponse } from "models/db";
+import { CONTENTS_KEY } from "constants/query_key";
+import { getUserContents } from "utils/apis/contents";
 
 const MyPost = () => {
   const { username } = useParams();
-  const { data, isError, isLoading } = useUserContentsQuery(username as string);
+  const queryKey = `${CONTENTS_KEY}/${username}`;
+  const { data, isError, isLoading } = useAPIByIdQuery<IContentsResponse>(
+    username as string,
+    queryKey,
+    getUserContents
+  );
+
   return (
     <MyPosts data={data?.contents} isError={isError} isLoading={isLoading} />
   );

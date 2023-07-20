@@ -7,7 +7,7 @@ import React, {
   DetailedHTMLProps,
   HTMLAttributes
 } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavMenutWrap } from "./styles";
 
 type commonProps = DetailedHTMLProps<
@@ -28,10 +28,6 @@ interface customType {
   fontSize?: string | number;
 }
 
-interface IMenuPos {
-  [key: string]: number;
-}
-
 const NavMenu: FunctionComponent<customType & commonProps> = ({
   lists,
   ...rest
@@ -43,7 +39,7 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
 
   const Lists = useMemo(() => lists, [lists]);
   const paths = pathname.split("/");
-  const searchPathName = paths[paths.length - 1];
+  const currentPathName = decodeURI(paths[paths.length - 1]);
 
   const onSelectedMenu = useCallback(
     (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -53,40 +49,35 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
     []
   );
 
+  /**
+   * 현재 url(currentPathName)과 해당 메뉴 item의 링크 url(targetPathName)과 같은지를 판단해주는 함수
+   * @param lists
+   * @returns number
+   */
   const getPathNameIdx = useCallback(
     (lists: listsType[]): number => {
       return lists.findIndex((item) => {
         const urlparts = (item.url as string).split("/");
-        const pathLastPart = urlparts[urlparts.length - 1];
-        return pathLastPart === searchPathName;
+        const targetPathName = urlparts[urlparts.length - 1];
+        return targetPathName === currentPathName;
       });
     },
-    [searchPathName]
+    [currentPathName]
   );
 
   const pathNameIdx = Lists[0].url && getPathNameIdx(Lists);
-
-  const menuInitPos: IMenuPos = useMemo(
-    () => ({
-      "0": 0,
-      "1": 1,
-      "2": 2
-    }),
-    []
-  );
-
   const activeLiPos =
-    menuInitPos[pathNameIdx ?? 0] * Number((100 / lists.length).toFixed(1));
+    Number(pathNameIdx) * Number((100 / lists.length).toFixed(1));
 
   useEffect(() => {
     if (activeRef.current) {
       const curElementPos = activeLiPos;
       activeRef.current.style.left = `${curElementPos}%`;
     }
-  }, [Lists, pathNameIdx, menuInitPos, activeLiPos, selectedElRef]);
+  }, [Lists, activeLiPos, selectedElRef]);
 
   const pushToRefs = useCallback(
-    (el?: any) => listChildrenRefs.current.push(el),
+    (el: any) => listChildrenRefs.current.push(el),
     []
   );
 

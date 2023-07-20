@@ -8,7 +8,7 @@ import ContentsInfo from "components/Feed/PostUserInfo";
 import CommentForm from "components/Review/CommentForm";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
-import { useDelCommentMutation } from "hooks/services/mutations";
+import { useDelCommentMutation } from "hooks/service/mutator";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 import { ROUTER_PATH } from "constants/router_path";

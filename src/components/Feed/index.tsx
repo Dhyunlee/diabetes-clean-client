@@ -1,16 +1,22 @@
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "constants/router_path";
-import FeedPosts from "components/Posts";
+import Posts from "components/Posts";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { userState } from "store/userState";
 import { StoryWarp } from "./styles";
-import { useContentsQuery } from "hooks/services/queries";
+import { useAPIQuery } from "hooks/service/queries";
+import { IContentsResponse } from "models/db";
+import { CONTENTS_KEY } from "constants/query_key";
+import { getAllContents } from "utils/apis/contents";
 
 const Feed = () => {
   const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
-  const { data, isError, isLoading } = useContentsQuery();
   const userInfo = useRecoilValue(userState);
+  const { data, isError, isLoading } = useAPIQuery<IContentsResponse>(
+    CONTENTS_KEY,
+    getAllContents
+  );
 
   const menuItem = useMemo(
     () => [
@@ -29,11 +35,7 @@ const Feed = () => {
   );
   return (
     <StoryWarp>
-      <FeedPosts
-        data={data?.contents}
-        isError={isError}
-        isLoading={isLoading}
-      />
+      <Posts data={data?.contents} isError={isError} isLoading={isLoading} />
       <SideBtnMenu menuItem={menuItem} />
     </StoryWarp>
   );
