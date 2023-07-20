@@ -103,28 +103,10 @@ const Login = () => {
           </InputGroup>
           <FrmBtnContainer>
             <button
-              type="reset"
-              style={{
-                width: 143
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                console.log("취소");
-                setInputs({
-                  ...inputs,
-                  email: "",
-                  password: ""
-                });
-                console.log(password);
-                navigate("/");
-              }}
-            >
-              취소하기
-            </button>
-            <button
               type="submit"
               style={{
-                width: 143
+                width: 296,
+                maxWidth: "inherit"
               }}
             >
               로그인
