@@ -24,10 +24,10 @@ export const SearchForm = styled.form`
     }
   }
   .search-icon {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50px;
     background-color: #f1f3f5;
     cursor: pointer;
     &:active {
