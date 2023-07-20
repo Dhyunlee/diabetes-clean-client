@@ -1,5 +1,5 @@
 import ReviewStatus from "./ReviewStatus";
-import { useAPIWithIdQuery } from "hooks/service/queries";
+import { useAPIByIdQuery } from "hooks/service/queries";
 import { ICommentResponse } from "models/db";
 import { COMMENT_KEY } from "constants/query_key";
 import { getAllComment } from "utils/apis/comment";
@@ -13,7 +13,7 @@ interface IProps {
   postId: string;
 }
 const Review = ({ postId }: IProps) => {
-  const { data } = useAPIWithIdQuery<ICommentResponse>(
+  const { data } = useAPIByIdQuery<ICommentResponse>(
     postId,
     COMMENT_KEY,
     getAllComment

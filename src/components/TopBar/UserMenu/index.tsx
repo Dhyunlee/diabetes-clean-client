@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useRecoilState } from "recoil";
-import { useQuery } from "@tanstack/react-query";
 import gravatar from "gravatar";
 import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
-import { getCurrentUserApi } from "utils/apis/userApis";
+import { getUserIdByToken } from "utils/apis/userApis";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
@@ -21,10 +20,7 @@ const UserMenu = () => {
   const { LOGIN, SIGNUP } = ROUTER_PATH;
   const token = useStorage.getStorage("accessToken");
 
-  const { data: userData } = useAPIQuery<IUserResponse>(
-    USER_KEY,
-    getCurrentUserApi
-  );
+  const { data: me } = useAPIQuery<IUserResponse>(USER_KEY, getUserIdByToken);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
 
   const onShowUserSubMenu = useCallback(() => {
@@ -36,10 +32,10 @@ const UserMenu = () => {
   }, []);
 
   useEffect(() => {
-    if (userData) {
-      setUserInfo(userData.userInfo);
+    if (me) {
+      setUserInfo(me.userInfo);
     }
-  }, [setUserInfo, userData]);
+  }, [setUserInfo, me]);
 
   const renderMenu = (token: string | null) => {
     if (!token) {
@@ -58,7 +54,7 @@ const UserMenu = () => {
         <>
           <MenuList>
             <UserItem>
-              {userData && (
+              {me && (
                 <UserInfoWrap
                   onClick={onShowUserSubMenu}
                   onMouseDown={(e) => {
@@ -68,9 +64,9 @@ const UserMenu = () => {
                   <Avatar
                     size={32}
                     imgUrl={
-                      userData?.userInfo?.imageSrc
-                        ? userData?.userInfo?.imageSrc
-                        : gravatar.url(userData?.userInfo?.nickname, {
+                      me?.userInfo?.imageSrc
+                        ? me?.userInfo?.imageSrc
+                        : gravatar.url(me?.userInfo?.nickname, {
                             s: "32px",
                             d: "retro"
                           })

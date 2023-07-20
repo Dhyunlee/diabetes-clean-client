@@ -3,7 +3,7 @@ import { BsFillTrash2Fill, BsPencilSquare } from "react-icons/bs";
 import dayjs from "dayjs";
 import { timeIcons } from "libs/time-icons";
 import { useModal } from "hooks/common/useModal";
-import { useAPIWithIdQuery } from "hooks/service/queries";
+import { useAPIByIdQuery } from "hooks/service/queries";
 import { useDelDiabetes } from "hooks/service/mutator";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import { getDiabetesFindById } from "utils/apis/diabetesApis";
@@ -21,7 +21,7 @@ interface Iprops {
 
 const DiabetesDetail = ({ id }: Iprops) => {
   const { closeModal } = useModal();
-  const { data, isError } = useAPIWithIdQuery<IDiabetesResponse>(
+  const { data, isError } = useAPIByIdQuery<IDiabetesResponse>(
     id,
     DIABETES_KEY,
     getDiabetesFindById

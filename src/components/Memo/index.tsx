@@ -11,7 +11,7 @@ import alertHandler from "utils/functions/alertHandler";
 import { getDiabetes } from "utils/apis/diabetesApis";
 import { IDiabetesInfo, IDiabetesResponse } from "models/db";
 import { userState } from "store/userState";
-import { useAPIWithIdQuery } from "hooks/service/queries";
+import { useAPIByIdQuery } from "hooks/service/queries";
 import { ROUTER_PATH } from "constants/router_path";
 import { DIABETES_KEY } from "constants/query_key";
 
@@ -29,7 +29,7 @@ const MemoList = () => {
     data: diabetesData,
     isError,
     isLoading
-  } = useAPIWithIdQuery<IDiabetesResponse>(userId, DIABETES_KEY, getDiabetes);
+  } = useAPIByIdQuery<IDiabetesResponse>(userId, DIABETES_KEY, getDiabetes);
 
   useEffect(() => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
