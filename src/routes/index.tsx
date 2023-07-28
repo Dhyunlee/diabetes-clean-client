@@ -15,6 +15,7 @@ import WriteContents from "pages/WriteContents";
 import MyPost from "components/MyFeed/MyPost";
 import ActivityPost from "components/MyFeed/ActivityPost";
 import EmpathyPost from "components/MyFeed/EmpathyPost";
+import Home from "pages/Home";
 
 const {
   INDEX,
@@ -31,12 +32,8 @@ const {
 const PublicRouter = () => {
   return (
     <Routes>
+      <Route path={INDEX} index element={<Home />} />
       <Route element={<PrivateRoutes />}>
-        <Route
-          path={INDEX}
-          index
-          element={<Navigate replace to={MEMO_DIABETES} />}
-        />
         <Route path={MEMO} element={<Memo />} />
         <Route path={SAVE_MEMO} element={<WriteMemo />}>
           <Route path="diabetes" element={<FormDiabetes />} />

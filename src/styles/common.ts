@@ -2,12 +2,12 @@ import styled from "@emotion/styled";
 import { palette } from "libs/palette";
 
 export const Header = styled.header`
+  padding: 10px 30px;
   box-shadow: ${({ theme }) => theme.boxShadow.light};
 `;
 
 export const Main = styled.main`
   width: 100%;
-  padding: 10px;
 `;
 
 export const Container = styled.div`
