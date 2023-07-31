@@ -9,6 +9,7 @@ export const SearchForm = styled.form`
     box-shadow: 0px 0px 6px 3px rgb(0 0 0 /10%);
   }
   .input-wrap {
+    position: relative;
     flex: 10;
     width: 100%;
     height: 40px;
@@ -21,6 +22,26 @@ export const SearchForm = styled.form`
       height: 100%;
       outline: none;
       font-size: 16px;
+    }
+    .clear-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: center;
+      line-height: 45px;
+      width: 45px;
+      height: 100%;
+      border-radius: 50%;
+      transition: all 0.1s ease-in;
+      display: none;
+      cursor: pointer;
+    }
+
+    .on {
+      display: block;
+    }
+    .clear-btn:hover {
+      background-color: #f1f3f5;
     }
   }
   .search-icon {

@@ -1,10 +1,10 @@
-import React, { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import Sidebar from "components/Base/Sidebar";
 import { Navbar, OverWrap } from "./styles";
 import UserMenu from "./UserMenu";
-import SearchArea from "./Search";
+import SearchBar from "../Base/SearchBar";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const Topbar = () => {
             </Link>
           </div>
         </div>
-        <div className="search-center">{targetPath && <SearchArea />}</div>
+        <div className="search-center">{targetPath && <SearchBar />}</div>
         <div className="menu-right">
           <UserMenu />
         </div>
