@@ -5,14 +5,14 @@ import gravatar from "gravatar";
 import { IComment } from "models/db";
 import SubMenu from "components/Base/SubMenu";
 import ContentsInfo from "components/Feed/PostUserInfo";
-import CommentForm from "components/Review/CommentForm";
+import CommentForm from "components/Comments/CommentForm";
+import { Icons } from "components/Posts/styles";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
 import { useDelCommentMutation } from "hooks/service/mutator";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 import { ROUTER_PATH } from "constants/router_path";
-import { Icons } from "components/Posts/styles";
 
 interface Iprops {
   comment: IComment;

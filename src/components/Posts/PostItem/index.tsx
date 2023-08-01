@@ -1,7 +1,7 @@
 import { memo } from "react";
-import Review from "components/Review";
-import { IContents } from "models/db";
+import Comments from "components/Comments";
 import PostHeader from "components/Posts/PostHeader";
+import { ICommentResponse, IContents } from "models/db";
 
 import {
   PostBody,
@@ -9,10 +9,21 @@ import {
   ReviewBlock,
   PostItemWrap
 } from "components/Posts/styles";
+import { Contour } from "styles/common";
+import PostStatus from "../PostStatus";
+import { useAPIByIdQuery } from "hooks/service/queries";
+import { COMMENT_KEY } from "constants/query_key";
+import { getAllComment } from "utils/apis/comment";
 
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
+
+  const { data: comments } = useAPIByIdQuery<ICommentResponse>(
+    _id,
+    COMMENT_KEY,
+    getAllComment
+  );
 
   return (
     <PostItemWrap key={_id}>
@@ -39,8 +50,16 @@ const PostItem = (props: IContents) => {
                 <p>{content}</p>
               </div>
             </PostBodyBlock>
+            <PostBodyBlock>
+              {comments && (
+                <PostStatus commentLength={comments.comment.length} />
+              )}
+            </PostBodyBlock>
+            <Contour />
             <ReviewBlock>
-              <Review postId={_id} />
+              {comments && (
+                <Comments postId={_id} comments={comments?.comment} />
+              )}
             </ReviewBlock>
           </PostBody>
         </>

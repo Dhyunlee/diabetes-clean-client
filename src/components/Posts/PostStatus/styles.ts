@@ -1,21 +1,21 @@
-import { palette } from "libs/palette";
 import styled from "@emotion/styled";
+import { palette } from "libs/palette";
 
-export const ReviewContainer = styled.div`
-  .review-status {
+export const PostStatusContainer = styled.div`
+  .status_inner {
     display: flex;
     align-items: center;
     padding: 10px 0;
     gap: 26px;
   }
 
-  .review_item {
+  .status_item {
     &:hover {
       color: ${palette.gray[3]};
     }
   }
 
-  .review_item.links {
+  .status_item.links {
     position: relative;
     top: -2px;
 
@@ -34,7 +34,7 @@ export const ReviewContainer = styled.div`
     }
   }
 
-  .review_item.comments {
+  .status_item.comments {
     position: relative;
     .count {
       padding-left: 3px;
@@ -43,8 +43,4 @@ export const ReviewContainer = styled.div`
       right: -13px;
     }
   }
-`;
-
-export const CommentsContainer = styled.div`
-  padding-top: 20px;
 `;
