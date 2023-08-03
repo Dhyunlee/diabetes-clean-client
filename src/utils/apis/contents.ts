@@ -9,10 +9,7 @@ const createContents = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<CommonResponse>(
       `${CONTENTS_API}`,
-      insertData,
-      {
-        withCredentials: true
-      }
+      insertData
     );
     return data;
   } catch (error: any) {
@@ -27,10 +24,7 @@ const createContents = async <T>(insertData: T) => {
 const deleteContents = async (contentId: string) => {
   try {
     const { data } = await api.delete<CommonResponse>(
-      `${CONTENTS_API}/${contentId}`,
-      {
-        withCredentials: true
-      }
+      `${CONTENTS_API}/${contentId}`
     );
     console.log({ res: data });
     return data;
@@ -45,9 +39,7 @@ const deleteContents = async (contentId: string) => {
 
 const getAllContents = async () => {
   try {
-    const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`, {
-      withCredentials: true
-    });
+    const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`);
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -61,10 +53,7 @@ const getUserContents = async (nickname: string | null) => {
   if (!nickname) return;
   try {
     const { data } = await api.get<IContentsResponse>(
-      `${CONTENTS_API}/users/${nickname}`,
-      {
-        withCredentials: true
-      }
+      `${CONTENTS_API}/users/${nickname}`
     );
     return data;
   } catch (error: any) {
