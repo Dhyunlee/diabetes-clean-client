@@ -7,18 +7,18 @@ import { IUserResponse } from "models/db";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
 import { getUserIdByToken } from "utils/apis/userApis";
-import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
 import { USER_KEY } from "constants/query_key";
 
 import { MenuList, UserInfoWrap, UserItem } from "./styles";
 import { useAPIQuery } from "hooks/service/queries";
+import { loginState } from "store/loginState";
 
 const UserMenu = () => {
   const [, setUserInfo] = useRecoilState(userState);
+  const [isLoggedIn] = useRecoilState(loginState);
   const { LOGIN, SIGNUP } = ROUTER_PATH;
-  const token = useStorage.getStorage("accessToken");
 
   const { data: me } = useAPIQuery<IUserResponse>(USER_KEY, getUserIdByToken);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
@@ -37,8 +37,8 @@ const UserMenu = () => {
     }
   }, [setUserInfo, me]);
 
-  const renderMenu = (token: string | null) => {
-    if (!token) {
+  const renderMenu = (isAuth: boolean) => {
+    if (!isAuth) {
       return (
         <>
           <UserItem>
@@ -88,7 +88,7 @@ const UserMenu = () => {
     }
   };
 
-  return <>{renderMenu(token)}</>;
+  return <>{renderMenu(isLoggedIn)}</>;
 };
 
 export default React.memo(UserMenu);

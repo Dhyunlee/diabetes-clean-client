@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import useStorage from "utils/functions/useStorage";
-
+import { useRecoilState } from "recoil";
+import { loginState } from "store/loginState";
 export const PrivateRoutes = () => {
-  const token = useStorage.getStorage("accessToken") || null;
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  const [isLoggedIn] = useRecoilState(loginState);
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoutes;
