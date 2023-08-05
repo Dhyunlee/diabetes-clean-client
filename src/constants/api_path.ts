@@ -12,7 +12,9 @@ export const API_PATH = {
   CONTENTS_API: "/api/v1/contents",
   MY_FEED: "/api/v1/contents/users",
   // Comment
-  COMMENT_API: "/api/v1/comment"
+  COMMENT_API: "/api/v1/comment",
+  //Like
+  LIKE_API: "/api/v1/like"
 };
 
 Object.freeze(API_PATH);

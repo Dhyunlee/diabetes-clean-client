@@ -1,37 +1,24 @@
-import { useState } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
-import { FcLike } from "react-icons/fc";
 import { PostStatusContainer } from "./styles";
+import LikeStatus from "../PostLikeStatus";
+import { ILike } from "models/db";
 
 interface IProps {
-  commentLength: number;
+  contentsId: string;
+  likes?: ILike[];
+  commentCount?: number;
 }
-const PostStatus = ({ commentLength }: IProps) => {
-  const [likes, setLikes] = useState(false);
-  const onClickLikes = () => {
-    setLikes((prev) => !prev);
-  };
+const PostStatus = ({ contentsId, likes, commentCount }: IProps) => {
   return (
     <PostStatusContainer>
       <div className="status_inner">
-        <div className="status_item links">
-          <span>
-            <span>공감</span>
-            <span className="likes-icon" onClick={onClickLikes}>
-              {likes ? (
-                <FcLike color="#000" className="icon" />
-              ) : (
-                <AiOutlineHeart color="#f44336" />
-              )}
-            </span>
-            <span className="count">{likes ? 1 : 0}</span>
-          </span>
-        </div>
+        <LikeStatus
+          likes={likes}
+          contentsId={contentsId}
+          likeCount={likes?.length}
+        />
         <div className="status_item comments">
-          <span>
-            <span>댓글</span>
-            <span className="count">{commentLength}</span>
-          </span>
+          <div>댓글</div>
+          <div className="count">{commentCount}</div>
         </div>
       </div>
     </PostStatusContainer>

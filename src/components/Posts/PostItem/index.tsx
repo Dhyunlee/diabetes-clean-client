@@ -1,24 +1,30 @@
 import { memo } from "react";
 import Comments from "components/Comments";
 import PostHeader from "components/Posts/PostHeader";
-import { ICommentResponse, IContents } from "models/db";
+import PostStatus from "components/Posts/PostStatus";
+import { ICommentResponse, IContents, ILikeResponse } from "models/db";
+import { useAPIByIdQuery } from "hooks/service/queries";
+import { COMMENT_KEY, Like_key } from "constants/query_key";
+import { getAllComment } from "utils/apis/comment";
 
+import { Contour } from "styles/common";
 import {
   PostBody,
   PostBodyBlock,
   ReviewBlock,
   PostItemWrap
 } from "components/Posts/styles";
-import { Contour } from "styles/common";
-import PostStatus from "../PostStatus";
-import { useAPIByIdQuery } from "hooks/service/queries";
-import { COMMENT_KEY } from "constants/query_key";
-import { getAllComment } from "utils/apis/comment";
+import { getContentsLike } from "utils/apis/like";
 
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
 
+  const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
+    _id,
+    Like_key,
+    getContentsLike
+  );
   const { data: comments } = useAPIByIdQuery<ICommentResponse>(
     _id,
     COMMENT_KEY,
@@ -51,9 +57,11 @@ const PostItem = (props: IContents) => {
               </div>
             </PostBodyBlock>
             <PostBodyBlock>
-              {comments && (
-                <PostStatus commentLength={comments.comment.length} />
-              )}
+              <PostStatus
+                contentsId={_id}
+                likes={contentsLike?.like}
+                commentCount={comments?.comment.length}
+              />
             </PostBodyBlock>
             <Contour />
             <ReviewBlock>
