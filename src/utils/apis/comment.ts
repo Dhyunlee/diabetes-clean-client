@@ -9,10 +9,7 @@ const createComment = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<CommonResponse>(
       `${COMMENT_API}`,
-      insertData,
-      {
-        withCredentials: true
-      }
+      insertData
     );
     return data;
   } catch (error: any) {
@@ -34,10 +31,7 @@ const updateComment = async ({
   try {
     const { data } = await api.patch<CommonResponse>(
       `${COMMENT_API}/${commentId}`,
-      { content },
-      {
-        withCredentials: true
-      }
+      { content }
     );
     console.log({ predata: data });
     return data;
@@ -53,10 +47,7 @@ const updateComment = async ({
 const deleteComment = async (commentId: string) => {
   try {
     const { data } = await api.delete<CommonResponse>(
-      `${COMMENT_API}/${commentId}`,
-      {
-        withCredentials: true
-      }
+      `${COMMENT_API}/${commentId}`
     );
     return data;
   } catch (error: any) {
@@ -72,10 +63,7 @@ const getAllComment = async (contentsId: string | null) => {
   try {
     if (!contentsId) return;
     const { data } = await api.get<ICommentResponse>(
-      `${COMMENT_API}/contents/${contentsId}`,
-      {
-        withCredentials: true
-      }
+      `${COMMENT_API}/contents/${contentsId}`
     );
     return data;
   } catch (error: any) {

@@ -1,15 +1,28 @@
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, IContentsResponse } from "models/db";
+import { CommonResponse, ILikeRequest, ILikeResponse } from "models/db";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
-const { CONTENTS_API } = API_PATH;
+const { LIKE_API } = API_PATH;
 
-const createContents = async <T>(insertData: T) => {
+const addLike = async (insertData: ILikeRequest) => {
+  try {
+    const { data } = await api.post<CommonResponse>(`${LIKE_API}`, insertData);
+    return data;
+  } catch (error: any) {
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
+    throw error;
+  }
+};
+const unLike = async (insertData: ILikeRequest) => {
+  const { userId, ...context } = insertData;
   try {
     const { data } = await api.post<CommonResponse>(
-      `${CONTENTS_API}`,
-      insertData
+      `${LIKE_API}/contents/users/${userId}`,
+      context
     );
     return data;
   } catch (error: any) {
@@ -20,26 +33,13 @@ const createContents = async <T>(insertData: T) => {
     throw error;
   }
 };
-
-const deleteContents = async (contentId: string) => {
+// /like/contents/contentsId
+const getContentsLike = async (contentsId: string | null) => {
   try {
-    const { data } = await api.delete<CommonResponse>(
-      `${CONTENTS_API}/${contentId}`
+    if (!contentsId) return;
+    const { data } = await api.get<ILikeResponse>(
+      `${LIKE_API}/contents/${contentsId}`
     );
-    console.log({ res: data });
-    return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error;
-  }
-};
-
-const getAllContents = async () => {
-  try {
-    const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`);
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -49,11 +49,12 @@ const getAllContents = async () => {
     throw error.response;
   }
 };
-const getUserContents = async (nickname: string | null) => {
-  if (!nickname) return;
+// /like/users/6491db12d62b2e1abd051b97
+const getMyContentsLike = async (userId: string | null) => {
   try {
-    const { data } = await api.get<IContentsResponse>(
-      `${CONTENTS_API}/users/${nickname}`
+    if (!userId) return;
+    const { data } = await api.get<ILikeResponse>(
+      `${LIKE_API}/users/${userId}`
     );
     return data;
   } catch (error: any) {
@@ -65,4 +66,4 @@ const getUserContents = async (nickname: string | null) => {
   }
 };
 
-export { getAllContents, getUserContents, createContents, deleteContents };
+export { addLike, unLike, getContentsLike, getMyContentsLike };

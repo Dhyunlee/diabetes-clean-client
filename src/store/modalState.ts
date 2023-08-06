@@ -1,4 +1,3 @@
-import { IDiabetesInfo } from "models/db";
 import { atom } from "recoil";
 
 export interface ITextInfo {

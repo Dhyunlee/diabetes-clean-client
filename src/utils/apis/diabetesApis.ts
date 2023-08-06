@@ -7,13 +7,7 @@ const { DIABETES_API } = API_PATH;
 
 const createDiabetes = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<CommonResponse>(
-      `${DIABETES_API}`,
-      insertData,
-      {
-        withCredentials: true
-      }
-    );
+    const { data } = await api.post<CommonResponse>(`${DIABETES_API}`);
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -27,10 +21,7 @@ const createDiabetes = async <T>(insertData: T) => {
 const deleteDiabetes = async (diabetesId: string) => {
   try {
     const { data } = await api.delete<CommonResponse>(
-      `${DIABETES_API}/${diabetesId}`,
-      {
-        withCredentials: true
-      }
+      `${DIABETES_API}/${diabetesId}`
     );
     return data;
   } catch (error: any) {
@@ -45,11 +36,7 @@ const deleteDiabetes = async (diabetesId: string) => {
 const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
   try {
     const { data } = await api.patch<IDiabetesResponse>(
-      `${DIABETES_API}/${diabetesId}`,
-      insertData,
-      {
-        withCredentials: true
-      }
+      `${DIABETES_API}/${diabetesId}`
     );
     return data;
   } catch (error: any) {
@@ -64,9 +51,7 @@ const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
 const getDiabetes = async (userId: string | null) => {
   try {
     if (!userId) return;
-    const { data } = await api.get(`${DIABETES_API}/users/${userId}`, {
-      withCredentials: true
-    });
+    const { data } = await api.get(`${DIABETES_API}/users/${userId}`);
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -80,9 +65,7 @@ const getDiabetes = async (userId: string | null) => {
 const getDiabetesFindById = async (id: string | null) => {
   try {
     if (!id) return;
-    const { data } = await api.get(`${DIABETES_API}/${id}`, {
-      withCredentials: true
-    });
+    const { data } = await api.get(`${DIABETES_API}/${id}`);
     return data;
   } catch (error: any) {
     alertHandler.onToast({

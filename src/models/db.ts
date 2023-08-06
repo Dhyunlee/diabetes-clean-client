@@ -125,3 +125,21 @@ export interface IFollowResponse {
     followings: Array<string>;
   };
 }
+
+export interface ILikeRequest {
+  userId: string;
+  commentId?: string;
+  contents?: string;
+}
+
+export interface ILike {
+  _id: string;
+  userId: string;
+  commentId?: string;
+  contents?: string;
+}
+
+export interface ILikeResponse {
+  isOk: boolean;
+  like: ILike[];
+}

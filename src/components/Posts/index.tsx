@@ -10,8 +10,7 @@ interface Iprops {
 
 const Posts = (props: Iprops) => {
   const { data: contents, isError, isLoading } = props;
-
-  if (contents === undefined && isLoading) {
+  if (!contents && isLoading) {
     return <div>포스팅 불러오는중</div>;
   }
   if (isError) {
