@@ -118,7 +118,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       }
     ];
   }, [
-    currentUser._id,
+    currentUser?._id,
     isFollow,
     onCloseMenu,
     onDelPost,

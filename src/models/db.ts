@@ -129,14 +129,14 @@ export interface IFollowResponse {
 export interface ILikeRequest {
   userId: string;
   commentId?: string;
-  contents?: string;
+  contentsId?: string;
 }
 
 export interface ILike {
   _id: string;
-  userId: string;
-  commentId?: string;
-  contents?: string;
+  writer: string;
+  comments?: IComment;
+  contents?: IContents;
 }
 
 export interface ILikeResponse {

@@ -38,8 +38,8 @@ const PostLikeStatus = ({ contentsId, likes, likeCount }: IProps) => {
 
   useEffect(() => {
     likes?.map((like) => {
-      if (like.userId === currentId) {
-        setIsLike(like.userId === currentId);
+      if (like.writer === currentId) {
+        setIsLike(like.writer === currentId);
       }
     });
 
