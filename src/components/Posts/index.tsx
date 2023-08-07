@@ -1,9 +1,9 @@
 import { PostCardWrap } from "./styles";
 import PostItem from "./PostItem";
-import { IContents } from "models/db";
+import { IContents, ILike } from "models/db";
 
 interface Iprops {
-  data?: IContents[];
+  data?: IContents[] | ILike[];
   isError?: boolean;
   isLoading?: boolean;
 }

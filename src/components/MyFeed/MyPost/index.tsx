@@ -5,6 +5,7 @@ import { IContentsResponse } from "models/db";
 import { CONTENTS_KEY } from "constants/query_key";
 import { getUserContents } from "utils/apis/contents";
 
+// 내 게시글
 const MyPost = () => {
   const { username } = useParams();
   const queryKey = `${CONTENTS_KEY}/${username}`;
