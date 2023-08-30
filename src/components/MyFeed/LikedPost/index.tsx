@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import LikedPosts from "components/Posts";
+import LikedPosts from "components/Posts/OriginPost";
 import { Like_key } from "constants/query_key";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import { IContents, ILikeResponse } from "models/db";

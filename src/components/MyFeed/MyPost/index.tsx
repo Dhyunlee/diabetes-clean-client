@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import MyPosts from "components/Posts";
+import MyPosts from "components/Posts/OriginPost";
 import useAPIByIdQuery from "hooks/service/queries/useAPIByIdQuery";
 import { IContentsResponse } from "models/db";
 import { CONTENTS_KEY } from "constants/query_key";

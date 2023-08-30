@@ -22,11 +22,11 @@ const createContents = async <T>(insertData: T) => {
 };
 
 const deleteContents = async (contentId: string) => {
+  console.log(contentId);
   try {
     const { data } = await api.delete<CommonResponse>(
       `${CONTENTS_API}/${contentId}`
     );
-    console.log({ res: data });
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -37,9 +37,13 @@ const deleteContents = async (contentId: string) => {
   }
 };
 
-const getAllContents = async () => {
+const getAllContents = async (page: number) => {
+  const limit = 10;
   try {
-    const { data } = await api.get<IContentsResponse>(`${CONTENTS_API}`);
+    //contents?page=1&size=10
+    const { data } = await api.get<IContentsResponse>(
+      `${CONTENTS_API}?page=${page}&size=${limit}`
+    );
     return data;
   } catch (error: any) {
     alertHandler.onToast({

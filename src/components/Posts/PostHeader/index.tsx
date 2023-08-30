@@ -43,6 +43,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
 
   const onDelPost = useCallback(() => {
     if (contentId) {
+      console.log({ contentId });
       alertHandler
         .onConfirm({
           msg: "포스팅을 삭제하실건가요?"
