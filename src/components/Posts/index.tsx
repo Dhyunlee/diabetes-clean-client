@@ -1,17 +1,16 @@
 import { PostCardWrap } from "./styles";
 import PostItem from "./PostItem";
-import { IContents } from "models/db";
+import { IContents, ILike } from "models/db";
 
 interface Iprops {
-  data?: IContents[];
+  data?: IContents[] | ILike[];
   isError?: boolean;
   isLoading?: boolean;
 }
 
 const Posts = (props: Iprops) => {
   const { data: contents, isError, isLoading } = props;
-
-  if (contents === undefined && isLoading) {
+  if (!contents && isLoading) {
     return <div>포스팅 불러오는중</div>;
   }
   if (isError) {

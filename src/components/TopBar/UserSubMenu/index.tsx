@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import SubMenu from "components/Base/SubMenu";
@@ -7,6 +7,7 @@ import api from "utils/axios";
 import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
+import { loginState } from "store/loginState";
 
 interface IProps {
   showSubMenu: boolean;
@@ -14,6 +15,7 @@ interface IProps {
 }
 const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const { MYPAGE, STORY } = ROUTER_PATH;
+  const [, setIsLoggedIn] = useRecoilState(loginState);
   const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -21,6 +23,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const handleLogOut = useCallback(() => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then(() => {
       removeStorage("accessToken");
+      setIsLoggedIn(false);
       queryClient.setQueryData(["user"], false);
       navigate("/login", { replace: true });
     });

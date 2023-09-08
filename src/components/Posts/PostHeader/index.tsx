@@ -29,7 +29,6 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
 
   useEffect(() => {
     if (writer) {
-      // 팔로우 버튼: 로그인한 유저의 팔로잉 목록에 현재 유저가 존재하는가?
       setIsFollow(currentUser.followings.includes(writer._id));
     }
   }, [currentUser, writer]);
@@ -119,7 +118,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       }
     ];
   }, [
-    currentUser._id,
+    currentUser?._id,
     isFollow,
     onCloseMenu,
     onDelPost,

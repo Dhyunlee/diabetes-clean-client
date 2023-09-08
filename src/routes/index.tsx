@@ -14,7 +14,7 @@ import MyStory from "pages/MyStory";
 import WriteContents from "pages/WriteContents";
 import MyPost from "components/MyFeed/MyPost";
 import ActivityPost from "components/MyFeed/ActivityPost";
-import EmpathyPost from "components/MyFeed/EmpathyPost";
+import LikedPost from "components/MyFeed/LikedPost";
 import Home from "pages/Home";
 
 const {
@@ -47,7 +47,7 @@ const PublicRouter = () => {
       <Route path={STORY} element={<Story />} />
       <Route path={MY_FEED} element={<MyStory />}>
         <Route index element={<MyPost />} />
-        <Route path="empathy" element={<EmpathyPost />} />
+        <Route path="empathy" element={<LikedPost />} />
         <Route path="activity" element={<ActivityPost />} />
       </Route>
       <Route path={"*"} element={<NotFound />} />
