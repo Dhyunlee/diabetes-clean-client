@@ -27,6 +27,7 @@ const App = () => {
         <RouterContainer />
       </Main>
       {isOpenModal && <GlobalModal isOpenModal={modalValue.isOpen} />}
+      <footer style={{ height: 150 }}>푸터</footer>
     </div>
   );
 };
