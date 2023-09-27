@@ -10,10 +10,10 @@ import { userState } from "store/userState";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import useFollowMutation from "hooks/service/mutator/follow/useFollowMutation";
 import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutation";
-import { getUserContents } from "utils/apis/contents";
+import { getMyFeedInfo } from "utils/apis/contents";
 import { getFollow } from "utils/apis/follow";
 import { CONTENTS_KEY, FOLLOW_KEY } from "constants/query_key";
-import { IContentsResponse, IFollowResponse } from "models/db";
+import { IFollowResponse, IMyFeedResponse } from "models/db";
 
 import {
   MyFeedContainer,
@@ -31,17 +31,13 @@ const MyFeed = () => {
   const { STORY } = ROUTER_PATH;
   const { username } = useParams();
   const queryKey = `${CONTENTS_KEY}/${username}`;
-  const { data: userContents, isLoading } = useAPIByIdQuery<IContentsResponse>(
+  const { data, isLoading } = useAPIByIdQuery<IMyFeedResponse>(
     username as string,
     queryKey,
-    getUserContents
+    getMyFeedInfo
   );
   const currentUser = useRecoilValue(userState);
-  const writer = useMemo(
-    () => userContents?.contents[0]?.writer,
-    [userContents?.contents]
-  );
-
+  const writer = useMemo(() => data?.contents.writer, [data]);
   const { data: followData } = useAPIByIdQuery<IFollowResponse>(
     writer?._id as string,
     FOLLOW_KEY,
@@ -70,6 +66,7 @@ const MyFeed = () => {
   if (isLoading) {
     return <div>로딩중</div>;
   }
+
   return (
     <MyFeedWrap>
       <MyFeedContainer>
@@ -133,7 +130,7 @@ const MyFeed = () => {
                   <li>
                     <span className="status-inner">
                       <span className="status">게시글</span>
-                      <span>{userContents?.contents.length}</span>
+                      <span>{data?.contents.contentsCount}</span>
                     </span>
                   </li>
                 </ul>

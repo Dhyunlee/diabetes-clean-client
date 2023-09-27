@@ -5,6 +5,7 @@ import Posts from "components/Posts";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { userState } from "store/userState";
 import { StoryWarp } from "./styles";
+import { getAllContents } from "utils/apis/contents";
 
 const Feed = () => {
   const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
@@ -27,7 +28,8 @@ const Feed = () => {
   );
   return (
     <StoryWarp className="posts">
-      <Posts />
+      {/* 피드, 마이 피드 컴포넌트에서 데이터 불러와서 Posts 컴포넌트에서 UI 랜더링 */}
+      <Posts fetcher={getAllContents} />
       <SideBtnMenu menuItem={menuItem} />
     </StoryWarp>
   );
