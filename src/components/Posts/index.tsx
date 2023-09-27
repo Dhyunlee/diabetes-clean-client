@@ -2,41 +2,32 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import PostItem from "./PostItem";
 import { IContentsResponse } from "models/db";
-import { PostCardWrap } from "./styles";
-import { useInfiniteQuery } from "@tanstack/react-query";
-// import {
-//   getUserContents,
-//   getLikedPosts,
-//   getAllContents
-// } from "utils/apis/contents";
+import { ErrprPostItemWrap, PostCardWrap } from "./styles";
+import { QueryKey, useInfiniteQuery } from "@tanstack/react-query";
 import { CONTENTS_KEY } from "constants/query_key";
+import axios from "axios";
 
 interface IProps {
-  fetcher: (page: string) => Promise<IContentsResponse>;
+  params: string;
+  queryKey?: string;
+  fetcher: (page: string, context: string) => Promise<IContentsResponse>;
 }
-const Posts = ({ fetcher }: IProps) => {
+const PostContext = ({ params, queryKey, fetcher }: IProps) => {
   const listSize = 10; //한 페이지에 보여질 게시글 수
   const { ref, inView } = useInView();
 
   const {
     data,
+    error,
     isSuccess,
-    isError,
+    isLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<IContentsResponse>({
-    queryKey: [CONTENTS_KEY],
-    queryFn: ({ pageParam = 1 }) => fetcher(pageParam),
-    // queryFn: ({ pageParam = 1 }) => getAllContents(pageParam),
-    // queryFn: ({ pageParam = 1 }) =>
-    //   getUserContents(params as string, pageParam),
+    queryKey: [queryKey || CONTENTS_KEY],
+    queryFn: ({ pageParam = 1 }) => fetcher(pageParam, params),
     getNextPageParam: (lastPage, allPages) => {
-      /* 
-        - lastPage.contents.length === listSize이면 아직 다 불러오지 못한 상태
-        - 10개씩 불러오기 때문에 lastPage.contents.length === listSize이
-        - 다르다면 그 해당 페이지가 마지막 페이지라는 의미
-      */
       return lastPage.contents.length === listSize
         ? allPages.length + 1
         : undefined;
@@ -48,39 +39,46 @@ const Posts = ({ fetcher }: IProps) => {
       fetchNextPage();
     }
   }, [inView, fetchNextPage, hasNextPage]);
-
-  const context =
-    isSuccess &&
-    data.pages.map((page) =>
-      page.contents.map((post, idx) => {
-        if (page.contents.length > 0) {
-          if (page.contents.length === idx + 1) {
-            return (
-              <PostCardWrap key={post._id} ref={ref}>
-                <PostItem {...post} />
-              </PostCardWrap>
-            );
-          }
-          return (
-            // 마지막 post
+  const renderContext = () => {
+    if (isSuccess) {
+      return data.pages.map((page) =>
+        page.contents.map((post, idx) => {
+          return page.contents?.length === idx + 1 ? (
+            <PostCardWrap key={post._id} ref={ref}>
+              <PostItem {...post} />
+            </PostCardWrap>
+          ) : (
             <PostCardWrap key={post._id}>
               <PostItem {...post} />
             </PostCardWrap>
           );
-        } else {
-          <PostCardWrap key={post._id} ref={ref}>
-            컨텐츠가 없습니다.
-          </PostCardWrap>;
+        })
+      );
+    } else {
+      if (axios.isAxiosError(error)) {
+        let errorMessage = "";
+        if (error.response?.status === 403) {
+          errorMessage = "좋아요한 게시글이 아직 없습니다.";
         }
-      })
-    );
+        if (error.response?.status === 500) {
+          errorMessage = "서버 에러, 잠시후 다시 시작해주세요";
+        }
+        return (
+          <PostCardWrap>
+            <ErrprPostItemWrap>{errorMessage}</ErrprPostItemWrap>
+          </PostCardWrap>
+        );
+      }
+    }
+  };
 
-  if (isError) {
-    return <div>포스팅을 불러오는데 실패했습니다.</div>;
+  if (isLoading) {
+    return <div>로딩중...</div>;
   }
+
   return (
     <>
-      {context}
+      {renderContext()}
       {isFetchingNextPage && (
         <h3 style={{ position: "fixed", top: 10, left: 10 }}>Loading...</h3>
       )}
@@ -88,4 +86,4 @@ const Posts = ({ fetcher }: IProps) => {
   );
 };
 
-export default Posts;
+export default PostContext;

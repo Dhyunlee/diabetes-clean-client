@@ -10,13 +10,21 @@ export const PostCardWrap = styled.div`
   color: #343a40;
 `;
 
+// PostItem
 export const PostItemWrap = styled.div`
   padding: 30px 15px;
   background-color: #fff;
   border-radius: 5px;
 `;
 
-// post-header
+export const ErrprPostItemWrap = styled(PostItemWrap)`
+  height: 360px;
+  color: #adb5bd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const PostHeader = styled.header`
   position: relative;
   width: 100%;

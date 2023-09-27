@@ -41,7 +41,7 @@ api.interceptors.response.use(
     return config;
   },
   async (error) => {
-    throw error.response;
+    throw error;
   }
 );
 
