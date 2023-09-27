@@ -29,7 +29,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
 
   useEffect(() => {
     if (writer) {
-      setIsFollow(currentUser.followings.includes(writer._id));
+      setIsFollow(currentUser?.followings.includes(writer._id));
     }
   }, [currentUser, writer]);
 
@@ -70,7 +70,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   }, []);
 
   const menuItem = useMemo(() => {
-    if (currentUser._id === writer._id) {
+    if (currentUser?._id === writer?._id) {
       return [
         {
           id: 1,
@@ -126,7 +126,7 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
     onFollow,
     onHidePost,
     onReportPost,
-    writer._id
+    writer?._id
   ]);
 
   return (
@@ -134,16 +134,16 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       <PostHeaderBlock>
         <PostUserInfo
           createdAt={createdAt}
-          userName={writer.nickname}
+          userName={writer?.nickname}
           imgUrl={
             writer?.imageSrc
               ? writer?.imageSrc
-              : gravatar.url(writer.nickname, {
+              : gravatar.url(writer?.nickname, {
                   s: "32px",
                   d: "retro"
                 })
           }
-          link={`/story/${writer.nickname}`}
+          link={`/story/${writer?.nickname}`}
         />
         {!isDeleted && (
           <Icons

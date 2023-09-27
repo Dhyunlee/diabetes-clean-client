@@ -17,7 +17,7 @@ import {
 import { getContentsLike } from "utils/apis/like";
 
 const PostItem = (props: IContents) => {
-  console.log(props.writer);
+  console.log(props);
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
 
