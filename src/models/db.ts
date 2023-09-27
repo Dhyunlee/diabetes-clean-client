@@ -89,6 +89,7 @@ export interface IContents {
   isDeleted: boolean;
 }
 export interface IContentsResponse {
+  likedPost?: any;
   isOk: boolean;
   contents: IContents[];
 }
@@ -98,6 +99,16 @@ export interface ICommentRequest {
   contentsId: string;
   parentCommentId?: string;
   content: string;
+}
+
+export interface IMyFeed {
+  writer: TMyInfo;
+  contentsCount: number;
+}
+
+export interface IMyFeedResponse {
+  isOk: boolean;
+  contents: IMyFeed;
 }
 
 export interface IComment {
