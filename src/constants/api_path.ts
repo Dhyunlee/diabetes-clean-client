@@ -11,6 +11,8 @@ export const API_PATH = {
   // Story
   CONTENTS_API: "/api/v1/contents",
   MY_FEED: "/api/v1/contents/users",
+  // Search
+  SEARCH_API: "/api/v1/search",
   // Comment
   COMMENT_API: "/api/v1/comment",
   //Like

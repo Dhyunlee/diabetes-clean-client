@@ -1,5 +1,3 @@
-import React from "react";
-
 const ActivityPost = () => {
   return (
     <div className="lists">

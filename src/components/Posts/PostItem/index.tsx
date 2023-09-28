@@ -19,6 +19,16 @@ import { getContentsLike } from "utils/apis/like";
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
+  const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
+    _id,
+    Like_key,
+    getContentsLike
+  );
+  const { data: comments } = useAPIByIdQuery<ICommentResponse>(
+    _id,
+    COMMENT_KEY,
+    getAllComment
+  );
 
   const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
     _id,
