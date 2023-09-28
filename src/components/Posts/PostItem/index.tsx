@@ -30,17 +30,6 @@ const PostItem = (props: IContents) => {
     getAllComment
   );
 
-  const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
-    _id,
-    Like_key,
-    getContentsLike
-  );
-  const { data: comments } = useAPIByIdQuery<ICommentResponse>(
-    _id,
-    COMMENT_KEY,
-    getAllComment
-  );
-
   return (
     <PostItemWrap key={_id}>
       <PostHeader

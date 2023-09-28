@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, IContentsResponse, ILikeResponse } from "models/db";
+import { CommonResponse, IContentsResponse } from "models/db";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
@@ -21,7 +21,6 @@ const createContents = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<CommonResponse>(
       `${CONTENTS_API}`,
-      insertData
       insertData
     );
     return data;
@@ -123,10 +122,43 @@ const getLikedPosts = async (page: string, context: string) => {
   try {
     //contents/like/users/username?page=1&size=10
     const { data } = await api.get<IContentsResponse>(
-      `${CONTENTS_API}/users/${nickname}`,
-      {
-        withCredentials: true
+      `${CONTENTS_API}/like/users/${context}?page=${page}&size=${limit}`
+    );
+    //응답 데이터를 contents와 맞추기 위해 가공함.
+    if (!data.likedPost.length)
+      return {
+        isOk: false,
+        contents: []
+      };
+    const contents = data?.likedPost
+      .map((item: any) => item.contents)
+      .reverse();
+    const data_: IContentsResponse = {
+      isOk: true,
+      contents
+    };
+
+    return data_;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
       }
+    }
+    throw error;
+  }
+};
+
+// 검색
+//search?keyword=오늘&page=1&size=10
+const getSearchContents = async (page: string, context: string) => {
+  const limit = 10;
+  try {
+    const { data } = await api.get<IContentsResponse>(
+      `${SEARCH_API}?keyword=${context}&page=${page}&size=${limit}`
     );
     return data;
   } catch (error: unknown) {
@@ -142,4 +174,12 @@ const getLikedPosts = async (page: string, context: string) => {
   }
 };
 
-export { getAllContents, getUserContents, createContents, deleteContents };
+export {
+  getAllContents,
+  getSearchContents,
+  getUserContents,
+  getMyFeedInfo,
+  getLikedPosts,
+  createContents,
+  deleteContents
+};
