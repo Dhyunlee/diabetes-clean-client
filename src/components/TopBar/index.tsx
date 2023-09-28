@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import Sidebar from "components/Base/Sidebar";
 import { Navbar, OverWrap } from "./styles";
 import UserMenu from "./UserMenu";
+import SearchBar from "../Base/SearchBar";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +12,9 @@ const Topbar = () => {
   const location = useLocation();
 
   useLayoutEffect(() => {
-    setTargetPath(location.pathname === "/story");
+    setTargetPath(
+      location.pathname === "/story" || location.pathname === "/search"
+    );
   }, [location.pathname]);
 
   const showSidebar = () => setIsOpen(true);
@@ -34,7 +37,7 @@ const Topbar = () => {
             </Link>
           </div>
         </div>
-        <div>{targetPath && <div>검색어 기능 구현중</div>}</div>
+        <div className="search-center">{targetPath && <SearchBar />}</div>
         <div className="menu-right">
           <UserMenu />
         </div>

@@ -51,6 +51,21 @@ export const reset = css`
     list-style: none;
   }
 
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  //input[type=search]의 x표시 없애기
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    display: none;
+  }
+
   .swal2-container {
     font-size: 18px !important;
   }

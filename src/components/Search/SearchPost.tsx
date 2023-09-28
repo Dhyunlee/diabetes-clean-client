@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
-import PostItem from "./PostItem";
+import PostItem from "../Posts/PostItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { IContentsResponse } from "models/db";
 import { CONTENTS_KEY } from "constants/query_key";
-import { ErrprPostItemWrap, PostCardWrap } from "./styles";
+import { ErrprPostItemWrap, PostCardWrap } from "../Posts/styles";
 
 interface IProps {
   params: string;
@@ -13,7 +13,7 @@ interface IProps {
   fetcher: (page: string, context: string) => Promise<IContentsResponse>;
   queryKey?: string;
 }
-const Posts = ({ params, queryKey, fetcher }: IProps) => {
+const SearchPost = ({ params, queryKey, fetcher }: IProps) => {
   const listSize = 10; //한 페이지에 보여질 게시글 수
   const { ref, inView } = useInView();
 
@@ -78,9 +78,15 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
   if (isLoading) {
     return <div>로딩중...</div>;
   }
-
   return (
     <>
+      {data?.pages[0].total && (
+        <div>
+          총{" "}
+          <span style={{ fontWeight: "bolder" }}>{data?.pages[0].total}개</span>
+          의 컨텐츠를 찾았습니다.
+        </div>
+      )}
       {renderContext()}
       {isFetchingNextPage && (
         <h3 style={{ position: "fixed", top: 10, left: 10 }}>Loading...</h3>
@@ -89,4 +95,4 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
   );
 };
 
-export default Posts;
+export default SearchPost;

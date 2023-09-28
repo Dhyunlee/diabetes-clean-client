@@ -12,6 +12,9 @@ export const Navbar = styled.div`
     justify-content: center;
     align-items: center;
   }
+  .search-center {
+    width: 680px;
+  }
   .menu-right {
     display: flex;
     justify-content: center;

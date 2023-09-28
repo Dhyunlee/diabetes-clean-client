@@ -92,6 +92,7 @@ export interface IContentsResponse {
   likedPost?: any;
   isOk: boolean;
   contents: IContents[];
+  total?: number;
 }
 
 export interface ICommentRequest {

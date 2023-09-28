@@ -19,7 +19,6 @@ import { getContentsLike } from "utils/apis/like";
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
-
   const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
     _id,
     Like_key,

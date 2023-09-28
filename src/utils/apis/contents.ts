@@ -4,7 +4,7 @@ import { CommonResponse, IContentsResponse } from "models/db";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
-const { CONTENTS_API } = API_PATH;
+const { CONTENTS_API, SEARCH_API } = API_PATH;
 
 export interface ResData {
   data: { isOk: boolean; likedPost: []; msg: string };
@@ -152,8 +152,31 @@ const getLikedPosts = async (page: string, context: string) => {
   }
 };
 
+// 검색
+//search?keyword=오늘&page=1&size=10
+const getSearchContents = async (page: string, context: string) => {
+  const limit = 10;
+  try {
+    const { data } = await api.get<IContentsResponse>(
+      `${SEARCH_API}?keyword=${context}&page=${page}&size=${limit}`
+    );
+    return data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
+  }
+};
+
 export {
   getAllContents,
+  getSearchContents,
   getUserContents,
   getMyFeedInfo,
   getLikedPosts,
