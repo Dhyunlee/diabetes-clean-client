@@ -1,25 +1,42 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { MdSearch, MdClear } from "react-icons/md";
 import { SearchForm } from "./styles";
+import alertHandler from "utils/functions/alertHandler";
 
 const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
   const [isClick, setIsClick] = useState(false);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchText.length) {
       setIsClick(true);
     }
-  }, [searchText.length]);
+  }, [searchText]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(searchText);
+  const onCleanIcon = () => {
+    if (inputRef.current) {
+      setIsClick(false);
+      (inputRef.current as HTMLInputElement).value = "";
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchText) {
+      navigate(`/search?keyword=${searchText}`);
+    } else {
+      alertHandler.onToast({
+        msg: "검색어를 입력해주세요!",
+        icon: "warning"
+      });
+    }
   };
 
   return (
@@ -36,19 +53,14 @@ const SearchBar = () => {
           />
           <span
             className={`clear-btn ${searchText.length && isClick ? "on" : ""}`}
-            onClick={() => {
-              if (inputRef.current) {
-                setIsClick(false);
-                (inputRef.current as HTMLInputElement).value = "";
-              }
-            }}
+            onClick={onCleanIcon}
           >
             <MdClear />
           </span>
         </div>
-        <div className="search-icon" onClick={() => console.log("클릭")}>
+        <button type="submit" className="search-icon">
           <MdSearch width={"100%"} size={25} color="gray" />
-        </div>
+        </button>
       </div>
     </SearchForm>
   );

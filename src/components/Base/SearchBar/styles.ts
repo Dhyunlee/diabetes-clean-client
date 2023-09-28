@@ -50,6 +50,7 @@ export const SearchForm = styled.form`
     align-items: center;
     width: 50px;
     background-color: #f1f3f5;
+    border: none;
     cursor: pointer;
     &:active {
     }

@@ -12,7 +12,9 @@ const Topbar = () => {
   const location = useLocation();
 
   useLayoutEffect(() => {
-    setTargetPath(location.pathname === "/story");
+    setTargetPath(
+      location.pathname === "/story" || location.pathname === "/search"
+    );
   }, [location.pathname]);
 
   const showSidebar = () => setIsOpen(true);

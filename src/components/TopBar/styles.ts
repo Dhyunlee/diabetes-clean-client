@@ -13,7 +13,7 @@ export const Navbar = styled.div`
     align-items: center;
   }
   .search-center {
-    width: 50%;
+    width: 680px;
   }
   .menu-right {
     display: flex;

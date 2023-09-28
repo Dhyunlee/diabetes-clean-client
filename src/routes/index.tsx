@@ -15,6 +15,7 @@ import WriteContents from "pages/WriteContents";
 import MyPost from "components/MyFeed/MyPost";
 import ActivityPost from "components/MyFeed/ActivityPost";
 import LikedPost from "components/MyFeed/LikedPost";
+import SearchPage from "pages/SearchPage";
 
 const {
   INDEX,
@@ -48,6 +49,7 @@ const PublicRouter = () => {
       <Route path={LOGIN} element={<Login />} />
       <Route path={SIGNUP} element={<SignUp />} />
       <Route path={STORY} element={<Story />} />
+      <Route path={"search"} element={<SearchPage />} />
       <Route path={MY_FEED} element={<MyStory />}>
         <Route index element={<MyPost />} />
         <Route path="empathy" element={<LikedPost />} />
