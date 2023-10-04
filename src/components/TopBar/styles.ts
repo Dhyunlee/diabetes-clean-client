@@ -12,7 +12,9 @@ export const Navbar = styled.div`
     align-items: center;
   }
   .search-center {
-    width: 680px;
+    position: relative;
+    left: -40px;
+    width: 660px;
   }
   .menu-right {
     display: flex;
