@@ -17,12 +17,12 @@ const UserProfile = () => {
         <ProfileContainer>
           <div className="profile-img">
             <Avatar
-              size={150}
+              size={170}
               imgUrl={
                 userInfo?.imageSrc
                   ? userInfo?.imageSrc
                   : gravatar.url(userInfo?.email, {
-                      s: "130px",
+                      s: "170px",
                       d: "retro"
                     })
               }
@@ -40,7 +40,7 @@ const UserProfile = () => {
               <span>프로필 수정</span>
             </div>
           </EditBtnWrap>
-          <Button posX={105} size={15} text="회원 탈퇴" />
+          <Button posX={150} size={16} text="회원 탈퇴" />
         </ProfileContainer>
       </ProfileBlock>
     </div>
