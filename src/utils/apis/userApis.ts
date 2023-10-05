@@ -17,6 +17,7 @@ const logInApi = async <T>(insertData: T) => {
     const { data } = await api.post<IAuthResponse>(`${LOG_IN}`, insertData);
     return data;
   } catch (error: any) {
+    console.log({ error });
     alertHandler.onToast({ msg: "서버 오류, 잠시후 다시 시도해주세요!" });
     throw error;
   }

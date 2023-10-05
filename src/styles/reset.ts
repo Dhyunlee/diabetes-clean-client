@@ -18,16 +18,22 @@ export const reset = css`
     font-family: "nexongoth";
     line-height: 1.4;
   }
-
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 13px;
   }
   ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }
+
   ::-webkit-scrollbar-thumb {
-    background-color: rgb(179, 179, 179);
+    background-color: #868e96;
     border-radius: 25px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+
+    &:hover {
+      background-color: #495057;
+    }
   }
 
   html {

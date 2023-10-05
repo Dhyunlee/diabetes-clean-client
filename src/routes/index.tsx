@@ -16,6 +16,7 @@ import MyPost from "components/MyFeed/MyPost";
 import ActivityPost from "components/MyFeed/ActivityPost";
 import LikedPost from "components/MyFeed/LikedPost";
 import SearchPage from "pages/SearchPage";
+import Home from "pages/Home";
 
 const {
   INDEX,
@@ -32,12 +33,8 @@ const {
 const PublicRouter = () => {
   return (
     <Routes>
+      <Route path={INDEX} index element={<Home />} />
       <Route element={<PrivateRoutes />}>
-        <Route
-          path={INDEX}
-          index
-          element={<Navigate replace to={MEMO_DIABETES} />}
-        />
         <Route path={MEMO} element={<Memo />} />
         <Route path={SAVE_MEMO} element={<WriteMemo />}>
           <Route path="diabetes" element={<FormDiabetes />} />
