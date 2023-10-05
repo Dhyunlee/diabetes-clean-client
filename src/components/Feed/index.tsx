@@ -1,13 +1,11 @@
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "constants/router_path";
-// import FeedPost from "components/Posts";
 import FeedPost from "components/Posts";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import { userState } from "store/userState";
 import { StoryWarp } from "./styles";
 import { getAllContents } from "utils/apis/contents";
-import ScrollTop from "components/Base/ScrollTop";
 
 const Feed = () => {
   const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
@@ -30,10 +28,7 @@ const Feed = () => {
   );
   return (
     <StoryWarp className="posts">
-      {/* 피드, 마이 피드 컴포넌트에서 데이터 불러와서 Posts 컴포넌트에서 UI 랜더링 */}
-      {/* <FeedPost fetcher={getAllContents} /> */}
       <FeedPost params="" queryKey="" fetcher={getAllContents} />
-      <ScrollTop />
       <SideBtnMenu menuItem={menuItem} />
     </StoryWarp>
   );

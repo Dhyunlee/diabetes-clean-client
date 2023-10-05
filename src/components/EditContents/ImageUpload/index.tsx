@@ -1,4 +1,4 @@
-import { Dispatch, memo, useRef, useState } from "react";
+import { Dispatch, memo, useState, useRef, useCallback } from "react";
 
 import {
   ImgUploadBox,
@@ -16,7 +16,7 @@ const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [thumbnail, setThumbnail] = useState<string | null>("");
 
-  const onChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeImg = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = (e.target.files as FileList)[0];
     if (file) {
       const fileReader: FileReader = new FileReader();
@@ -28,19 +28,19 @@ const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
         // TODO: 이미지 업로드 로직(함수) 불러오기
       });
     }
-  };
-  const onClickFileInput = () => {
+  }, []);
+  const onClickFileInput = useCallback(() => {
     inputFileRef?.current?.click();
-  };
+  }, []);
 
-  const onCancelImageUpload = () => {
+  const onCancelImageUpload = useCallback(() => {
     if (thumbnail) {
       setThumbnail("");
       setImgUrl("");
       setImgFileName("");
       //TODO: 이미지 업로드:삭제 부분 로직 작성하기
     }
-  };
+  }, [setImgFileName, setImgUrl, thumbnail]);
 
   //TODO: 이미지 업로드: 생성 부분 로직 작성하기
   return (

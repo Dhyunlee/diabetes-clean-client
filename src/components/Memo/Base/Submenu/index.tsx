@@ -1,4 +1,3 @@
-import { SubmenuContainer } from "pages/Memo/styles";
 import NavMenu from "components/Base/NavMenu";
 import { ROUTER_PATH } from "constants/router_path";
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import dayjs from "dayjs";
@@ -49,11 +49,15 @@ const MemoList = () => {
     }
   }, [curDate, diabetesData?.diabetesInfo]);
 
-  const currentDate = `${curDate.year()}년 ${
-    curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
-  }월`;
+  const currentDate = useMemo(
+    () =>
+      `${curDate.year()}년 ${
+        curDate.month() < 9 ? "0" + (curDate.month() + 1) : curDate.month() + 1
+      }월`,
+    [curDate]
+  );
 
-  const increamentDate = () => {
+  const increamentDate = useCallback(() => {
     const today_ = Number(today.split("-").join(""));
     const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
     if (today_ <= curDate_) {
@@ -63,11 +67,11 @@ const MemoList = () => {
       return;
     }
     setCurDate(curDate.add(1, "month"));
-  };
+  }, [curDate, today]);
 
-  const decreamentDate = () => {
+  const decreamentDate = useCallback(() => {
     setCurDate(curDate.subtract(1, "month"));
-  };
+  }, [curDate]);
 
   const menuItem = useMemo(
     () => [

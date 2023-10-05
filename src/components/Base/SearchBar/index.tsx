@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdSearch, MdClear } from "react-icons/md";
 import { SearchForm } from "./styles";
@@ -16,28 +16,31 @@ const SearchBar = () => {
     }
   }, [searchText]);
 
-  const onCleanIcon = () => {
+  const onCleanIcon = useCallback(() => {
     if (inputRef.current) {
       setIsClick(false);
       (inputRef.current as HTMLInputElement).value = "";
     }
-  };
+  }, []);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  };
+  }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (searchText) {
-      navigate(`/search?keyword=${searchText}`);
-    } else {
-      alertHandler.onToast({
-        msg: "검색어를 입력해주세요!",
-        icon: "warning"
-      });
-    }
-  };
+  const onSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (searchText) {
+        navigate(`/search?keyword=${searchText}`);
+      } else {
+        alertHandler.onToast({
+          msg: "검색어를 입력해주세요!",
+          icon: "warning"
+        });
+      }
+    },
+    [navigate, searchText]
+  );
 
   return (
     <SearchForm onSubmit={onSubmit}>

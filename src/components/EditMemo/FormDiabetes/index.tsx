@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
@@ -32,29 +32,44 @@ const FormDiabetes = () => {
   const [createdTime, setCreatedTime] = useState(dayjs().format("HH:mm"));
   const useMutate = useCreateDiabetes();
 
-  const onChangeSugarLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSugarLevel(Number(e.target.value) || "");
-  };
+  const onChangeSugarLevel = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSugarLevel(Number(e.target.value) || "");
+    },
+    []
+  );
 
-  const onChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInutMemo(e.target.value);
-  };
+  const onChangeMemo = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setInutMemo(e.target.value);
+    },
+    []
+  );
 
-  const onChangeWrittenDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreatedDate(e.target.value);
-    console.log(e.target.value);
-  };
+  const onChangeWrittenDate = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCreatedDate(e.target.value);
+      console.log(e.target.value);
+    },
+    []
+  );
 
-  const onChangeWrittenTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCreatedTime(e.target.value);
-  };
+  const onChangeWrittenTime = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCreatedTime(e.target.value);
+    },
+    []
+  );
 
-  const onChnageSlot = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log({ slot: e.target.value });
-    setSlot(e.target.value);
-  };
+  const onChnageSlot = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      console.log({ slot: e.target.value });
+      setSlot(e.target.value);
+    },
+    []
+  );
 
-  const onCancal = () => {
+  const onCancal = useCallback(() => {
     alertHandler
       .onConfirm({
         icon: "warning",
@@ -75,8 +90,9 @@ const FormDiabetes = () => {
           closeModal();
         }
       });
-  };
-  const onWriteMemo = () => {
+  }, [closeModal, navigate]);
+
+  const onWriteMemo = useCallback(() => {
     const createdAt: string = dayjs(`${createdDate} ${createdTime}`).format(
       "YYYY-MM-DD HH:mm:ss"
     );
@@ -97,7 +113,17 @@ const FormDiabetes = () => {
         : "시간대를 입력해주세요";
       alertHandler.onToast({ msg: text, icon: "info" });
     }
-  };
+  }, [
+    INDEX,
+    createdDate,
+    createdTime,
+    inutMemo,
+    navigate,
+    slot,
+    sugarLevel,
+    useMutate,
+    userId
+  ]);
 
   return (
     <>

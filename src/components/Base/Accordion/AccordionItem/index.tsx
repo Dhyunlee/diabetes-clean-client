@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { IAccordion } from "..";
 
 const AccordionItem = ({ title, desc }: IAccordion) => {
   const [showStatus, setShowStatus] = useState(false);
-  const onToggle = () => {
+  const onToggle = useCallback(() => {
     setShowStatus((prev) => !prev);
-  };
+  }, []);
   return (
     <div className="accordion-item">
       <div className="accordion_title" onClick={onToggle}>

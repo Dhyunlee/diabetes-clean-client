@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ROUTER_PATH } from "constants/router_path";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
@@ -24,7 +24,6 @@ const {
   SIGNUP,
   SAVE_MEMO,
   MEMO,
-  MEMO_DIABETES,
   STORY,
   MYPAGE,
   SAVE_CONTENTS,

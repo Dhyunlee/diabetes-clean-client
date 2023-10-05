@@ -16,6 +16,7 @@ const DiabetesItem = ({ _id, sugar_level, slot, createdAt }: IDiabetesInfo) => {
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
     slot?.includes(itemIcons_desc)
   );
+
   return (
     <ContentsItem
       key={_id}

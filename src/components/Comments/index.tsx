@@ -1,11 +1,6 @@
-import PostStatus from "components/Posts/PostStatus";
 import Comment from "components/Comments/Comment";
 import CommentForm from "components/Comments/CommentForm";
-import { useAPIByIdQuery } from "hooks/service/queries";
-import { COMMENT_KEY } from "constants/query_key";
-import { getAllComment } from "utils/apis/comment";
-import { IComment, ICommentResponse } from "models/db";
-
+import { IComment } from "models/db";
 import { CommentsContainer } from "./styles";
 
 interface IProps {

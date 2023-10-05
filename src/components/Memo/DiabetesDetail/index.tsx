@@ -52,12 +52,10 @@ const DiabetesDetail = ({ id }: Iprops) => {
         });
     }
   }, [diabetes?._id, closeModal, useMutate]);
-  const onEditDiabetes = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      console.log("당수치 수정페이지로 이동");
-    },
-    []
-  );
+
+  const onEditDiabetes = useCallback(() => {
+    console.log("당수치 수정페이지로 이동");
+  }, []);
 
   if (isError) {
     return (

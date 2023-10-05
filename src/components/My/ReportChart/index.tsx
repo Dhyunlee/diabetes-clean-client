@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -9,42 +10,45 @@ import {
   Line
 } from "recharts";
 
-const data = [
-  {
-    name: "공복",
-    수치: 300
-  },
-  {
-    name: "아침식전",
-    수치: 100
-  },
-  {
-    name: "아침식후",
-    수치: 110
-  },
-  {
-    name: "점심식전",
-    수치: 90
-  },
-  {
-    name: "점심식후",
-    수치: 120
-  },
-  {
-    name: "저녁식전",
-    수치: 120
-  },
-  {
-    name: "저녁식후",
-    수치: 140
-  },
-  {
-    name: "취침전",
-    수치: 142
-  }
-];
-
 const ReportChart = () => {
+  const data = useMemo(
+    () => [
+      {
+        name: "공복",
+        수치: 300
+      },
+      {
+        name: "아침식전",
+        수치: 100
+      },
+      {
+        name: "아침식후",
+        수치: 110
+      },
+      {
+        name: "점심식전",
+        수치: 90
+      },
+      {
+        name: "점심식후",
+        수치: 120
+      },
+      {
+        name: "저녁식전",
+        수치: 120
+      },
+      {
+        name: "저녁식후",
+        수치: 140
+      },
+      {
+        name: "취침전",
+        수치: 142
+      }
+    ],
+    []
+  );
+
   return (
     <ResponsiveContainer height={400}>
       <ComposedChart className="chart" data={data}>

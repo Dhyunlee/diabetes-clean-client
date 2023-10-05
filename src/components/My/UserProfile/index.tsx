@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { MdEdit } from "react-icons/md";
 import gravatar from "gravatar";
@@ -16,7 +15,7 @@ const UserProfile = () => {
   const userInfo = useRecoilValue(userState);
   const useMutate = useDelUserMutation();
 
-  const onDelUser = () => {
+  const onDelUser = useCallback(() => {
     alertHandler
       .onConfirm({
         icon: "warning",
@@ -35,7 +34,8 @@ const UserProfile = () => {
           alertHandler.onToast({ msg: alertMessage.cancelMsg });
         }
       });
-  };
+  }, [useMutate, userInfo?._id]);
+
   return (
     <div>
       <Title>프로필</Title>

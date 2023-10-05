@@ -1,16 +1,20 @@
+import { useMemo } from "react";
 import NavMenu from "components/Base/NavMenu";
-import ReportChart from "../ReportChart";
-import { Title } from "../styles";
+import ReportChart from "components/My/ReportChart";
+import { Title } from "components/My/styles";
 import { palette } from "libs/palette";
 
-const periods = [
-  { id: 1, label: "오늘", url: "/mypage" },
-  { id: 2, label: "한 주", url: "/mypage" },
-  { id: 3, label: "한 달", url: "/mypage" },
-  { id: 4, label: "3개월", url: "/mypage" }
-];
-
 const DiabetesReport = () => {
+  const periods = useMemo(
+    () => [
+      { id: 1, label: "오늘", url: "/mypage" },
+      { id: 2, label: "한 주", url: "/mypage" },
+      { id: 3, label: "한 달", url: "/mypage" },
+      { id: 4, label: "3개월", url: "/mypage" }
+    ],
+    []
+  );
+
   return (
     <div style={{ margin: "30px 0" }}>
       <Title>

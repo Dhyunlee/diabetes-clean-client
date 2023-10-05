@@ -1,4 +1,11 @@
-import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  FormEvent,
+  ChangeEvent
+} from "react";
 import { useRecoilValue } from "recoil";
 import Button from "components/Base/Button";
 import Textarea from "components/Base/Textarea";
@@ -37,42 +44,59 @@ const CommentForm = ({
     }
   }, [preContent]);
 
-  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
-  };
+  }, []);
 
-  const onReset = () => {
+  const onReset = useCallback(() => {
     if (textAreaRef.current) {
       textAreaRef.current.value = "";
       setContent("");
     }
-  };
+  }, []);
 
-  const onSubmit = (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (content) {
-      const insertData = {
-        writer: userId,
-        contentsId,
-        content
-      };
+  const onSubmit = useCallback(
+    (e: FormEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      if (content) {
+        const insertData = {
+          writer: userId,
+          contentsId,
+          content
+        };
 
-      editMode
-        ? (() => {
-            if (commentId && preContent !== content) {
-              updateCommentMutation.mutate({ commentId, content });
+        editMode
+          ? (() => {
+              if (commentId && preContent !== content) {
+                updateCommentMutation.mutate({ commentId, content });
+                onClose && onClose();
+              }
               onClose && onClose();
-            }
-            onClose && onClose();
-          })()
-        : (() => {
-            createCommentMmutation.mutate(insertData);
-            onReset && onReset();
-          })();
-    } else {
-      alertHandler.onDefaultAlert({ msg: "댓글을 입력해주세요!", pos: "top" });
-    }
-  };
+            })()
+          : (() => {
+              createCommentMmutation.mutate(insertData);
+              onReset && onReset();
+            })();
+      } else {
+        alertHandler.onDefaultAlert({
+          msg: "댓글을 입력해주세요!",
+          pos: "top"
+        });
+      }
+    },
+    [
+      commentId,
+      content,
+      contentsId,
+      createCommentMmutation,
+      editMode,
+      onClose,
+      onReset,
+      preContent,
+      updateCommentMutation,
+      userId
+    ]
+  );
   return (
     <CommentsFormContainer>
       <div className="comments-form">

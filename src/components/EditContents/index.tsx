@@ -14,9 +14,12 @@ import {
   TextareaGroup
 } from "components/EditMemo/FormDiabetes/styles";
 import { ROUTER_PATH } from "constants/router_path";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { useModal } from "hooks/common/useModal";
 
 const EditContents = () => {
   const { STORY } = ROUTER_PATH;
+  const { closeModal } = useModal();
   const navigate = useNavigate();
   const mutation = useCreateContentsMutation();
   const { _id: userId } = useRecoilValue(userState);
@@ -30,7 +33,31 @@ const EditContents = () => {
     },
     []
   );
-  const onSubmitContent = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const onCancal = useCallback(() => {
+    alertHandler
+      .onConfirm({
+        icon: "warning",
+        html: (
+          <p>
+            페이지를 떠나면 기록한 내용이 모두 없어집니다.
+            <br />
+            그래도 떠나시겠습니까?
+          </p>
+        )
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          navigate(-1);
+          closeModal();
+        } else if (result.isDismissed) {
+          alertHandler.onToast({ msg: alertMessage.cancelMsg });
+          closeModal();
+        }
+      });
+  }, [closeModal, navigate]);
+
+  const onSubmitContent = useCallback(() => {
     console.log(content);
     const insertData = {
       writer: userId,
@@ -40,7 +67,8 @@ const EditContents = () => {
     };
     mutation.mutate(insertData);
     navigate(STORY, { replace: true });
-  };
+  }, [STORY, content, imageName, imageUrl, mutation, navigate, userId]);
+
   return (
     <div>
       <Container>
@@ -64,7 +92,7 @@ const EditContents = () => {
               />
             </InputGroup>
             <ButtonGroup>
-              <button type="reset" onClick={() => navigate(-1)}>
+              <button type="reset" onClick={onCancal}>
                 취소하기
               </button>
               <button type="submit" onClick={onSubmitContent}>

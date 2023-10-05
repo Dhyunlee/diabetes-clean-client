@@ -37,19 +37,24 @@ const MyFeed = () => {
     getMyFeedInfo
   );
   const currentUser = useRecoilValue(userState);
+  const followMutate = useFollowMutation();
+  const unFollowMutate = useUnFollowMutation();
+
   const writer = useMemo(() => data?.contents.writer, [data]);
+  const subMenus = useMemo(
+    () => [
+      { id: 1, label: "내 게시글", url: `${STORY}/${username}` },
+      { id: 2, label: "관심 글", url: `${STORY}/${username}/empathy` },
+      { id: 3, label: "활동 내역", url: `${STORY}/${username}/activity` }
+    ],
+    [STORY, username]
+  );
+
   const { data: followData } = useAPIByIdQuery<IFollowResponse>(
     writer?._id as string,
     FOLLOW_KEY,
     getFollow
   );
-  const followMutate = useFollowMutation();
-  const unFollowMutate = useUnFollowMutation();
-  const subMenus = [
-    { id: 1, label: "내 게시글", url: `${STORY}/${username}` },
-    { id: 2, label: "관심 글", url: `${STORY}/${username}/empathy` },
-    { id: 3, label: "활동 내역", url: `${STORY}/${username}/activity` }
-  ];
   useEffect(() => {
     if (followData && currentUser) {
       // 팔로우 버튼: 유저의 팔로워 목록에 내가 존재하는가?

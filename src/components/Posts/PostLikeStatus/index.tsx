@@ -1,10 +1,10 @@
-import useAddLikeMutation from "hooks/service/mutator/like/useAddLikeMutation";
-import useUnLikeMutation from "hooks/service/mutator/like/useUnLikeMutation";
-import { ILike } from "models/db";
-import { useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useRecoilValue } from "recoil";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
-import { useRecoilValue } from "recoil";
+import { ILike } from "models/db";
+import useAddLikeMutation from "hooks/service/mutator/like/useAddLikeMutation";
+import useUnLikeMutation from "hooks/service/mutator/like/useUnLikeMutation";
 import { userState } from "store/userState";
 
 interface IProps {
@@ -19,7 +19,21 @@ const PostLikeStatus = ({ contentsId, likes, likeCount }: IProps) => {
   const addLike = useAddLikeMutation();
   const unLike = useUnLikeMutation();
 
-  const onClickLikes = () => {
+  useEffect(() => {
+    likes?.map((like) => {
+      if (like.writer === currentId) {
+        setIsLike(like.writer === currentId);
+      }
+    });
+
+    return () => {
+      if (!likes) {
+        setIsLike(false);
+      }
+    };
+  }, [currentId, likes]);
+
+  const onClickLikes = useCallback(() => {
     if (!isLike) {
       const insertData = {
         userId: currentId,
@@ -34,21 +48,8 @@ const PostLikeStatus = ({ contentsId, likes, likeCount }: IProps) => {
       unLike.mutate(insertData);
       setIsLike(false);
     }
-  };
+  }, [addLike, contentsId, currentId, isLike, unLike]);
 
-  useEffect(() => {
-    likes?.map((like) => {
-      if (like.writer === currentId) {
-        setIsLike(like.writer === currentId);
-      }
-    });
-
-    return () => {
-      if (!likes) {
-        setIsLike(false);
-      }
-    };
-  }, [currentId, likes]);
   return (
     <div className="status_item links">
       <div>공감</div>

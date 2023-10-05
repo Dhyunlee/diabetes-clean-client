@@ -6,6 +6,7 @@ import Topbar from "components/TopBar";
 import GlobalModal from "components/Base/GlobalModal";
 
 import { Header, Main } from "styles/common";
+import ScrollTop from "components/Base/ScrollTop";
 
 const App = () => {
   const modalValue = useRecoilValue(modalState);
@@ -25,6 +26,7 @@ const App = () => {
       </Header>
       <Main>
         <RouterContainer />
+        <ScrollTop />
       </Main>
       {isOpenModal && <GlobalModal isOpenModal={modalValue.isOpen} />}
       <footer style={{ height: 150 }}>푸터</footer>
