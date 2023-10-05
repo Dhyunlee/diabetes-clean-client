@@ -1,14 +1,16 @@
 import Swal, { SweetAlertIcon, SweetAlertPosition } from "sweetalert2";
+import widthReactCount from "sweetalert2-react-content";
+
 interface AlertType {
-  title?: string;
+  title?: string | HTMLElement | JQuery | undefined;
   msg?: string;
-  innerHtml?: string | HTMLElement;
+  html?: string | HTMLElement | JQuery | undefined;
   pos?: SweetAlertPosition;
   icon?: SweetAlertIcon;
 }
 
 class AlertHandler {
-  defaultConfirm = "정말로 그렇게 하실건가요?";
+  reactSwal = widthReactCount(Swal);
   alertMessage = {
     sucessMsg: "성공적으로 등록되었습니다.",
     delMsg: "기록이 삭제되었습니다.",
@@ -16,19 +18,22 @@ class AlertHandler {
   };
 
   onDefaultAlert(props?: AlertType) {
-    Swal.fire({
-      text: props?.msg || this.defaultConfirm,
-      html: props?.innerHtml,
+    const swal = this.reactSwal.fire({
+      title: props?.title,
+      text: props?.msg,
+      html: props?.html,
       position: props?.pos || "center",
       showCancelButton: false,
       confirmButtonColor: "#3085d6",
       confirmButtonText: "확인"
     });
+    return swal;
   }
   onConfirm(props?: AlertType) {
-    const swal = Swal.fire({
-      text: props?.msg || this.defaultConfirm,
-      html: props?.innerHtml,
+    const swal = this.reactSwal.fire({
+      title: props?.title,
+      text: props?.msg,
+      html: props?.html,
       position: "top",
       icon: props?.icon,
       showCancelButton: true,
@@ -40,11 +45,10 @@ class AlertHandler {
     return swal;
   }
   onToast(props?: AlertType) {
-    const Toast = Swal.mixin({
+    const Toast = this.reactSwal.mixin({
       toast: true,
       position: props?.pos || "top-end",
       showConfirmButton: false,
-      timer: 3000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -53,7 +57,7 @@ class AlertHandler {
     });
     Toast.fire({
       icon: props?.icon || "success",
-      text: props?.msg || "정상 처리되었습니다."
+      text: props?.msg
     });
   }
 }

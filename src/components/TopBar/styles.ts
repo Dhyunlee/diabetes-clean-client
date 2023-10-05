@@ -13,7 +13,7 @@ export const Navbar = styled.div`
   }
   .search-center {
     position: relative;
-    left: -40px;
+    left: -38px;
     width: 660px;
   }
   .menu-right {
@@ -52,6 +52,7 @@ export const OverWrap = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
 `;
