@@ -6,7 +6,6 @@ import { StoryWarp } from "components/Feed/styles";
 export const MyFeedWrap = styled(Container)`
   max-width: inherit;
   width: 90%;
-  height: 700px;
 `;
 export const Header = styled.header`
   width: 100%;
