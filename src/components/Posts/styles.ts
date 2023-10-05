@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const PostCardWrap = styled.div`
   width: 100%;
+  padding: 10px 0px;
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -9,13 +10,21 @@ export const PostCardWrap = styled.div`
   color: #343a40;
 `;
 
+// PostItem
 export const PostItemWrap = styled.div`
-  padding: 20px 15px;
+  padding: 30px 15px;
   background-color: #fff;
   border-radius: 5px;
 `;
 
-// post-header
+export const ErrprPostItemWrap = styled(PostItemWrap)`
+  height: 360px;
+  color: #adb5bd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const PostHeader = styled.header`
   position: relative;
   width: 100%;

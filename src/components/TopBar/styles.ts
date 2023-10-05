@@ -2,7 +2,6 @@ import { palette } from "libs/palette";
 import styled from "@emotion/styled";
 
 export const Navbar = styled.div`
-  padding: 5px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,6 +10,11 @@ export const Navbar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .search-center {
+    position: relative;
+    left: -38px;
+    width: 660px;
   }
   .menu-right {
     display: flex;
@@ -48,6 +52,7 @@ export const OverWrap = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
 `;

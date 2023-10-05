@@ -8,9 +8,11 @@ export const ProfileBlock = styled.div`
   align-items: center;
   gap: 15px;
   padding: 45px 0;
-  margin: 30px 0;
+  margin: 30px 0px;
   box-shadow: 0px 0px 12px -3px rgb(0 0 0 / 20%);
   .user-info {
+    margin-bottom: 20px;
+    font-size: 18px;
     text-align: center;
   }
 `;
@@ -23,7 +25,6 @@ export const ProfileContainer = styled.div`
   align-items: center;
   gap: 20px;
   border-radius: 5px;
-  border: 1px solid lightgray;
 `;
 
 export const EditBtnWrap = styled.div`
@@ -31,6 +32,7 @@ export const EditBtnWrap = styled.div`
   gap: 5px;
   justify-content: center;
   align-items: center;
+  width: 150px;
   border: 1px solid gray;
   background-color: ${palette.gray[1]};
   border-radius: 5px;
@@ -47,7 +49,7 @@ export const EditBtnWrap = styled.div`
     }
   }
   .btn-name {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   &:active {

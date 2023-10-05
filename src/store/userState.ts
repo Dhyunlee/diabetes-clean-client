@@ -1,22 +1,17 @@
+import { IUserInfo } from "models/db";
 import { atom } from "recoil";
 
-interface IUserState {
-  _id: string;
-  createdAt: string;
-  email: string;
-  imageSrc: string;
-  nickname: string;
-  updatedAt: string;
-}
-
-export const userState = atom<IUserState>({
+export const userState = atom<IUserInfo>({
   key: "userState",
   default: {
     _id: "",
-    createdAt: "",
     email: "",
-    imageSrc: "",
     nickname: "",
+    aboutMe: "",
+    followers: [],
+    followings: [],
+    imageSrc: "",
+    createdAt: "",
     updatedAt: ""
   }
 });

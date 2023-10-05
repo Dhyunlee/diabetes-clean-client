@@ -18,16 +18,22 @@ export const reset = css`
     font-family: "nexongoth";
     line-height: 1.4;
   }
-
   ::-webkit-scrollbar {
-    width: 5px;
+    width: 13px;
   }
   ::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }
+
   ::-webkit-scrollbar-thumb {
-    background-color: rgb(179, 179, 179);
+    background-color: #868e96;
     border-radius: 25px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+
+    &:hover {
+      background-color: #495057;
+    }
   }
 
   html {
@@ -49,6 +55,21 @@ export const reset = css`
   ul,
   li {
     list-style: none;
+  }
+
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  //input[type=search]의 x표시 없애기
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    display: none;
   }
 
   .swal2-container {

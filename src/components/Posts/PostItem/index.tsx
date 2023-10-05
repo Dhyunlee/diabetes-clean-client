@@ -1,18 +1,34 @@
 import { memo } from "react";
-import Review from "components/Review";
-import { IContents } from "models/db";
+import Comments from "components/Comments";
 import PostHeader from "components/Posts/PostHeader";
+import PostStatus from "components/Posts/PostStatus";
+import { ICommentResponse, IContents, ILikeResponse } from "models/db";
+import { useAPIByIdQuery } from "hooks/service/queries";
+import { COMMENT_KEY, Like_key } from "constants/query_key";
+import { getAllComment } from "utils/apis/comment";
 
+import { Contour } from "styles/common";
 import {
   PostBody,
   PostBodyBlock,
   ReviewBlock,
   PostItemWrap
 } from "components/Posts/styles";
+import { getContentsLike } from "utils/apis/like";
 
 const PostItem = (props: IContents) => {
   const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
     props;
+  const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
+    _id,
+    Like_key,
+    getContentsLike
+  );
+  const { data: comments } = useAPIByIdQuery<ICommentResponse>(
+    _id,
+    COMMENT_KEY,
+    getAllComment
+  );
 
   return (
     <PostItemWrap key={_id}>
@@ -39,8 +55,18 @@ const PostItem = (props: IContents) => {
                 <p>{content}</p>
               </div>
             </PostBodyBlock>
+            <PostBodyBlock>
+              <PostStatus
+                contentsId={_id}
+                likes={contentsLike?.like}
+                commentCount={comments?.comment.length}
+              />
+            </PostBodyBlock>
+            <Contour />
             <ReviewBlock>
-              <Review postId={_id} />
+              {comments && (
+                <Comments postId={_id} comments={comments?.comment} />
+              )}
             </ReviewBlock>
           </PostBody>
         </>

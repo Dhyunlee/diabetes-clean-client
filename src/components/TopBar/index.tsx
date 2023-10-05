@@ -1,30 +1,43 @@
-import React, { useLayoutEffect, useState } from "react";
-import * as FaIcons from "react-icons/fa";
+import { useState, useEffect, useCallback, useLayoutEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { FaBars } from "react-icons/fa";
+import { useInView } from "react-intersection-observer";
 import Sidebar from "components/Base/Sidebar";
-import { Navbar, OverWrap } from "./styles";
+import SearchBar from "components/Base/SearchBar/index";
+import { headerViewState } from "store/headerViewState";
 import UserMenu from "./UserMenu";
+import { Navbar, OverWrap } from "./styles";
+import { useSetRecoilState } from "recoil";
 
 const Topbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const setIsViewHeader = useSetRecoilState(headerViewState);
   const [targetPath, setTargetPath] = useState(false);
+  const [ref, isView] = useInView({
+    threshold: 0.5
+  });
   const location = useLocation();
 
   useLayoutEffect(() => {
-    setTargetPath(location.pathname === "/story");
+    setTargetPath(
+      location.pathname === "/story" || location.pathname === "/search"
+    );
   }, [location.pathname]);
 
-  const showSidebar = () => setIsOpen(true);
-  const showCloseSidebar = () => setIsOpen(false);
+  useEffect(() => {
+    setIsViewHeader(isView);
+  }, [isView, setIsViewHeader]);
 
+  const showSidebar = useCallback(() => setIsOpen(true), []);
+  const showCloseSidebar = useCallback(() => setIsOpen(false), []);
   return (
     <>
-      <Navbar className="navbar">
+      <Navbar className="navbar" ref={ref}>
         <div className="menu-left">
           <div>
             <button className="menu-bars">
               <span onClick={showSidebar}>
-                <FaIcons.FaBars />
+                <FaBars />
               </span>
             </button>
           </div>
@@ -34,7 +47,7 @@ const Topbar = () => {
             </Link>
           </div>
         </div>
-        <div>{targetPath && <div>검색어 기능 구현중</div>}</div>
+        <div className="search-center">{targetPath && <SearchBar />}</div>
         <div className="menu-right">
           <UserMenu />
         </div>

@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
 import Input from "components/Base/Input";
-import { ISelectedSlotItem, selectedSlotItem } from "libs/slotItem";
-import { createDiabetes } from "utils/apis/diabetesApis";
-import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import { userState } from "store/userState";
-import { IDiabetesRequest } from "models/db";
 import { useModal } from "hooks/common/useModal";
+import { useCreateDiabetes } from "hooks/service/mutator";
+import { ISelectedSlotItem, selectedSlotItem } from "libs/slotItem";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { ROUTER_PATH } from "constants/router_path";
 import {
   ButtonGroup,
   FormWrap,
@@ -22,25 +21,16 @@ import {
 } from "./styles";
 
 const FormDiabetes = () => {
+  const { INDEX } = ROUTER_PATH;
   const { closeModal } = useModal();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { _id: userId } = useRecoilValue(userState);
   const [sugarLevel, setSugarLevel] = useState<number | string>("");
   const [slot, setSlot] = useState<string>("");
   const [inutMemo, setInutMemo] = useState("");
   const [createdDate, setCreatedDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [createdTime, setCreatedTime] = useState(dayjs().format("HH:mm"));
-
-  const useMutate = useMutation(createDiabetes<IDiabetesRequest>, {
-    onSuccess: () => {
-      queryClient.invalidateQueries<string>(["diabetes"]);
-      navigate("/", { replace: true });
-    },
-    onError: (error) => {
-      console.log(error);
-    }
-  });
+  const useMutate = useCreateDiabetes();
 
   const onChangeSugarLevel = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSugarLevel(Number(e.target.value) || "");
@@ -68,8 +58,13 @@ const FormDiabetes = () => {
     alertHandler
       .onConfirm({
         icon: "warning",
-        innerHtml:
-          "<p>페이지를 떠나면 기록한 내용이 모두 없어집니다.<br />그래도 떠나시겠습니까?</p>"
+        html: (
+          <p>
+            페이지를 떠나면 기록한 내용이 모두 없어집니다.
+            <br />
+            그래도 떠나시겠습니까?
+          </p>
+        )
       })
       .then((result) => {
         if (result.isConfirmed) {
@@ -95,6 +90,7 @@ const FormDiabetes = () => {
 
     if (sugarLevel && slot) {
       useMutate.mutate(insertData);
+      navigate(INDEX, { replace: true });
     } else {
       const text = !sugarLevel
         ? "당수치를 입력해주세요"

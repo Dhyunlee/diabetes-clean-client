@@ -1,12 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useUserContentsQuery } from "hooks/services/queries";
 import MyPosts from "components/Posts";
+import { getUserContents } from "utils/apis/contents";
 
+// 내 게시글
 const MyPost = () => {
   const { username } = useParams();
-  const { data, isError, isLoading } = useUserContentsQuery(username as string);
   return (
-    <MyPosts data={data?.contents} isError={isError} isLoading={isLoading} />
+    <MyPosts
+      params={username as string}
+      queryKey="myfeed"
+      fetcher={getUserContents}
+    />
   );
 };
 

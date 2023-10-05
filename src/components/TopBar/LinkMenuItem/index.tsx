@@ -5,14 +5,15 @@ import { MenuItemType } from "typings/menuItem";
 
 interface IProps {
   menuItemData: MenuItemType[];
+  showCloseSidebar: () => void;
 }
 
-const LinkMenuItem = ({ menuItemData }: IProps) => {
+const LinkMenuItem = ({ menuItemData, showCloseSidebar }: IProps) => {
   return (
     <>
       {menuItemData?.map((item, index) => (
         <NavContents key={index} className={item.label}>
-          <Link to={item.path as string}>
+          <Link to={item.path as string} onClick={showCloseSidebar}>
             <span>{item.label}</span>
           </Link>
         </NavContents>

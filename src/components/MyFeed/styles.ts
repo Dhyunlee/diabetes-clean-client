@@ -97,18 +97,3 @@ export const MainContents = styled(StoryWarp)`
     padding: 30px;
   }
 `;
-
-export const ContentsMenu = styled.nav`
-  ul {
-    display: flex;
-    padding: 15px 20px;
-    gap: 20px;
-  }
-  li {
-    font-size: 18px;
-    a {
-      display: block;
-      padding: 10px 5px;
-    }
-  }
-`;
