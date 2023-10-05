@@ -33,13 +33,16 @@ const Sidebar = ({ isOpen, showCloseSidebar }: IProps) => {
 
   return (
     <StyledNavMenu className={isOpen ? "nav-menu active" : "nav-menu"}>
-      <ul className="nav-menu-items" onClick={showCloseSidebar}>
+      <ul className="nav-menu-items">
         <NavbarToggle className="navbar-toggle">
           <CloseBtn onClick={showCloseSidebar}>
             <span>&times;</span>
           </CloseBtn>
         </NavbarToggle>
-        <LinkMenuItem menuItemData={userMenuItem} />
+        <LinkMenuItem
+          menuItemData={userMenuItem}
+          showCloseSidebar={showCloseSidebar}
+        />
       </ul>
     </StyledNavMenu>
   );
