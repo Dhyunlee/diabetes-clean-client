@@ -6,3 +6,5 @@ export { default as useUpdateCommentMutation } from "./comment/useUpdateCommentM
 
 export { default as useCreateDiabetes } from "./memo/useCreateDiabetes";
 export { default as useDelDiabetes } from "./memo/useDelDiabetes";
+
+export { default as useDelUserMutation } from "./user/useDelUserMutation";

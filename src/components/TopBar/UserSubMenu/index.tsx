@@ -8,6 +8,7 @@ import useStorage from "utils/functions/useStorage";
 import { userState } from "store/userState";
 import { ROUTER_PATH } from "constants/router_path";
 import { loginState } from "store/loginState";
+import { USER_KEY } from "constants/query_key";
 
 interface IProps {
   showSubMenu: boolean;
@@ -24,7 +25,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then(() => {
       removeStorage("accessToken");
       setIsLoggedIn(false);
-      queryClient.setQueryData(["user"], false);
+      queryClient.setQueryData([USER_KEY], false);
       navigate("/login", { replace: true });
     });
 

@@ -1,15 +1,41 @@
+import { useNavigate } from "react-router-dom";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { MdEdit } from "react-icons/md";
 import gravatar from "gravatar";
-import Avatar from "components/Base/Avatar";
-import { palette } from "libs/palette";
+import { useDelUserMutation } from "hooks/service/mutator";
 import { userState } from "store/userState";
-import { EditBtnWrap, ProfileBlock, ProfileContainer } from "./styles";
+import { palette } from "libs/palette";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import Avatar from "components/Base/Avatar";
 import Button from "components/Base/Button";
-import { Title } from "../styles";
+import { Title } from "components/My/styles";
+import { EditBtnWrap, ProfileBlock, ProfileContainer } from "./styles";
 
 const UserProfile = () => {
   const userInfo = useRecoilValue(userState);
+  const useMutate = useDelUserMutation();
+
+  const onDelUser = () => {
+    alertHandler
+      .onConfirm({
+        icon: "warning",
+        html: (
+          <p style={{ fontSize: 16 }}>
+            회원 탈퇴하면 모든 데이터가 삭제됩니다.
+            <br />
+            그래도 회원 탈퇴를 하시겠습니까?
+          </p>
+        )
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          useMutate.mutate(userInfo?._id);
+        } else if (result.isDismissed) {
+          alertHandler.onToast({ msg: alertMessage.cancelMsg });
+        }
+      });
+  };
   return (
     <div>
       <Title>프로필</Title>
@@ -40,7 +66,7 @@ const UserProfile = () => {
               <span>프로필 수정</span>
             </div>
           </EditBtnWrap>
-          <Button posX={150} size={16} text="회원 탈퇴" />
+          <Button posX={150} size={16} text="회원 탈퇴" onClick={onDelUser} />
         </ProfileContainer>
       </ProfileBlock>
     </div>
