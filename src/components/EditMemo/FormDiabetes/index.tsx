@@ -58,8 +58,13 @@ const FormDiabetes = () => {
     alertHandler
       .onConfirm({
         icon: "warning",
-        innerHtml:
-          "<p>페이지를 떠나면 기록한 내용이 모두 없어집니다.<br />그래도 떠나시겠습니까?</p>"
+        html: (
+          <p>
+            페이지를 떠나면 기록한 내용이 모두 없어집니다.
+            <br />
+            그래도 떠나시겠습니까?
+          </p>
+        )
       })
       .then((result) => {
         if (result.isConfirmed) {
