@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const ScrollTopWrap = styled.div<{ isFadeIn: boolean }>`
   position: fixed;
   bottom: 130px;
-  right: 100px;
+  right: 50px;
   opacity: ${({ isFadeIn }) => (isFadeIn ? 1 : 0)};
   transition: opacity 0.5s;
 `;

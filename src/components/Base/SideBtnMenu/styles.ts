@@ -7,7 +7,7 @@ interface IStyleProps {
 export const SubMenuBtnContainer = styled.div`
   position: fixed;
   bottom: 60px;
-  right: 100px;
+  right: 50px;
 `;
 
 export const SubMenuBtn = styled.button<IStyleProps>`
