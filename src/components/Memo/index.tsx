@@ -9,7 +9,7 @@ import Diet from "components/Memo/Diet";
 import SideBtnMenu from "components/Base/SideBtnMenu";
 import alertHandler from "utils/functions/alertHandler";
 import { getDiabetes } from "utils/apis/diabetesApis";
-import { IDiabetesInfo, IDiabetesResponse } from "models/db";
+import { IDiabetesInfo, IDiabetesResponse } from "models/data";
 import { userState } from "store/userState";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import { ROUTER_PATH } from "constants/router_path";

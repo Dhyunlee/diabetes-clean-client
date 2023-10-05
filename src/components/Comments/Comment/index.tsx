@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useRecoilValue } from "recoil";
 import gravatar from "gravatar";
-import { IComment } from "models/db";
+import { IComment } from "models/data";
 import SubMenu from "components/Base/SubMenu";
 import ContentsInfo from "components/Feed/PostUserInfo";
 import CommentForm from "components/Comments/CommentForm";

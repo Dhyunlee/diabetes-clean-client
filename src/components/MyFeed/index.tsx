@@ -13,7 +13,7 @@ import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutatio
 import { getMyFeedInfo } from "utils/apis/contents";
 import { getFollow } from "utils/apis/follow";
 import { CONTENTS_KEY, FOLLOW_KEY } from "constants/query_key";
-import { IFollowResponse, IMyFeedResponse } from "models/db";
+import { IFollowResponse, IMyFeedResponse } from "models/data";
 
 import {
   MyFeedContainer,

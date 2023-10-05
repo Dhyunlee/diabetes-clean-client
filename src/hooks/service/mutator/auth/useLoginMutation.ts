@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { USER_KEY } from "constants/query_key";
-import { IAuthResponse, TAuthRequest } from "models/db";
+import { IAuthResponse, TAuthRequest } from "models/data";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "store/loginState";

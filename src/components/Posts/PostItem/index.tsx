@@ -2,7 +2,7 @@ import { memo } from "react";
 import Comments from "components/Comments";
 import PostHeader from "components/Posts/PostHeader";
 import PostStatus from "components/Posts/PostStatus";
-import { ICommentResponse, IContents, ILikeResponse } from "models/db";
+import { ICommentResponse, IContents, ILikeResponse } from "models/data";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import { COMMENT_KEY, Like_key } from "constants/query_key";
 import { getAllComment } from "utils/apis/comment";

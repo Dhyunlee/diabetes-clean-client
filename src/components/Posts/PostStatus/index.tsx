@@ -1,6 +1,6 @@
 import { PostStatusContainer } from "./styles";
 import LikeStatus from "../PostLikeStatus";
-import { ILike } from "models/db";
+import { ILike } from "models/data";
 
 interface IProps {
   contentsId: string;

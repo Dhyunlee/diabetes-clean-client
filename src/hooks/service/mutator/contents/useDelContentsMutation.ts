@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { CONTENTS_KEY } from "constants/query_key";
-import { CommonResponse } from "models/db";
+import { CommonResponse } from "models/data";
 import { deleteContents } from "utils/apis/contents";
 import alertHandler from "utils/functions/alertHandler";
 

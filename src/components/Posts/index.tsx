@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import PostItem from "./PostItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { IContentsResponse } from "models/db";
+import { IContentsResponse } from "models/data";
 import { CONTENTS_KEY } from "constants/query_key";
 import { ErrprPostItemWrap, PostCardWrap } from "./styles";
 

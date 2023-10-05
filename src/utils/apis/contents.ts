@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, IContentsResponse } from "models/db";
+import { CommonResponse, IContentsResponse } from "models/data";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 

@@ -1,6 +1,6 @@
 import Comment from "components/Comments/Comment";
 import CommentForm from "components/Comments/CommentForm";
-import { IComment } from "models/db";
+import { IComment } from "models/data";
 import { CommentsContainer } from "./styles";
 
 interface IProps {

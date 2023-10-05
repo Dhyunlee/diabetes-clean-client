@@ -5,7 +5,7 @@ import {
   IAuthResponse,
   IUserResponse,
   TWriterInfo
-} from "models/db";
+} from "models/data";
 import { API_PATH } from "constants/api_path";
 import alertHandler from "utils/functions/alertHandler";
 

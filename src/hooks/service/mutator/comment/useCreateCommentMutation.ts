@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { COMMENT_KEY } from "constants/query_key";
-import { CommonResponse, ICommentRequest } from "models/db";
+import { CommonResponse, ICommentRequest } from "models/data";
 import { createComment } from "utils/apis/comment";
 import alertHandler from "utils/functions/alertHandler";
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FcCollapse, FcExpand } from "react-icons/fc";
 import { useRecoilState } from "recoil";
 import gravatar from "gravatar";
-import { IUserResponse } from "models/db";
+import { IUserResponse } from "models/data";
 import Avatar from "components/Base/Avatar";
 import UserSubMenu from "components/TopBar/UserSubMenu";
 import { getUserIdByToken } from "utils/apis/userApis";

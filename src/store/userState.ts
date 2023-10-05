@@ -1,4 +1,4 @@
-import { IUserInfo } from "models/db";
+import { IUserInfo } from "models/data";
 import { atom } from "recoil";
 
 export const userState = atom<IUserInfo>({

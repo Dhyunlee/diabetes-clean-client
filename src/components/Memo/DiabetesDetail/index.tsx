@@ -13,7 +13,7 @@ import {
   DetailModalHeader
 } from "components/Base/GlobalModal/styles";
 import { DIABETES_KEY } from "constants/query_key";
-import { IDiabetesInfo, IDiabetesResponse } from "models/db";
+import { IDiabetesInfo, IDiabetesResponse } from "models/data";
 
 interface Iprops {
   id: string;

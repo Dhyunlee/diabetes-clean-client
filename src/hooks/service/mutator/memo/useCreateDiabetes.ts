@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { CommonResponse, IDiabetesRequest } from "models/db";
+import { CommonResponse, IDiabetesRequest } from "models/data";
 import { createDiabetes } from "utils/apis/diabetesApis";
 import { DIABETES_KEY } from "constants/query_key";
 import alertHandler from "utils/functions/alertHandler";

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
-import { ILike } from "models/db";
+import { ILike } from "models/data";
 import useAddLikeMutation from "hooks/service/mutator/like/useAddLikeMutation";
 import useUnLikeMutation from "hooks/service/mutator/like/useUnLikeMutation";
 import { userState } from "store/userState";

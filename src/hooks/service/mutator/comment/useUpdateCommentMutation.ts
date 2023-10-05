@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { COMMENT_KEY } from "constants/query_key";
-import { CommonResponse } from "models/db";
+import { CommonResponse } from "models/data";
 import { updateComment } from "utils/apis/comment";
 import alertHandler from "utils/functions/alertHandler";
 

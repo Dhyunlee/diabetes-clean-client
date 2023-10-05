@@ -1,5 +1,5 @@
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, ILikeRequest, ILikeResponse } from "models/db";
+import { CommonResponse, ILikeRequest, ILikeResponse } from "models/data";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 

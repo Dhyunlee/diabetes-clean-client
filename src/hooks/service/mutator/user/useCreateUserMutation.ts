@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { USER_KEY } from "constants/query_key";
-import { CommonResponse, IAuthRequest } from "models/db";
+import { CommonResponse, IAuthRequest } from "models/data";
 import { postUserApi } from "utils/apis/userApis";
 import alertHandler from "utils/functions/alertHandler";
 

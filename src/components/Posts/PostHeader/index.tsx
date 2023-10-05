@@ -6,7 +6,7 @@ import SubMenu from "components/Base/SubMenu";
 
 import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
-import { TMyInfo } from "models/db";
+import { TMyInfo } from "models/data";
 import { useDelContentsMutation } from "hooks/service/mutator";
 import alertHandler from "utils/functions/alertHandler";
 import PostUserInfo from "components/Feed/PostUserInfo";

@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import DiabetesDetail from "components/Memo/DiabetesDetail/index";
 import { useModal } from "hooks/common/useModal";
 import { timeIcons } from "libs/time-icons";
-import { IDiabetesInfo } from "models/db";
+import { IDiabetesInfo } from "models/data";
 import {
   ContentsItem,
   ContentsItemBody,

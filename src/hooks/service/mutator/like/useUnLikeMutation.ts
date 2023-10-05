@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { Like_key } from "constants/query_key";
-import { CommonResponse, ILikeRequest } from "models/db";
+import { CommonResponse, ILikeRequest } from "models/data";
 import { unLike } from "utils/apis/like";
 
 const useUnLikeMutation = () => {
