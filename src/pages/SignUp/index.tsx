@@ -45,7 +45,7 @@ const SignUp = () => {
   const { email, password, passwordCheck, nickname } = inputs;
 
   useEffect(() => {
-    const result = Object.values(isComplete).every((item) => item === true);
+    const result = Object.values(isComplete).every((item) => !!item);
     setIsCompleteState(result);
   }, [isComplete]);
 
