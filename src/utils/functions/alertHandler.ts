@@ -50,9 +50,10 @@ class AlertHandler {
       position: props?.pos || "top-end",
       showConfirmButton: false,
       timerProgressBar: true,
+      timer: 2000,
       didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
+        toast.addEventListener("mouseenter", this.reactSwal.stopTimer);
+        toast.addEventListener("mouseleave", this.reactSwal.resumeTimer);
       }
     });
     Toast.fire({
