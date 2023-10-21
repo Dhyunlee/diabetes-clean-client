@@ -65,7 +65,8 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
     [currentPathName]
   );
 
-  const pathNameIdx = Lists[0].url && getPathNameIdx(Lists);
+  const pathNameIdx =
+    Lists[0].url && (getPathNameIdx(Lists) < 0 ? 0 : getPathNameIdx(Lists));
   const activeLiPos =
     Number(pathNameIdx) * Number((100 / lists.length).toFixed(1));
 
@@ -80,7 +81,7 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
     (el: any) => listChildrenRefs.current.push(el),
     []
   );
-
+  console.log({ activeLiPos });
   return (
     <NavMenutWrap {...rest}>
       <ul>
