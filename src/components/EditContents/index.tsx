@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
@@ -58,15 +58,19 @@ const EditContents = () => {
   }, [closeModal, navigate]);
 
   const onSubmitContent = useCallback(() => {
-    console.log(content);
     const insertData = {
       writer: userId,
       content,
       imageName,
       imageUrl
     };
-    mutation.mutate(insertData);
-    navigate(STORY, { replace: true });
+
+    if (content !== "") {
+      mutation.mutate(insertData);
+      navigate(STORY, { replace: true });
+    } else {
+      alertHandler.onToast({ msg: "내용을 입력해주세요!", icon: "warning" });
+    }
   }, [STORY, content, imageName, imageUrl, mutation, navigate, userId]);
 
   return (

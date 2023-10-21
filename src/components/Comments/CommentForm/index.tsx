@@ -78,10 +78,7 @@ const CommentForm = ({
               onReset && onReset();
             })();
       } else {
-        alertHandler.onDefaultAlert({
-          msg: "댓글을 입력해주세요!",
-          pos: "top"
-        });
+        alertHandler.onToast({ msg: "댓글을 입력해주세요!", icon: "warning" });
       }
     },
     [
