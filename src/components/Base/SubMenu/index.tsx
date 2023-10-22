@@ -18,7 +18,7 @@ const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
       customCss={customCss}
     >
       <SubMenuList width="110px">
-        {menuItem.map((menu) =>
+        {menuItem?.map((menu) =>
           menu.path ? (
             <SubMenuItem
               key={menu.id}
