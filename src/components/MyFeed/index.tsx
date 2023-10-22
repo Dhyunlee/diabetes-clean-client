@@ -25,10 +25,11 @@ import {
   UserInfo,
   UserStatus
 } from "./styles";
+import SideBtnMenu from "components/Base/SideBtnMenu";
 
 const MyFeed = () => {
+  const { STORY, SAVE_CONTENTS } = ROUTER_PATH;
   const [isFollow, setIsFollow] = useState(false);
-  const { STORY } = ROUTER_PATH;
   const { username } = useParams();
   const queryKey = `${CONTENTS_KEY}/${username}`;
   const { data, isLoading } = useAPIByIdQuery<IMyFeedResponse>(
@@ -75,7 +76,6 @@ const MyFeed = () => {
   if (isLoading) {
     return <div>로딩중</div>;
   }
-
   console.log({ currentUser });
   return (
     <MyFeedWrap>
@@ -153,6 +153,15 @@ const MyFeed = () => {
           </MainContents>
         </MyFeedMain>
       </MyFeedContainer>
+      <SideBtnMenu
+        menuItem={[
+          {
+            id: 1,
+            path: `${SAVE_CONTENTS}`,
+            label: "작성하기"
+          }
+        ]}
+      />
     </MyFeedWrap>
   );
 };

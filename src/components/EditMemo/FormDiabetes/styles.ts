@@ -1,7 +1,7 @@
 import { palette } from "libs/palette";
 import styled from "@emotion/styled";
 
-export const FormWrap = styled.div`
+export const FormWrap = styled.form`
   padding: 10px;
   width: 100%;
   min-width: 300px;

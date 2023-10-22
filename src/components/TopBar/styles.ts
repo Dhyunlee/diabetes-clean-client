@@ -19,7 +19,8 @@ export const Navbar = styled.div`
   .menu-right {
     display: flex;
     justify-content: center;
-    padding: 5px 12px;
+    align-items: center;
+    padding-right: 30px;
   }
   .menu-bars {
     background: none;
@@ -34,16 +35,12 @@ export const Navbar = styled.div`
       font-size: 25px;
     }
   }
-  .page-title {
+  .logo {
     position: relative;
     left: 0;
     top: 3px;
-    margin-left: 0;
     height: 100%;
-    font-size: 20px;
     line-height: 40px;
-    color: ${({ theme }) => theme.bgColor.main};
-    font-weight: 600;
   }
 `;
 export const OverWrap = styled.div`
