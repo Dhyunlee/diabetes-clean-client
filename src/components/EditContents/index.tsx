@@ -1,25 +1,15 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "store/userState";
+import { useModal } from "hooks/common/useModal";
 import { useCreateContentsMutation } from "hooks/service/mutator";
-import ImageUpload from "components/EditContents/ImageUpload";
-import { EditBody } from "components/EditMemo/styles";
-import { EditHeader } from "components/EditMemo/styles";
-import { Container } from "styles/common";
-import {
-  ButtonGroup,
-  FormWrap,
-  InputGroup,
-  TextareaGroup
-} from "components/EditMemo/FormDiabetes/styles";
 import { ROUTER_PATH } from "constants/router_path";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
-import { useModal } from "hooks/common/useModal";
+import EditForm from "components/EditContents/Base/EditForm";
 
 const EditContents = () => {
   const { STORY } = ROUTER_PATH;
-  const { closeModal } = useModal();
   const navigate = useNavigate();
   const mutation = useCreateContentsMutation();
   const { _id: userId } = useRecoilValue(userState);
@@ -49,63 +39,42 @@ const EditContents = () => {
       .then((result) => {
         if (result.isConfirmed) {
           navigate(-1);
-          closeModal();
         } else if (result.isDismissed) {
           alertHandler.onToast({ msg: alertMessage.cancelMsg });
-          closeModal();
         }
       });
-  }, [closeModal, navigate]);
+  }, [navigate]);
 
-  const onSubmitContent = useCallback(() => {
-    const insertData = {
-      writer: userId,
-      content,
-      imageName,
-      imageUrl
-    };
+  const onSubmitContent = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log(content);
+      const insertData = {
+        writer: userId,
+        content,
+        imageName,
+        imageUrl
+      };
 
-    if (content !== "") {
-      mutation.mutate(insertData);
-      navigate(STORY, { replace: true });
-    } else {
-      alertHandler.onToast({ msg: "내용을 입력해주세요!", icon: "warning" });
-    }
-  }, [STORY, content, imageName, imageUrl, mutation, navigate, userId]);
+      if (content !== "") {
+        mutation.mutate(insertData);
+        navigate(STORY, { replace: true });
+      } else {
+        alertHandler.onToast({ msg: "내용을 입력해주세요!", icon: "warning" });
+      }
+    },
+    [STORY, content, imageName, imageUrl, mutation, navigate, userId]
+  );
 
   return (
-    <div>
-      <Container>
-        <EditHeader>
-          <div className="memo-title" style={{ padding: 0 }}>
-            <span>컨텐츠 작성하기</span>
-          </div>
-        </EditHeader>
-        <EditBody>
-          <FormWrap style={{ padding: 0 }}>
-            <TextareaGroup>
-              <textarea
-                placeholder="당신의 이야기를 들려주세요"
-                onChange={onChangeContent}
-              />
-            </TextareaGroup>
-            <InputGroup style={{ position: "relative" }}>
-              <ImageUpload
-                setImgUrl={setImageUrl}
-                setImgFileName={setimageName}
-              />
-            </InputGroup>
-            <ButtonGroup>
-              <button type="reset" onClick={onCancal}>
-                취소하기
-              </button>
-              <button type="submit" onClick={onSubmitContent}>
-                게시하기
-              </button>
-            </ButtonGroup>
-          </FormWrap>
-        </EditBody>
-      </Container>
+    <div className="form-wrap">
+      <EditForm
+        onCancal={onCancal}
+        onChangeContent={onChangeContent}
+        onSubmitContent={onSubmitContent}
+        setImageUrl={setImageUrl}
+        setimageName={setimageName}
+      />
     </div>
   );
 };
