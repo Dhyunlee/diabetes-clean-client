@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
 import alertHandler from "utils/functions/alertHandler";
-import useCreateUserMutation from "hooks/service/mutator/user/useCreateUserMutation";
+import { useCreateUserMutation } from "hooks/service/mutator";
 import {
   FormBtn,
   Container,
