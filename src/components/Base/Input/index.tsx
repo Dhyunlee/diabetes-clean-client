@@ -1,8 +1,4 @@
-import {
-  DetailedHTMLProps,
-  FunctionComponent,
-  InputHTMLAttributes
-} from "react";
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import { InputInterface } from "./styles";
 
 type commonInputProps = DetailedHTMLProps<
@@ -10,7 +6,7 @@ type commonInputProps = DetailedHTMLProps<
   HTMLInputElement
 >;
 
-const Input: FunctionComponent<commonInputProps> = ({ ...rest }) => {
+const Input: FC<commonInputProps> = ({ ...rest }) => {
   return <InputInterface {...rest} />;
 };
 

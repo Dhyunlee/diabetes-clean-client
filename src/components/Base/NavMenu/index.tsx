@@ -3,9 +3,9 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  FunctionComponent,
   DetailedHTMLProps,
-  HTMLAttributes
+  HTMLAttributes,
+  FC
 } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavMenutWrap } from "./styles";
@@ -28,10 +28,7 @@ interface customType {
   fontSize?: string | number;
 }
 
-const NavMenu: FunctionComponent<customType & commonProps> = ({
-  lists,
-  ...rest
-}) => {
+const NavMenu: FC<customType & commonProps> = ({ lists, ...rest }) => {
   const { pathname } = useLocation();
   const listChildrenRefs = useRef<HTMLElement[]>([]);
   const selectedElRef = useRef<HTMLElement | null>(null);
