@@ -8,8 +8,6 @@ import Memo from "pages/Memo";
 import PrivateRoutes from "./PrivateRoutes";
 import My from "pages/My";
 import WriteMemo from "pages/WriteMemo";
-import FormDiabetes from "components/EditMemo/FormDiabetes";
-import FormDiet from "components/EditMemo/FormDiet";
 import MyStory from "pages/MyStory";
 import WriteContents from "pages/WriteContents";
 import MyPost from "components/MyFeed/MyPost";
@@ -22,12 +20,15 @@ const {
   INDEX,
   LOGIN,
   SIGNUP,
-  SAVE_MEMO,
+  SAVE_MEMO_DIABETES,
+  UPDATE_DIABETES,
   MEMO,
   STORY,
   MYPAGE,
   SAVE_CONTENTS,
-  MY_FEED
+  MY_FEED,
+  SEARCH,
+  EMPATHY
 } = ROUTER_PATH;
 const PublicRouter = () => {
   return (
@@ -35,20 +36,24 @@ const PublicRouter = () => {
       <Route path={INDEX} index element={<Home />} />
       <Route element={<PrivateRoutes />}>
         <Route path={MEMO} element={<Memo />} />
+        <Route path={SAVE_MEMO_DIABETES} element={<WriteMemo />} />
+        <Route path={UPDATE_DIABETES} element={<WriteMemo />} />
+        {/* 
+          식단 CRUD 개발후 활성화
         <Route path={SAVE_MEMO} element={<WriteMemo />}>
           <Route path="diabetes" element={<FormDiabetes />} />
           <Route path="diet" element={<FormDiet />} />
-        </Route>
+        </Route> */}
         <Route path={SAVE_CONTENTS} element={<WriteContents />} />
         <Route path={MYPAGE} element={<My />} />
       </Route>
       <Route path={LOGIN} element={<Login />} />
       <Route path={SIGNUP} element={<SignUp />} />
       <Route path={STORY} element={<Story />} />
-      <Route path={"search"} element={<SearchPage />} />
+      <Route path={SEARCH} element={<SearchPage />} />
       <Route path={MY_FEED} element={<MyStory />}>
         <Route index element={<MyPost />} />
-        <Route path="empathy" element={<LikedPost />} />
+        <Route path={EMPATHY} element={<LikedPost />} />
         <Route path="activity" element={<ActivityPost />} />
       </Route>
       <Route path={"*"} element={<NotFound />} />

@@ -12,7 +12,6 @@ import {
 import useLoginMutation from "hooks/service/mutator/auth/useLoginMutation";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     email: "",
     password: ""

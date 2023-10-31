@@ -1,5 +1,5 @@
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, IDiabetesResponse } from "models/data";
+import { CommonResponse, IDiabetesRequest } from "models/data";
 import api from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
@@ -7,7 +7,10 @@ const { DIABETES_API } = API_PATH;
 
 const createDiabetes = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<CommonResponse>(`${DIABETES_API}`);
+    const { data } = await api.post<CommonResponse>(
+      `${DIABETES_API}`,
+      insertData
+    );
     return data;
   } catch (error: any) {
     alertHandler.onToast({
@@ -33,10 +36,18 @@ const deleteDiabetes = async (diabetesId: string) => {
   }
 };
 
-const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
+const updateDiabetes = async ({
+  diabetesId,
+  diabetesData
+}: {
+  diabetesId: string;
+  diabetesData: IDiabetesRequest;
+}) => {
+  console.log({ diabetesId, diabetesData });
   try {
-    const { data } = await api.patch<IDiabetesResponse>(
-      `${DIABETES_API}/${diabetesId}`
+    const { data } = await api.patch<CommonResponse>(
+      `${DIABETES_API}/${diabetesId}`,
+      diabetesData
     );
     return data;
   } catch (error: any) {
