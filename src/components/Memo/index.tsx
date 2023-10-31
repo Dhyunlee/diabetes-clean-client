@@ -79,14 +79,15 @@ const MemoList = () => {
         id: 1,
         path: `${SAVE_MEMO_DIABETES}`,
         label: "당수치 기록"
-      },
-      {
-        id: 2,
-        path: `${SAVE_MEMO_DIET}`,
-        label: "식단 기록"
       }
+      // ,
+      // {
+      //   id: 2,
+      //   path: `${SAVE_MEMO_DIET}`,
+      //   label: "식단 기록"
+      // }
     ],
-    [SAVE_MEMO_DIABETES, SAVE_MEMO_DIET]
+    [SAVE_MEMO_DIABETES]
   );
 
   if (isLoading) return <div>당수치 내역을 불러오는중입니다.</div>;
@@ -98,7 +99,7 @@ const MemoList = () => {
         <div className="memo-title">
           <span>기록 내역</span>
         </div>
-        <Submenu />
+        {/* <Submenu /> */} {/* <-- 식단 기능 추가후 활성화 --> */}
         <DateArea
           currentDate={currentDate}
           increamentDate={increamentDate}

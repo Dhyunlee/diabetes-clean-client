@@ -14,6 +14,7 @@ export const FormWrap = styled.form`
 
 export const InputGroup = styled.div`
   margin-top: 13px;
+  padding: 0 5px;
   display: flex;
   width: 100%;
   gap: 5px;
@@ -26,9 +27,11 @@ export const LabelWrap = styled.div`
   font-weight: 700;
 `;
 export const InputWrap = styled.div`
+  width: 210px;
   input,
   select,
   textarea {
+    width: 100%;
     outline: none;
   }
 `;
@@ -71,22 +74,16 @@ export const Select = styled.select`
 `;
 
 export const ButtonGroup = styled.div`
-  position: absolute;
-  width: 100%;
-  bottom: -30px;
-  left: 0;
+  padding: 10px 10px;
+  margin-top: 16px;
+  display: flex;
 
   button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 48%;
-    position: absolute;
-    top: 0;
-    height: 30px;
-    padding: 20px;
+    width: 49%;
     border: none;
-    font-size: 16px;
     border-radius: 3px;
     box-shadow: 0 0 0 0 rgb(0 0 0 / 10%), 0 2px 5px rgb(0 0 0 / 10%);
     cursor: pointer;

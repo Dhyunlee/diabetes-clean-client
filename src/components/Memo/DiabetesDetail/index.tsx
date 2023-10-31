@@ -14,13 +14,16 @@ import {
 } from "components/Base/GlobalModal/styles";
 import { DIABETES_KEY } from "constants/query_key";
 import { IDiabetesInfo, IDiabetesResponse } from "models/data";
+import { useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "constants/router_path";
 
 interface Iprops {
   id: string;
 }
-
+const { UPDATE_DIABETES } = ROUTER_PATH;
 const DiabetesDetail = ({ id }: Iprops) => {
   const { closeModal } = useModal();
+  const navigate = useNavigate();
   const { data, isError } = useAPIByIdQuery<IDiabetesResponse>(
     id,
     DIABETES_KEY,
@@ -31,7 +34,7 @@ const DiabetesDetail = ({ id }: Iprops) => {
   const iconData = timeIcons.find(({ itemIcons_desc }) =>
     diabetes?.slot?.includes(itemIcons_desc)
   );
-  console.log(diabetes);
+
   const useMutate = useDelDiabetes();
 
   const onDelDiabetes = useCallback(() => {
@@ -54,8 +57,9 @@ const DiabetesDetail = ({ id }: Iprops) => {
   }, [diabetes?._id, closeModal, useMutate]);
 
   const onEditDiabetes = useCallback(() => {
-    console.log("당수치 수정페이지로 이동");
-  }, []);
+    navigate(`${UPDATE_DIABETES}`, { state: id });
+    closeModal();
+  }, [closeModal, id, navigate]);
 
   if (isError) {
     return (
