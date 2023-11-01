@@ -1,19 +1,45 @@
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import { MdEdit } from "react-icons/md";
 import gravatar from "gravatar";
-import { useDelUserMutation } from "hooks/service/mutator";
+import { useDeleteUser } from "hooks/service/mutator";
 import { userState } from "store/userState";
-import { palette } from "libs/palette";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import Avatar from "components/Base/Avatar";
 import Button from "components/Base/Button";
 import { Title } from "components/My/styles";
-import { EditBtnWrap, ProfileBlock, ProfileContainer } from "./styles";
+import Textarea from "components/Base/Textarea";
+import {
+  ButtonGroup,
+  ProfileBlock,
+  ProfileContainer,
+  UserInfo
+} from "./styles";
+import useUpdateUser from "hooks/service/mutator/user/useUpdateUser";
 
 const UserProfile = () => {
   const userInfo = useRecoilValue(userState);
-  const useMutate = useDelUserMutation();
+  const deleteMutate = useDeleteUser();
+  const updateMutate = useUpdateUser();
+
+  const [isEditMode, setisEditMode] = useState(false);
+  const [nickname, setNickname] = useState(userInfo.nickname);
+  const [aboutMe, setAboutMe] = useState(userInfo.aboutMe);
+
+  const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+    e.target.focus();
+  };
+  const onChangeAboutMe = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setAboutMe(e.target.value);
+  };
+  const onToggleEditMode = () => {
+    setisEditMode((prev) => !prev);
+    if (nickname || aboutMe) {
+      setNickname("");
+      setAboutMe("");
+    }
+  };
 
   const onDelUser = useCallback(() => {
     alertHandler
@@ -29,12 +55,31 @@ const UserProfile = () => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          useMutate.mutate(userInfo?._id);
+          deleteMutate.mutate(userInfo?._id);
         } else if (result.isDismissed) {
           alertHandler.onToast({ msg: alertMessage.cancelMsg });
         }
       });
-  }, [useMutate, userInfo?._id]);
+  }, [deleteMutate, userInfo?._id]);
+
+  const onUpdateUser = useCallback(() => {
+    if (nickname || aboutMe) {
+      const insertData = {
+        nickname: nickname || userInfo.nickname,
+        aboutMe: aboutMe || userInfo.aboutMe
+      };
+      console.log(insertData);
+      updateMutate.mutate({ userId: userInfo?._id, userData: insertData });
+    }
+    setisEditMode((prev) => !prev);
+  }, [
+    aboutMe,
+    nickname,
+    updateMutate,
+    userInfo?._id,
+    userInfo.aboutMe,
+    userInfo.nickname
+  ]);
 
   return (
     <div>
@@ -42,8 +87,14 @@ const UserProfile = () => {
       <ProfileBlock>
         <ProfileContainer>
           <div className="profile-img">
+            <button
+              className="prof_btn"
+              onClick={() => console.log("프로필 이미지 변경")}
+            >
+              <MdEdit color="#232" />
+            </button>
             <Avatar
-              size={170}
+              size={160}
               imgUrl={
                 userInfo?.imageSrc
                   ? userInfo?.imageSrc
@@ -54,19 +105,43 @@ const UserProfile = () => {
               }
             />
           </div>
-          <div className="user-info">
-            <div>{userInfo.nickname}</div>
-            <div>{userInfo.email}</div>
-          </div>
-          <EditBtnWrap>
-            <div className="inner icon-wrap">
-              <MdEdit className="icon" color={palette.gray[5]} />
+          <UserInfo>
+            <div className="Info_block">
+              <div className="info_title">닉네임</div>
+              {isEditMode ? (
+                <input
+                  className="info_cont edit_mode"
+                  placeholder={userInfo.nickname}
+                  value={nickname}
+                  onChange={onChangeNickName}
+                />
+              ) : (
+                <div className="info_cont">{userInfo.nickname}</div>
+              )}
             </div>
-            <div className="inner btn-name">
-              <span>프로필 수정</span>
+            <div className="Info_block">
+              <div className="info_title">소개</div>
+              {isEditMode ? (
+                <Textarea
+                  rows={11}
+                  className="info_cont about_me edit_mode"
+                  placeholder={userInfo.aboutMe}
+                  defaultValue={aboutMe}
+                  onChange={onChangeAboutMe}
+                />
+              ) : (
+                <div className="info_cont about_me">{userInfo.aboutMe}</div>
+              )}
             </div>
-          </EditBtnWrap>
-          <Button posX={150} size={16} text="회원 탈퇴" onClick={onDelUser} />
+          </UserInfo>
+          <ButtonGroup>
+            {isEditMode ? (
+              <Button text="프로필 적용" onClick={onUpdateUser} />
+            ) : (
+              <Button text="프로필 수정" onClick={onToggleEditMode} />
+            )}
+            <Button text="회원 탈퇴" onClick={onDelUser} />
+          </ButtonGroup>
         </ProfileContainer>
       </ProfileBlock>
     </div>
