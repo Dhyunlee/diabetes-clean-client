@@ -6,15 +6,17 @@ import {
   ImageUploadForm,
   ThumbnailImg
 } from "./styles";
+import Button from "components/Base/Button";
 
 interface IProps {
+  imageUrl: string;
   setImgUrl: Dispatch<React.SetStateAction<string>>;
   setImgFileName: Dispatch<React.SetStateAction<string>>;
 }
 
-const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
+const ImageUpload = ({ imageUrl, setImgUrl, setImgFileName }: IProps) => {
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [thumbnail, setThumbnail] = useState<string | null>("");
+  const [thumbnail, setThumbnail] = useState<string | null>(imageUrl || "");
 
   const onChangeImg = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = (e.target.files as FileList)[0];
@@ -23,7 +25,6 @@ const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
       fileReader.readAsDataURL(file);
       fileReader.addEventListener("loadend", (e: ProgressEvent<FileReader>) => {
         const { result } = e.currentTarget as FileReader;
-        console.log({ result });
         setThumbnail(result as string);
         // TODO: 이미지 업로드 로직(함수) 불러오기
       });
@@ -45,13 +46,12 @@ const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
   //TODO: 이미지 업로드: 생성 부분 로직 작성하기
   return (
     <>
-      <button
-        onClick={onCancelImageUpload}
+      <Button
+        text="이미지 취소"
         type="button"
-        style={{ position: "absolute", right: 10, top: 20 }}
-      >
-        이미지 취소
-      </button>
+        onClick={onCancelImageUpload}
+        style={{ position: "absolute", right: 10, top: 10 }}
+      />
       <ImageUploadForm>
         <ImgUploadBox>
           <DrapFileArea onClick={onClickFileInput}>
@@ -76,6 +76,7 @@ const ImageUpload = ({ setImgUrl, setImgFileName }: IProps) => {
               </>
             )}
             <input
+              multiple
               name="imgUpload"
               type="file"
               accept="image/gif, image/jpeg, image/png"
