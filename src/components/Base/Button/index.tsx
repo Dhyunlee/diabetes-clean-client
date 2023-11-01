@@ -11,6 +11,8 @@ interface customType {
   posX?: string | number;
   posY?: string | number;
   size?: string | number;
+  bgColor?: string;
+  color?: string;
 }
 
 const Button: FC<customType & commonButtonProps> = ({ text, ...rest }) => {

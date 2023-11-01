@@ -71,6 +71,12 @@ export interface IDiabetesResponse {
   diabetesInfo: IDiabetesInfo[] | IDiabetesInfo;
 }
 
+export interface IUpdateDiabetes {
+  id: string;
+  sugar_level: number;
+  note: string;
+}
+
 export interface IContentsRequest {
   writer: string;
   content: string;

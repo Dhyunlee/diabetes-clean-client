@@ -1,5 +1,5 @@
-export { default as useCreateDiabetes } from "./memo/useCreateDiabetes";
-export { default as useDelDiabetes } from "./memo/useDelDiabetes";
+export { default as useCreateDiabetes } from "./diabetes/useCreateDiabetes";
+export { default as useDelDiabetes } from "./diabetes/useDelDiabetes";
 
 export { default as useCreateContents } from "./contents/useCreateContents";
 export { default as useDelContents } from "./contents/useDelContents";

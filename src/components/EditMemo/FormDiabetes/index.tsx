@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
@@ -8,7 +8,6 @@ import { useModal } from "hooks/common/useModal";
 import { useCreateDiabetes } from "hooks/service/mutator";
 import { ISelectedSlotItem, selectedSlotItem } from "libs/slotItem";
 import alertHandler, { alertMessage } from "utils/functions/alertHandler";
-import { ROUTER_PATH } from "constants/router_path";
 import {
   ButtonGroup,
   FormWrap,
@@ -19,51 +18,46 @@ import {
   TextareaGroup,
   UnitTextWrap
 } from "./styles";
+import Button from "components/Base/Button";
+import { useInput } from "hooks/common/useInput";
+import { IDiabetesInfo, IDiabetesRequest } from "models/data";
+import useUpdateDiabetes from "hooks/service/mutator/diabetes/useUpdateDiabetes";
 
-const FormDiabetes = () => {
-  const { INDEX } = ROUTER_PATH;
+interface Props {
+  mode: string;
+  data: IDiabetesInfo | null;
+}
+const FormDiabetes = ({ mode, data }: Props) => {
+  const date = (data?.createdAt as string)?.split(" ")[0];
+  const time = (data?.createdAt as string)?.split(" ")[1];
   const { closeModal } = useModal();
-  const navigate = useNavigate();
   const { _id: userId } = useRecoilValue(userState);
-  const [sugarLevel, setSugarLevel] = useState<number | string>("");
-  const [slot, setSlot] = useState<string>("");
-  const [inutMemo, setInutMemo] = useState("");
-  const [createdDate, setCreatedDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [createdTime, setCreatedTime] = useState(dayjs().format("HH:mm"));
-  const useMutate = useCreateDiabetes();
+  const createMutate = useCreateDiabetes();
+  const updateMudate = useUpdateDiabetes();
+  const navigate = useNavigate();
 
-  const onChangeSugarLevel = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSugarLevel(Number(e.target.value) || "");
-    },
-    []
+  const [sugarLevel, , onChangeSugarLevel] = useInput<string>(
+    String(data?.sugar_level ?? "")
   );
+  const [writtenDate, , onChangeWrittenDate] = useInput(
+    date || dayjs().format("YYYY-MM-DD")
+  );
+  const [writtenTime, , onChangeWrittenTime] = useInput(
+    time || dayjs().format("HH:mm")
+  );
+
+  const [slot, setSlot] = useState<string>(data?.slot as string);
+  const [inutMemo, setInutMemo] = useState<string>(data?.note as string);
 
   const onChangeMemo = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setInutMemo(e.target.value);
     },
-    []
-  );
-
-  const onChangeWrittenDate = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCreatedDate(e.target.value);
-      console.log(e.target.value);
-    },
-    []
-  );
-
-  const onChangeWrittenTime = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCreatedTime(e.target.value);
-    },
-    []
+    [setInutMemo]
   );
 
   const onChnageSlot = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      console.log({ slot: e.target.value });
       setSlot(e.target.value);
     },
     []
@@ -92,120 +86,131 @@ const FormDiabetes = () => {
       });
   }, [closeModal, navigate]);
 
-  const onWriteMemo = useCallback(() => {
-    const createdAt: string = dayjs(`${createdDate} ${createdTime}`).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    const insertData = {
-      writer: userId,
-      sugar_level: Number(sugarLevel),
-      slot,
-      note: inutMemo,
-      createdAt
-    };
+  const onWriteMemo = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const createdAt: string = dayjs(`${writtenDate} ${writtenTime}`).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const insertData: IDiabetesRequest = {
+        writer: userId,
+        sugar_level: Number(sugarLevel),
+        slot,
+        note: inutMemo as string,
+        createdAt
+      };
 
-    if (sugarLevel && slot) {
-      useMutate.mutate(insertData);
-      navigate(INDEX, { replace: true });
-    } else {
-      const text = !sugarLevel
-        ? "당수치를 입력해주세요"
-        : "시간대를 입력해주세요";
-      alertHandler.onToast({ msg: text, icon: "info" });
-    }
-  }, [
-    INDEX,
-    createdDate,
-    createdTime,
-    inutMemo,
-    navigate,
-    slot,
-    sugarLevel,
-    useMutate,
-    userId
-  ]);
+      if (sugarLevel && slot) {
+        console.log(insertData);
+        if (mode === "create") {
+          createMutate.mutate(insertData);
+        } else {
+          updateMudate.mutate({
+            diabetesId: data?._id as string,
+            diabetesData: insertData
+          });
+        }
+      } else {
+        const text = !sugarLevel
+          ? "당수치를 입력해주세요"
+          : "시간대를 입력해주세요";
+        alertHandler.onToast({ msg: text, icon: "info" });
+      }
+    },
+    [
+      writtenDate,
+      writtenTime,
+      userId,
+      sugarLevel,
+      slot,
+      inutMemo,
+      mode,
+      createMutate,
+      updateMudate,
+      data?._id
+    ]
+  );
 
   return (
-    <>
-      <FormWrap>
-        <InputGroup>
-          <LabelWrap>
-            <label>날짜</label>
-          </LabelWrap>
-          <InputWrap>
-            <Input
-              style={{ width: 150 }}
-              type="date"
-              value={createdDate}
-              onChange={onChangeWrittenDate}
-              required
-            />
-          </InputWrap>
-        </InputGroup>
-        <InputGroup>
-          <LabelWrap>
-            <label>시간</label>
-          </LabelWrap>
-          <InputWrap>
-            <Input
-              style={{ width: 150 }}
-              type="time"
-              value={createdTime}
-              onChange={onChangeWrittenTime}
-              required
-            />
-          </InputWrap>
-        </InputGroup>
-        <InputGroup>
-          <LabelWrap>
-            <label>시간대</label>
-          </LabelWrap>
-          <InputWrap>
-            <Select style={{ width: 150 }} onChange={onChnageSlot}>
-              {selectedSlotItem.map(({ id, slot, dec }: ISelectedSlotItem) => (
-                <option key={id} value={slot}>
-                  {dec}
-                </option>
-              ))}
-            </Select>
-          </InputWrap>
-        </InputGroup>
-        <InputGroup>
-          <LabelWrap>
-            <label>당수치</label>
-          </LabelWrap>
-          <InputWrap>
-            <Input
-              value={sugarLevel}
-              maxLength={3}
-              placeholder="당수치를 입력해주세요"
-              pattern="[0-9]+"
-              onChange={onChangeSugarLevel}
-              required
-            />
-          </InputWrap>
-          <UnitTextWrap>
-            <span>mg/dl</span>
-          </UnitTextWrap>
-        </InputGroup>
-        <TextareaGroup>
-          <textarea
-            value={inutMemo}
-            placeholder="오늘 당관리는 어떠셨나요?"
-            onChange={onChangeMemo}
+    <FormWrap onSubmit={onWriteMemo}>
+      <InputGroup>
+        <LabelWrap>
+          <label>날짜</label>
+        </LabelWrap>
+        <InputWrap>
+          <Input
+            type="date"
+            value={writtenDate}
+            onChange={onChangeWrittenDate}
+            required
           />
-        </TextareaGroup>
-        <ButtonGroup>
-          <button type="reset" onClick={onCancal}>
-            취소하기
-          </button>
-          <button type="submit" onClick={onWriteMemo}>
-            기록하기
-          </button>
-        </ButtonGroup>
-      </FormWrap>
-    </>
+        </InputWrap>
+      </InputGroup>
+      <InputGroup>
+        <LabelWrap>
+          <label>시간</label>
+        </LabelWrap>
+        <InputWrap>
+          <Input
+            type="time"
+            value={writtenTime}
+            onChange={onChangeWrittenTime}
+            required
+          />
+        </InputWrap>
+      </InputGroup>
+      <InputGroup>
+        <LabelWrap>
+          <label>시간대</label>
+        </LabelWrap>
+        <InputWrap>
+          <Select onChange={onChnageSlot} value={slot}>
+            {selectedSlotItem.map(({ id, slot, dec }: ISelectedSlotItem) => (
+              <option key={id} value={slot}>
+                {dec}
+              </option>
+            ))}
+          </Select>
+        </InputWrap>
+      </InputGroup>
+      <InputGroup>
+        <LabelWrap>
+          <label>당수치</label>
+        </LabelWrap>
+        <InputWrap>
+          <Input
+            value={sugarLevel}
+            maxLength={3}
+            placeholder="당수치를 입력해주세요"
+            pattern="[0-9]+"
+            onChange={onChangeSugarLevel}
+            required
+          />
+        </InputWrap>
+        <UnitTextWrap>
+          <span>mg/dl</span>
+        </UnitTextWrap>
+      </InputGroup>
+      <TextareaGroup>
+        <textarea
+          value={inutMemo}
+          placeholder="오늘 당관리는 어떠셨나요?"
+          onChange={onChangeMemo}
+        />
+      </TextareaGroup>
+      <ButtonGroup>
+        <Button type="button" text="취소하기" onClick={onCancal} />
+        <Button
+          type="submit"
+          text={mode === "create" ? "작성하기" : "수정하기"}
+        />
+      </ButtonGroup>
+    </FormWrap>
   );
+};
+
+FormDiabetes.defaultProps = {
+  mode: "create"
 };
 
 export default FormDiabetes;
