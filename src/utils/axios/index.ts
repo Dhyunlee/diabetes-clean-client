@@ -1,9 +1,17 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import useStorage from "utils/functions/useStorage";
 // const API_BASE_URL = process.env.REACT_APP_BASE_URL;
 const API_BASE_URL = "";
 const { getStorage } = useStorage;
 console.log({ API_BASE_URL });
+
+export interface ResponseErrorType {
+  code: string;
+  message: string;
+  response: AxiosResponse;
+  status: number;
+}
+
 const api = axios.create({
   baseURL: API_BASE_URL || "http://localhost:5000",
   withCredentials: true,

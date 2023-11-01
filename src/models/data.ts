@@ -39,10 +39,7 @@ export type TMyInfo = Pick<
 
 export type TBriefWriter = Pick<TMyInfo, "_id" | "nickname" | "imageSrc">;
 
-export type TWriterInfo = Omit<
-  TMyInfo,
-  "followers" | "followings" | "email" | "aboutMe"
->;
+export type TUserUpdateRequest = Pick<TMyInfo, "nickname" | "aboutMe">;
 
 export interface IUserResponse {
   isOk: boolean;
@@ -86,7 +83,7 @@ export interface IContentsRequest {
 
 export interface IContents {
   _id: string;
-  writer: TMyInfo | TWriterInfo;
+  writer: TMyInfo | TBriefWriter;
   content: string;
   imageName: string;
   imageUrl: string;

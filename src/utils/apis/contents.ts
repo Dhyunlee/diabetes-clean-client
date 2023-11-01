@@ -1,20 +1,13 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { API_PATH } from "constants/api_path";
 import { CommonResponse, IContentsResponse } from "models/data";
-import api from "utils/axios";
+import api, { ResponseErrorType } from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
 const { CONTENTS_API, SEARCH_API } = API_PATH;
 
 export interface ResData {
   data: { isOk: boolean; likedPost: []; msg: string };
-}
-
-export interface ResponseErrorType {
-  code: string;
-  message: string;
-  response: AxiosResponse;
-  status: number;
 }
 
 // 게시글 추가

@@ -9,7 +9,7 @@ import CommentForm from "components/Comments/CommentForm";
 import { Icons } from "components/Posts/styles";
 import alertHandler from "utils/functions/alertHandler";
 import { userState } from "store/userState";
-import { useDelCommentMutation } from "hooks/service/mutator";
+import { useDelComment } from "hooks/service/mutator";
 import { useToggle } from "hooks/common/useToggle";
 import { CommentContainer, CommentContents, CommentHeader } from "./styles";
 import { ROUTER_PATH } from "constants/router_path";
@@ -23,7 +23,7 @@ const Comment = ({ comment }: Iprops) => {
   const [isShowSubMenu, setIsShowSubMenu, onToggleMenu] = useToggle();
   const [isShowCommentForm, setIsShowCommentForm, onToggleComment] =
     useToggle();
-  const mutation = useDelCommentMutation();
+  const mutation = useDelComment();
   const {
     _id: commentId,
     content,

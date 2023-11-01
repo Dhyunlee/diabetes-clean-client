@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { updateContents } from "utils/apis/contents";
 import alertHandler from "utils/functions/alertHandler";
 
-const useUpdateContents = () => {
+const useUpdateDiabetes = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation<
@@ -33,4 +33,4 @@ const useUpdateContents = () => {
   });
 };
 
-export default useUpdateContents;
+export default useUpdateDiabetes;

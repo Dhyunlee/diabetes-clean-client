@@ -5,7 +5,7 @@ import { CommonResponse, ICommentRequest } from "models/data";
 import { createComment } from "utils/apis/comment";
 import alertHandler from "utils/functions/alertHandler";
 
-const useCreateCommentMutation = () => {
+const useCreateComment = () => {
   const queryClient = useQueryClient();
   return useMutation<CommonResponse, AxiosError, ICommentRequest>(
     createComment<ICommentRequest>,
@@ -21,4 +21,4 @@ const useCreateCommentMutation = () => {
     }
   );
 };
-export default useCreateCommentMutation;
+export default useCreateComment;

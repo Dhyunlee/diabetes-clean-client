@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { FOLLOW_KEY } from "constants/query_key";
+import { CONTENTS_KEY, FOLLOW_KEY, USER_KEY } from "constants/query_key";
 import { CommonResponse } from "models/data";
-import { follow } from "utils/apis/follow";
+import { unFollow } from "utils/apis/follow";
 import alertHandler from "utils/functions/alertHandler";
 
-const useFollowMutation = () => {
+const useUnFollow = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, string>(follow, {
+  return useMutation<CommonResponse, AxiosError, string>(unFollow, {
     onSuccess: (data) => {
       queryClient.invalidateQueries<string>([FOLLOW_KEY]);
       alertHandler.onToast({ msg: data.msg });
@@ -19,4 +19,4 @@ const useFollowMutation = () => {
   });
 };
 
-export default useFollowMutation;
+export default useUnFollow;
