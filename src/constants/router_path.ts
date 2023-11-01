@@ -2,8 +2,6 @@ export const ROUTER_PATH = {
   INDEX: "/",
   LOGIN: "/login",
   SIGNUP: "/signup",
-  // SAVE_MEMO: "/create/*",
-  // UPDATE_MEMO: "/update-memo/*",
   SAVE_MEMO_DIABETES: "/create/diabetes",
   UPDATE_DIABETES: "/update/diabetes",
   SAVE_MEMO_DIET: "/create/diet",
@@ -15,6 +13,7 @@ export const ROUTER_PATH = {
   UPDATE_CONTENTS: "/update/story",
   STORY: "/story",
   MY_FEED: "/story/:username",
+
   SEARCH: "search",
   EMPATHY: "empathy"
 };

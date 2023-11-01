@@ -21,7 +21,7 @@ import {
 import Button from "components/Base/Button";
 import { useInput } from "hooks/common/useInput";
 import { IDiabetesInfo, IDiabetesRequest } from "models/data";
-import useUpdateDiabetes from "hooks/service/mutator/memo/useUpdateDiabetes";
+import useUpdateDiabetes from "hooks/service/mutator/diabetes/useUpdateDiabetes";
 
 interface Props {
   mode: string;

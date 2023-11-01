@@ -27,7 +27,9 @@ const {
   MYPAGE,
   SAVE_CONTENTS,
   UPDATE_CONTENTS,
-  MY_FEED
+  MY_FEED,
+  SEARCH,
+  EMPATHY
 } = ROUTER_PATH;
 const PublicRouter = () => {
   return (
