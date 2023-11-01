@@ -2,13 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { Like_key } from "constants/query_key";
 import { CommonResponse, ILikeRequest } from "models/data";
-import { addLike } from "utils/apis/like";
+import { unLike } from "utils/apis/like";
 
-const useAddLikeMutation = () => {
+const useUnLike = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, ILikeRequest>(addLike, {
-    onSuccess: () => {
+  return useMutation<CommonResponse, AxiosError, ILikeRequest>(unLike, {
+    onSuccess: (data) => {
       queryClient.invalidateQueries<string>([Like_key]);
+      console.log(data);
     },
     onError: (err) => {
       console.log({ error: err });
@@ -17,4 +18,4 @@ const useAddLikeMutation = () => {
   });
 };
 
-export default useAddLikeMutation;
+export default useUnLike;

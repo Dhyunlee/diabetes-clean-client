@@ -2,17 +2,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { COMMENT_KEY } from "constants/query_key";
 import { CommonResponse } from "models/data";
-import { deleteComment } from "utils/apis/comment";
+import { updateComment } from "utils/apis/comment";
 import alertHandler from "utils/functions/alertHandler";
 
-const useDelCommentMutation = () => {
+const useUpdateComment = () => {
   const queryClient = useQueryClient();
-  return useMutation<CommonResponse, AxiosError, string>(deleteComment, {
+  return useMutation<
+    CommonResponse,
+    AxiosError,
+    { content: string; commentId: string }
+  >(updateComment, {
     onSuccess: (data) => {
       if (data.isOk) {
+        queryClient.invalidateQueries<string>([COMMENT_KEY]);
         alertHandler.onToast({ msg: data.msg });
       }
-      queryClient.invalidateQueries<string>([COMMENT_KEY]);
     },
     onError: (err) => {
       console.log({ error: err });
@@ -21,4 +25,4 @@ const useDelCommentMutation = () => {
   });
 };
 
-export default useDelCommentMutation;
+export default useUpdateComment;

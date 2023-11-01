@@ -11,8 +11,8 @@ import { TMyInfo } from "models/data";
 import { useDelContents } from "hooks/service/mutator";
 import alertHandler from "utils/functions/alertHandler";
 import PostUserInfo from "components/Feed/PostUserInfo";
-import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutation";
-import useFollowMutation from "hooks/service/mutator/follow/useFollowMutation";
+import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollow";
+import useFollowMutation from "hooks/service/mutator/follow/useFollow";
 import { ROUTER_PATH } from "constants/router_path";
 
 interface IProps {

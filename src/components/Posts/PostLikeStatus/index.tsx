@@ -3,8 +3,8 @@ import { useRecoilValue } from "recoil";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
 import { ILike } from "models/data";
-import useAddLikeMutation from "hooks/service/mutator/like/useAddLikeMutation";
-import useUnLikeMutation from "hooks/service/mutator/like/useUnLikeMutation";
+import useAddLike from "hooks/service/mutator/like/useAddLike";
+import useUnLike from "hooks/service/mutator/like/useUnLike";
 import { userState } from "store/userState";
 
 interface IProps {
@@ -16,8 +16,8 @@ interface IProps {
 const PostLikeStatus = ({ contentsId, likes, likeCount }: IProps) => {
   const [isLike, setIsLike] = useState(false);
   const { _id: currentId } = useRecoilValue(userState);
-  const addLike = useAddLikeMutation();
-  const unLike = useUnLikeMutation();
+  const addLike = useAddLike();
+  const unLike = useUnLike();
 
   useEffect(() => {
     likes?.map((like) => {
