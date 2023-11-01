@@ -76,7 +76,6 @@ const MyFeed = () => {
   if (isLoading) {
     return <div>로딩중</div>;
   }
-  console.log({ currentUser });
   return (
     <MyFeedWrap>
       <MyFeedContainer>

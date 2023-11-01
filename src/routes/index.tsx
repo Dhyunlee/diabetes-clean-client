@@ -11,7 +11,7 @@ import WriteMemo from "pages/WriteMemo";
 import FormDiabetes from "components/EditMemo/FormDiabetes";
 import FormDiet from "components/EditMemo/FormDiet";
 import MyStory from "pages/MyStory";
-import WriteContents from "pages/WriteContents";
+import WriteContents from "pages/EditContents";
 import MyPost from "components/MyFeed/MyPost";
 import ActivityPost from "components/MyFeed/ActivityPost";
 import LikedPost from "components/MyFeed/LikedPost";
@@ -27,6 +27,7 @@ const {
   STORY,
   MYPAGE,
   SAVE_CONTENTS,
+  UPDATE_CONTENTS,
   MY_FEED
 } = ROUTER_PATH;
 const PublicRouter = () => {
@@ -40,6 +41,7 @@ const PublicRouter = () => {
           <Route path="diet" element={<FormDiet />} />
         </Route>
         <Route path={SAVE_CONTENTS} element={<WriteContents />} />
+        <Route path={UPDATE_CONTENTS} element={<WriteContents />} />
         <Route path={MYPAGE} element={<My />} />
       </Route>
       <Route path={LOGIN} element={<Login />} />
