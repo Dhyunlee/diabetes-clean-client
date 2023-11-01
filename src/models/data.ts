@@ -41,7 +41,7 @@ export type TBriefWriter = Pick<TMyInfo, "_id" | "nickname" | "imageSrc">;
 
 export type TWriterInfo = Omit<
   TMyInfo,
-  "followers" | "followings" | "imageSrc" | "aboutMe"
+  "followers" | "followings" | "email" | "aboutMe"
 >;
 
 export interface IUserResponse {
@@ -86,7 +86,7 @@ export interface IContentsRequest {
 
 export interface IContents {
   _id: string;
-  writer: TMyInfo;
+  writer: TMyInfo | TWriterInfo;
   content: string;
   imageName: string;
   imageUrl: string;
@@ -98,6 +98,12 @@ export interface IContentsResponse {
   likedPost?: any;
   isOk: boolean;
   contents: IContents[];
+  total?: number;
+}
+
+export interface IContentsDetailResponse {
+  isOk: boolean;
+  contentsInfo: IContents;
   total?: number;
 }
 

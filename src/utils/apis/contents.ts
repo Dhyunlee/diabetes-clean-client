@@ -17,6 +17,7 @@ export interface ResponseErrorType {
   status: number;
 }
 
+// 게시글 추가
 const createContents = async <T>(insertData: T) => {
   try {
     const { data } = await api.post<CommonResponse>(
@@ -37,6 +38,7 @@ const createContents = async <T>(insertData: T) => {
   }
 };
 
+// 게시글 삭제
 const deleteContents = async (contentId: string) => {
   console.log(contentId);
   try {
@@ -57,6 +59,36 @@ const deleteContents = async (contentId: string) => {
   }
 };
 
+// 게시글 수정
+const updateContents = async ({
+  contentsId,
+  content
+}: {
+  contentsId: string;
+  content: string;
+}) => {
+  try {
+    const { data } = await api.patch<CommonResponse>(
+      `${CONTENTS_API}/${contentsId}`,
+      {
+        content
+      }
+    );
+    return data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
+  }
+};
+
+//모든 게시글
 const getAllContents = async (page: string) => {
   const limit = 10;
   try {
@@ -77,6 +109,7 @@ const getAllContents = async (page: string) => {
     throw error;
   }
 };
+
 //내피드 페이징처리
 const getUserContents = async (page: string, context: string) => {
   const limit = 10;
@@ -98,6 +131,7 @@ const getUserContents = async (page: string, context: string) => {
   }
 };
 
+// 내 게시글 (게시글수 포함)
 const getMyFeedInfo = async (context: string) => {
   try {
     const { data } = await api.get<IContentsResponse>(
@@ -117,6 +151,7 @@ const getMyFeedInfo = async (context: string) => {
   }
 };
 
+// 내 관심글
 const getLikedPosts = async (page: string, context: string) => {
   const limit = 10;
   try {
@@ -152,7 +187,7 @@ const getLikedPosts = async (page: string, context: string) => {
   }
 };
 
-// 검색
+// 게시글 검색
 //search?keyword=오늘&page=1&size=10
 const getSearchContents = async (page: string, context: string) => {
   const limit = 10;
@@ -174,6 +209,21 @@ const getSearchContents = async (page: string, context: string) => {
   }
 };
 
+// 게시글 상세 조회
+const getContentsFindById = async (id: string | null) => {
+  try {
+    if (!id) return;
+    const { data } = await api.get(`${CONTENTS_API}/${id}`);
+    return data;
+  } catch (error: any) {
+    alertHandler.onToast({
+      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
+      icon: "error"
+    });
+    throw error.response;
+  }
+};
+
 export {
   getAllContents,
   getSearchContents,
@@ -181,5 +231,7 @@ export {
   getMyFeedInfo,
   getLikedPosts,
   createContents,
-  deleteContents
+  deleteContents,
+  updateContents,
+  getContentsFindById
 };

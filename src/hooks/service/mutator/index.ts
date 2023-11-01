@@ -1,8 +1,9 @@
 export { default as useCreateDiabetes } from "./memo/useCreateDiabetes";
 export { default as useDelDiabetes } from "./memo/useDelDiabetes";
 
-export { default as useCreateContentsMutation } from "./contents/useCreateContentsMutation";
-export { default as useDelContentsMutation } from "./contents/useDelContentsMutation";
+export { default as useCreateContents } from "./contents/useCreateContents";
+export { default as useDelContents } from "./contents/useDelContents";
+export { default as useupdateContents } from "./contents/useUpdateContents";
 
 export { default as useCreateCommentMutation } from "./comment/useCreateCommentMutation";
 export { default as useDelCommentMutation } from "./comment/useDelCommentMutation";
