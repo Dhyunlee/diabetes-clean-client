@@ -35,7 +35,7 @@ const MemoList = () => {
     const startOfDate = dayjs(curDate).startOf("month").format("YYYYMMDD");
     const endOfDate = dayjs(curDate).endOf("month").format("YYYYMMDD");
 
-    const thisMonthDate = (
+    const thisMonthData = (
       diabetesData?.diabetesInfo as IDiabetesInfo[]
     )?.filter((item: IDiabetesInfo) => {
       const fomattedCreatedAt = dayjs(item.createdAt).format("YYYY-MM-DD");
@@ -44,8 +44,8 @@ const MemoList = () => {
         return item;
       }
     });
-    if (thisMonthDate) {
-      setProcessData(thisMonthDate);
+    if (thisMonthData) {
+      setProcessData(thisMonthData);
     }
   }, [curDate, diabetesData?.diabetesInfo]);
 
@@ -56,8 +56,7 @@ const MemoList = () => {
       }월`,
     [curDate]
   );
-
-  const increamentDate = useCallback(() => {
+  const incrementDate = useCallback(() => {
     const today_ = Number(today.split("-").join(""));
     const curDate_ = Number(curDate.format("YYYY-MM").split("-").join(""));
     if (today_ <= curDate_) {
@@ -69,7 +68,7 @@ const MemoList = () => {
     setCurDate(curDate.add(1, "month"));
   }, [curDate, today]);
 
-  const decreamentDate = useCallback(() => {
+  const decrementDate = useCallback(() => {
     setCurDate(curDate.subtract(1, "month"));
   }, [curDate]);
 
@@ -102,8 +101,8 @@ const MemoList = () => {
         {/* <Submenu /> */} {/* <-- 식단 기능 추가후 활성화 --> */}
         <DateArea
           currentDate={currentDate}
-          increamentDate={increamentDate}
-          decreamentDate={decreamentDate}
+          incrementDate={incrementDate}
+          decrementDate={decrementDate}
         />
         <br />
       </MemoHeader>

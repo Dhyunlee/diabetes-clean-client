@@ -6,15 +6,15 @@ dayjs.locale(ko);
 
 interface IProps {
   currentDate: string;
-  increamentDate: () => void;
-  decreamentDate: () => void;
+  incrementDate: () => void;
+  decrementDate: () => void;
 }
 
-const DateArea = ({ currentDate, increamentDate, decreamentDate }: IProps) => {
+const DateArea = ({ currentDate, incrementDate, decrementDate }: IProps) => {
   return (
     <DateAreaContainer>
       <div className="btn-wrap">
-        <button className="dateCtrlBtn" onClick={decreamentDate}>
+        <button className="dateCtrlBtn" onClick={decrementDate}>
           <AiOutlineArrowLeft />
         </button>
       </div>
@@ -22,7 +22,7 @@ const DateArea = ({ currentDate, increamentDate, decreamentDate }: IProps) => {
         <span className="dateText">{currentDate}</span>
       </div>
       <div className="btn-wrap">
-        <button className="dateCtrlBtn" onClick={increamentDate}>
+        <button className="dateCtrlBtn" onClick={incrementDate}>
           <AiOutlineArrowRight />
         </button>
       </div>
