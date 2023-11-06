@@ -6,6 +6,7 @@ import { useAPIByIdQuery } from "hooks/service/queries";
 import { IDiabetesInfo, IDiabetesResponse } from "models/data";
 import { ISortedData, getSortedData } from "utils/functions/getSortedData";
 import { getDiabetes } from "utils/apis/diabetesApis";
+import { getThisMonthData } from "utils/functions/getThisMonthData";
 import { DIABETES_KEY } from "constants/query_key";
 import { userState } from "store/userState";
 import {
@@ -13,7 +14,6 @@ import {
   DiabetesItemWrap,
   DiabetesItemContainer
 } from "components/Memo/styles";
-import { getThisMonthData } from "utils/functions/getThisMonthData";
 
 interface Props {
   curDate: dayjs.Dayjs;
