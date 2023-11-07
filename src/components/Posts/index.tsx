@@ -41,10 +41,8 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
 
   const renderContext = () => {
     if (isSuccess) {
-      console.log({ data });
       return data.pages.map((page) =>
         page.contents.map((post, idx) => {
-          console.log({ page, post });
           return (
             <div key={post._id}>
               <PostCardWrap
@@ -59,6 +57,7 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
       );
     } else {
       if (axios.isAxiosError(error)) {
+        console.log(error);
         let errorMessage = "";
         if (error.response?.status === 403) {
           errorMessage = error.response?.data.msg;
