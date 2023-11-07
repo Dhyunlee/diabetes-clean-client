@@ -130,16 +130,17 @@ const getUserFindById = async (userId: string) => {
 
 // 회원 인증 상태
 const getUserIdByToken = async () => {
-  const { removeStorage } = useStorage;
+  const { removeStorage, setStorage } = useStorage;
   try {
     const { data } = await api.get<IUserResponse>(`${AUTH}`);
     return data;
   } catch (error: unknown) {
     if (axios.isAxiosError<ResponseErrorType>(error)) {
       if (error.response?.status === 401) {
-        console.log("401");
+        setStorage("isAuth", JSON.stringify({ loginState: false }));
+      } else if (error.response?.status === 403) {
         removeStorage("accessToken");
-      } else if (error.response?.status === 500) {
+      } else {
         alertHandler.onToast({
           msg: "서버 오류! 잠시후 다시 시작해주세요.",
           icon: "error"

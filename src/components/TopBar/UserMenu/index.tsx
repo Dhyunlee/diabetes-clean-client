@@ -22,7 +22,6 @@ const UserMenu = () => {
 
   const { data: me } = useAPIQuery<IUserResponse>(USER_KEY, getUserIdByToken);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
-
   const onShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);
