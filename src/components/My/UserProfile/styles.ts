@@ -12,7 +12,7 @@ export const ProfileBlock = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  padding: 50px;
+  padding: 45px 0;
   position: relative;
   left: 0;
   top: 0;
@@ -23,11 +23,15 @@ export const ProfileContainer = styled.div`
   width: 400px;
   gap: 20px;
   border-radius: 5px;
-
+  .profile-img {
+    position: relative;
+    left: 0;
+    top: 0;
+  }
   .prof_btn {
     position: absolute;
-    right: 100px;
-    top: 55px;
+    right: 18px;
+    bottom: 8px;
     display: block;
     width: 30px;
     height: 30px;
@@ -39,7 +43,7 @@ export const ProfileContainer = styled.div`
     cursor: pointer;
 
     &:hover {
-      background: rgb(0 0 0 / 10%);
+      background-color: #f8f9fa;
     }
 
     &:active {
@@ -72,7 +76,7 @@ export const UserInfo = styled.div`
       outline: none;
       border: 1px solid gray;
       display: block;
-      width: 270px;
+      width: 370px;
       padding: 10px;
       font-size: 18px;
       box-shadow: 0px 0px 12px -3px rgb(0 0 0 / 8%);

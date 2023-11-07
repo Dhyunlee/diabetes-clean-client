@@ -35,7 +35,7 @@ export const UserInfoWrap = styled.span`
   cursor: pointer;
   .profile-img {
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: -15px;
   }
   .menuIcon {

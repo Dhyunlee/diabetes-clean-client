@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Container } from "styles/common";
 
 export const MyContainer = styled(Container)`
-  margin: 10px auto;
+  margin: 30px auto;
   padding: 10px 25px;
   max-width: 680px;
   background: #fff;
