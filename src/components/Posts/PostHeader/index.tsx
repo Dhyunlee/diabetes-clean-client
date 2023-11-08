@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { FiMoreHorizontal } from "react-icons/fi";
 import gravatar from "gravatar";
@@ -7,25 +8,28 @@ import SubMenu from "components/Base/SubMenu";
 import { PostHeaderBlock, Icons } from "components/Posts/styles";
 import { userState } from "store/userState";
 import { TMyInfo } from "models/data";
-import { useDelContentsMutation } from "hooks/service/mutator";
+import { useDelContents } from "hooks/service/mutator";
 import alertHandler from "utils/functions/alertHandler";
 import PostUserInfo from "components/Feed/PostUserInfo";
-import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutation";
-import useFollowMutation from "hooks/service/mutator/follow/useFollowMutation";
+import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollow";
+import useFollowMutation from "hooks/service/mutator/follow/useFollow";
+import { ROUTER_PATH } from "constants/router_path";
 
 interface IProps {
   writer: TMyInfo;
-  contentId: string;
+  contentsId: string;
   isDeleted: boolean;
   createdAt: string | Date;
 }
-const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
+const { UPDATE_CONTENTS } = ROUTER_PATH;
+const PostHeader = ({ writer, contentsId, createdAt, isDeleted }: IProps) => {
   const currentUser = useRecoilValue(userState);
   const [isFollow, setIsFollow] = useState(false);
   const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
+  const navigate = useNavigate();
   const followMutate = useFollowMutation();
   const unFollowMutate = useUnFollowMutation();
-  const contentsMutation = useDelContentsMutation();
+  const contentsMutation = useDelContents();
 
   useEffect(() => {
     if (writer) {
@@ -42,19 +46,24 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
   }, []);
 
   const onDelPost = useCallback(() => {
-    if (contentId) {
-      console.log({ contentId });
+    if (contentsId) {
+      console.log({ contentsId });
       alertHandler
         .onConfirm({
           msg: "포스팅을 삭제하실건가요?"
         })
         .then((result) => {
           if (result.isConfirmed) {
-            contentsMutation.mutate(contentId);
+            contentsMutation.mutate(contentsId);
           }
         });
     }
-  }, [contentsMutation, contentId]);
+  }, [contentsMutation, contentsId]);
+
+  const onUpdatePost = useCallback(() => {
+    navigate(`${UPDATE_CONTENTS}`, { state: contentsId });
+  }, [contentsId, navigate]);
+
   const onFollow = useCallback(() => {
     isFollow
       ? unFollowMutate.mutate(writer?._id as string)
@@ -65,17 +74,14 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
     console.log("ReportPost");
   }, []);
 
-  const onHidePost = useCallback(() => {
-    console.log("HidePost");
-  }, []);
-
   const menuItem = useMemo(() => {
     if (currentUser?._id === writer?._id) {
       return [
         {
           id: 1,
-          path: "/mypage",
-          label: "게시물 수정"
+          path: null,
+          label: "게시물 수정",
+          handler: onUpdatePost
         },
         {
           id: 2,
@@ -102,17 +108,11 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
       {
         id: 2,
         path: null,
-        label: "게시물 숨기기",
-        handler: onHidePost
-      },
-      {
-        id: 3,
-        path: null,
         label: "게시물 신고",
         handler: onReportPost
       },
       {
-        id: 4,
+        id: 3,
         path: null,
         label: "취소",
         handler: onCloseMenu
@@ -124,8 +124,8 @@ const PostHeader = ({ writer, contentId, createdAt, isDeleted }: IProps) => {
     onCloseMenu,
     onDelPost,
     onFollow,
-    onHidePost,
     onReportPost,
+    onUpdatePost,
     writer?._id
   ]);
 

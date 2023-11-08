@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import MyPosts from "components/Posts";
 import { getUserContents } from "utils/apis/contents";
+import { MY_FEED } from "constants/query_key";
 
 // 내 게시글
 const MyPost = () => {
@@ -8,7 +9,7 @@ const MyPost = () => {
   return (
     <MyPosts
       params={username as string}
-      queryKey="myfeed"
+      queryKey={MY_FEED}
       fetcher={getUserContents}
     />
   );

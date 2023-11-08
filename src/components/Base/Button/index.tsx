@@ -1,8 +1,4 @@
-import {
-  DetailedHTMLProps,
-  FunctionComponent,
-  ButtonHTMLAttributes
-} from "react";
+import { DetailedHTMLProps, ButtonHTMLAttributes, FC } from "react";
 import { ButtonInterface } from "./style";
 
 type commonButtonProps = DetailedHTMLProps<
@@ -15,12 +11,11 @@ interface customType {
   posX?: string | number;
   posY?: string | number;
   size?: string | number;
+  bgColor?: string;
+  color?: string;
 }
 
-const Button: FunctionComponent<customType & commonButtonProps> = ({
-  text,
-  ...rest
-}) => {
+const Button: FC<customType & commonButtonProps> = ({ text, ...rest }) => {
   return <ButtonInterface {...rest}>{text}</ButtonInterface>;
 };
 

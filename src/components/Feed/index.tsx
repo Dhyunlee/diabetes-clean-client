@@ -6,9 +6,10 @@ import SideBtnMenu from "components/Base/SideBtnMenu";
 import { userState } from "store/userState";
 import { StoryWarp } from "./styles";
 import { getAllContents } from "utils/apis/contents";
+import { CONTENTS_KEY } from "constants/query_key";
 
+const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
 const Feed = () => {
-  const { SAVE_CONTENTS, STORY } = ROUTER_PATH;
   const userInfo = useRecoilValue(userState);
 
   const menuItem = useMemo(
@@ -24,11 +25,11 @@ const Feed = () => {
         label: "내피드"
       }
     ],
-    [SAVE_CONTENTS, STORY, userInfo.nickname]
+    [userInfo.nickname]
   );
   return (
     <StoryWarp className="posts">
-      <FeedPost params="" queryKey="" fetcher={getAllContents} />
+      <FeedPost params="" queryKey={CONTENTS_KEY} fetcher={getAllContents} />
       <SideBtnMenu menuItem={menuItem} />
     </StoryWarp>
   );

@@ -21,9 +21,9 @@ const useLoginMutation = () => {
       onSuccess(data) {
         if (data) {
           setStorage("accessToken", data.accessToken);
-          if (getStorage("accessToken")) {
-            setIsLoggedIn(true);
-          }
+          getStorage("accessToken")
+            ? setIsLoggedIn(true)
+            : setIsLoggedIn(false);
           navigate("/");
         }
         queryClient.refetchQueries({ queryKey: [USER_KEY] });

@@ -1,6 +1,7 @@
+import axios from "axios";
 import { API_PATH } from "constants/api_path";
 import { CommonResponse, ICommentResponse } from "models/data";
-import api from "utils/axios";
+import api, { ResponseErrorType } from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
 const { COMMENT_API } = API_PATH;
@@ -12,11 +13,15 @@ const createComment = async <T>(insertData: T) => {
       insertData
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -35,11 +40,15 @@ const updateComment = async ({
     );
     console.log({ predata: data });
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -50,11 +59,15 @@ const deleteComment = async (commentId: string) => {
       `${COMMENT_API}/${commentId}`
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -66,12 +79,16 @@ const getAllComment = async (contentsId: string | null) => {
       `${COMMENT_API}/contents/${contentsId}`
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
   }
 };
 

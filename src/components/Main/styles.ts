@@ -9,7 +9,7 @@ const TextAni = keyframes`
     transform: translateX(0);
   }
 `;
-export const MainContainer = styled.section`
+export const MainContainer = styled.div`
   .main_container {
     //메인 화면 공통 스타일
     padding: 30px 0;
@@ -19,19 +19,21 @@ export const MainContainer = styled.section`
 
   /* banner-video 영역 */
   section.banner-video {
-    position: relative;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
 
     .video-wrap {
+      position: relative;
+      left: 0;
+      top: 0;
       width: 100%;
-      height: 100%;
-
+      height: calc(100vh - 69px);
+      opacity: 0.8;
+      overflow: hidden;
       .video {
         width: 100%;
         height: 100%;
+        object-fit: fill;
       }
     }
     .text {

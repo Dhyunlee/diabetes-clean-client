@@ -1,19 +1,27 @@
+import axios from "axios";
 import { API_PATH } from "constants/api_path";
-import { CommonResponse, IDiabetesResponse } from "models/data";
-import api from "utils/axios";
+import { CommonResponse, IDiabetesRequest } from "models/data";
+import api, { ResponseErrorType } from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
 const { DIABETES_API } = API_PATH;
 
 const createDiabetes = async <T>(insertData: T) => {
   try {
-    const { data } = await api.post<CommonResponse>(`${DIABETES_API}`);
+    const { data } = await api.post<CommonResponse>(
+      `${DIABETES_API}`,
+      insertData
+    );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -24,26 +32,42 @@ const deleteDiabetes = async (diabetesId: string) => {
       `${DIABETES_API}/${diabetesId}`
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
 
-const updateDiabetes = async <T>(diabetesId: string, insertData: T) => {
+const updateDiabetes = async ({
+  diabetesId,
+  diabetesData
+}: {
+  diabetesId: string;
+  diabetesData: IDiabetesRequest;
+}) => {
+  console.log({ diabetesId, diabetesData });
   try {
-    const { data } = await api.patch<IDiabetesResponse>(
-      `${DIABETES_API}/${diabetesId}`
+    const { data } = await api.patch<CommonResponse>(
+      `${DIABETES_API}/${diabetesId}`,
+      diabetesData
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -53,12 +77,16 @@ const getDiabetes = async (userId: string | null) => {
     if (!userId) return;
     const { data } = await api.get(`${DIABETES_API}/users/${userId}`);
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
   }
 };
 
@@ -67,12 +95,16 @@ const getDiabetesFindById = async (id: string | null) => {
     if (!id) return;
     const { data } = await api.get(`${DIABETES_API}/${id}`);
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
   }
 };
 

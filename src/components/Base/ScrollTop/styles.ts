@@ -8,9 +8,7 @@ export const ScrollTopWrap = styled.div<{ isFadeIn: boolean }>`
   transition: opacity 0.5s;
 `;
 
-export const ScrollTopBtn = styled.button`
-  z-index: 5;
-  cursor: pointer;
+export const ScrollTopBtn = styled.button<{ isFadeIn: boolean }>`
   width: 55px;
   height: 55px;
   display: block;
@@ -29,6 +27,8 @@ export const ScrollTopBtn = styled.button`
   justify-content: center;
   transition: 0.25s all ease-in;
   background: #70290d;
+  z-index: 5;
+  cursor: ${({ isFadeIn }) => (isFadeIn ? "pointer" : "")};
 
   &:hover {
     background: #c2906d;

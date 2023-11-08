@@ -8,8 +8,8 @@ import Button from "components/Base/Button";
 import { ROUTER_PATH } from "constants/router_path";
 import { userState } from "store/userState";
 import { useAPIByIdQuery } from "hooks/service/queries";
-import useFollowMutation from "hooks/service/mutator/follow/useFollowMutation";
-import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollowMutation";
+import useFollowMutation from "hooks/service/mutator/follow/useFollow";
+import useUnFollowMutation from "hooks/service/mutator/follow/useUnFollow";
 import { getMyFeedInfo } from "utils/apis/contents";
 import { getFollow } from "utils/apis/follow";
 import { CONTENTS_KEY, FOLLOW_KEY } from "constants/query_key";
@@ -25,10 +25,11 @@ import {
   UserInfo,
   UserStatus
 } from "./styles";
+import SideBtnMenu from "components/Base/SideBtnMenu";
 
 const MyFeed = () => {
+  const { STORY, SAVE_CONTENTS } = ROUTER_PATH;
   const [isFollow, setIsFollow] = useState(false);
-  const { STORY } = ROUTER_PATH;
   const { username } = useParams();
   const queryKey = `${CONTENTS_KEY}/${username}`;
   const { data, isLoading } = useAPIByIdQuery<IMyFeedResponse>(
@@ -36,18 +37,22 @@ const MyFeed = () => {
     queryKey,
     getMyFeedInfo
   );
-  const currentUser = useRecoilValue(userState);
+  const currentUser = useRecoilValue(userState); //현재 인증된 유저
   const followMutate = useFollowMutation();
   const unFollowMutate = useUnFollowMutation();
 
-  const writer = useMemo(() => data?.contents.writer, [data]);
+  const writer = useMemo(() => data?.contents.writer, [data]); //게시글 작성자
   const subMenus = useMemo(
     () => [
-      { id: 1, label: "내 게시글", url: `${STORY}/${username}` },
-      { id: 2, label: "관심 글", url: `${STORY}/${username}/empathy` },
-      { id: 3, label: "활동 내역", url: `${STORY}/${username}/activity` }
+      {
+        id: 1,
+        label: `${username === currentUser?.nickname ? "내 게시글" : "게시글"}`,
+        url: `${STORY}/${username}`
+      },
+      { id: 2, label: "관심 글", url: `${STORY}/${username}/empathy` }
+      // { id: 3, label: "활동 내역", url: `${STORY}/${username}/activity` } //활동 내역 기능 개발시 활성화
     ],
-    [STORY, username]
+    [STORY, currentUser?.nickname, username]
   );
 
   const { data: followData } = useAPIByIdQuery<IFollowResponse>(
@@ -58,7 +63,7 @@ const MyFeed = () => {
   useEffect(() => {
     if (followData && currentUser) {
       // 팔로우 버튼: 유저의 팔로워 목록에 내가 존재하는가?
-      setIsFollow(followData.followInfo.followers.includes(currentUser._id));
+      setIsFollow(followData?.followInfo?.followers.includes(currentUser?._id));
     }
   }, [currentUser, followData, writer]);
 
@@ -71,7 +76,6 @@ const MyFeed = () => {
   if (isLoading) {
     return <div>로딩중</div>;
   }
-
   return (
     <MyFeedWrap>
       <MyFeedContainer>
@@ -123,13 +127,13 @@ const MyFeed = () => {
                   <li>
                     <span className="status-inner">
                       <span className="status">팔로잉</span>
-                      <span>{followData?.followInfo.followings.length}</span>
+                      <span>{followData?.followInfo?.followings.length}</span>
                     </span>
                   </li>
                   <li>
                     <span className="status-inner">
                       <span className="status">팔로워</span>
-                      <span>{followData?.followInfo.followers.length}</span>
+                      <span>{followData?.followInfo?.followers.length}</span>
                     </span>
                   </li>
                   <li>
@@ -148,6 +152,15 @@ const MyFeed = () => {
           </MainContents>
         </MyFeedMain>
       </MyFeedContainer>
+      <SideBtnMenu
+        menuItem={[
+          {
+            id: 1,
+            path: `${SAVE_CONTENTS}`,
+            label: "작성하기"
+          }
+        ]}
+      />
     </MyFeedWrap>
   );
 };

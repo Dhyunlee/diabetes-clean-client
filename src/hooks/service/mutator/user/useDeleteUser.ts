@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteUserApi } from "utils/apis/userApis";
 import alertHandler from "utils/functions/alertHandler";
 
-const useDelDiabetes = () => {
+const useDeleteUser = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -44,4 +44,4 @@ const useDelDiabetes = () => {
   });
 };
 
-export default useDelDiabetes;
+export default useDeleteUser;

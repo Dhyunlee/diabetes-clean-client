@@ -4,7 +4,6 @@ import axios from "axios";
 import PostItem from "./PostItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { IContentsResponse } from "models/data";
-import { CONTENTS_KEY } from "constants/query_key";
 import { ErrprPostItemWrap, PostCardWrap } from "./styles";
 
 interface IProps {
@@ -21,12 +20,11 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
     data,
     error,
     isSuccess,
-    isLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<IContentsResponse>({
-    queryKey: [queryKey || CONTENTS_KEY],
+    queryKey: [queryKey],
     queryFn: ({ pageParam = 1 }) => fetcher(pageParam, params),
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.contents.length === listSize
@@ -49,7 +47,7 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
             <div key={post._id}>
               <PostCardWrap
                 key={post._id}
-                ref={page.contents?.length === idx + 1 ? ref : null}
+                ref={page.contents?.length === listSize ? ref : null}
               >
                 <PostItem {...post} />
               </PostCardWrap>
@@ -59,6 +57,7 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
       );
     } else {
       if (axios.isAxiosError(error)) {
+        console.log(error);
         let errorMessage = "";
         if (error.response?.status === 403) {
           errorMessage = error.response?.data.msg;
@@ -74,10 +73,6 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
       }
     }
   };
-
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
 
   return (
     <>

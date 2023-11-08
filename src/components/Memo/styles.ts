@@ -53,47 +53,32 @@ export const DateAreaContainer = styled.div`
   }
 `;
 
-// -- [ MemoContents ] --
 export const MemoContents = styled.section`
   margin: 0 auto;
   min-width: 97%;
   width: 260px;
 `;
 
-// -- [ ContentsList ] --
-export const ContentsList = styled.div`
+export const DiabetesListWrap = styled.div`
   margin-bottom: 30px;
 `;
 
-// -- [ ContentsItem ] --
-export const ContentsItem = styled.div`
-  padding: 15px;
+export const DiabetesItemContainer = styled.div`
+  margin-bottom: 45px;
+`;
+
+export const DiabetesItemWrap = styled.div`
+  padding: 10px 15px;
   margin-top: 20px;
   box-shadow: ${({ theme }) => theme.boxShadow.middle};
   cursor: pointer;
 `;
 
-// -- [ ContentsItemHeader ] --
-export const ContentsItemHeader = styled.header``;
-
-// -- [ ContentsItemBody ] --
-export const ContentsItemBody = styled.div`
-  width: 100%;
+export const ItemBodyWrap = styled.div`
   display: flex;
-  padding: 5px 10px;
   justify-content: space-between;
 
-  .content_body-header {
-    display: flex;
-
-    .item-icon {
-      line-height: 22px;
-    }
-    .item-title {
-      padding-left: 5px;
-    }
-  }
-
-  .content_body-inner {
+  .item-slot {
+    padding-left: 8px;
   }
 `;

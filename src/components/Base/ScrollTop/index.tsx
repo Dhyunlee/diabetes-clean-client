@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { ScrollTopBtn, ScrollTopWrap } from "./styles";
 import { MdArrowUpward } from "react-icons/md";
 import { headerViewState } from "store/headerViewState";
@@ -14,7 +14,7 @@ const ScrollTop = () => {
 
   return (
     <ScrollTopWrap onClick={onScrollTop} isFadeIn={!isViewHeader}>
-      <ScrollTopBtn>
+      <ScrollTopBtn isFadeIn={!isViewHeader}>
         <MdArrowUpward size={40} />
       </ScrollTopBtn>
     </ScrollTopWrap>

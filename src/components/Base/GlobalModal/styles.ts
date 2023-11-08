@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { ContentsItem } from "../../Memo/styles";
+import { DiabetesItemWrap } from "../../Memo/styles";
 
-export const DetailContainer = styled(ContentsItem)`
+export const DetailContainer = styled(DiabetesItemWrap)`
   padding: 30px 20px;
   width: 500px;
   cursor: default;

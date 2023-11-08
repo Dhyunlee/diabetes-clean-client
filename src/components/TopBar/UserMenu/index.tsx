@@ -22,7 +22,6 @@ const UserMenu = () => {
 
   const { data: me } = useAPIQuery<IUserResponse>(USER_KEY, getUserIdByToken);
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
-
   const onShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
   }, [showUserSubMenu]);
@@ -57,21 +56,21 @@ const UserMenu = () => {
               {me && (
                 <UserInfoWrap
                   onClick={onShowUserSubMenu}
-                  onMouseDown={(e) => {
-                    e.stopPropagation();
-                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
                 >
-                  <Avatar
-                    size={32}
-                    imgUrl={
-                      me?.userInfo?.imageSrc
-                        ? me?.userInfo?.imageSrc
-                        : gravatar.url(me?.userInfo?.nickname, {
-                            s: "32px",
-                            d: "retro"
-                          })
-                    }
-                  />
+                  <span className="profile-img">
+                    <Avatar
+                      size={40}
+                      imgUrl={
+                        me?.userInfo?.imageSrc
+                          ? me?.userInfo?.imageSrc
+                          : gravatar.url(me?.userInfo?.nickname, {
+                              s: "40px",
+                              d: "retro"
+                            })
+                      }
+                    />
+                  </span>
                   <span className="menuIcon">
                     {showUserSubMenu ? <FcCollapse /> : <FcExpand />}
                   </span>

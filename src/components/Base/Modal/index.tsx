@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent,
+  FC,
   ReactNode,
   memo,
   useCallback,
@@ -16,7 +16,7 @@ interface IModal {
   isOpenModal: boolean;
 }
 
-const Modal: FunctionComponent<IModal> = ({ isOpenModal, children }) => {
+const Modal: FC<IModal> = ({ isOpenModal, children }) => {
   const { closeModal } = useModal();
   const domRef = useRef<Element | null>();
   const [isMountedModal, setIsMountedModal] = useState(false);

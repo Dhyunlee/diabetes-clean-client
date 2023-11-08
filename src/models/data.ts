@@ -39,10 +39,7 @@ export type TMyInfo = Pick<
 
 export type TBriefWriter = Pick<TMyInfo, "_id" | "nickname" | "imageSrc">;
 
-export type TWriterInfo = Omit<
-  TMyInfo,
-  "followers" | "followings" | "imageSrc" | "aboutMe"
->;
+export type TUserUpdateRequest = Pick<TMyInfo, "nickname" | "aboutMe">;
 
 export interface IUserResponse {
   isOk: boolean;
@@ -71,6 +68,12 @@ export interface IDiabetesResponse {
   diabetesInfo: IDiabetesInfo[] | IDiabetesInfo;
 }
 
+export interface IUpdateDiabetes {
+  id: string;
+  sugar_level: number;
+  note: string;
+}
+
 export interface IContentsRequest {
   writer: string;
   content: string;
@@ -80,7 +83,7 @@ export interface IContentsRequest {
 
 export interface IContents {
   _id: string;
-  writer: TMyInfo;
+  writer: TMyInfo | TBriefWriter;
   content: string;
   imageName: string;
   imageUrl: string;
@@ -92,6 +95,12 @@ export interface IContentsResponse {
   likedPost?: any;
   isOk: boolean;
   contents: IContents[];
+  total?: number;
+}
+
+export interface IContentsDetailResponse {
+  isOk: boolean;
+  contentsInfo: IContents;
   total?: number;
 }
 

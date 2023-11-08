@@ -3,9 +3,9 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  FunctionComponent,
   DetailedHTMLProps,
-  HTMLAttributes
+  HTMLAttributes,
+  FC
 } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavMenutWrap } from "./styles";
@@ -28,10 +28,7 @@ interface customType {
   fontSize?: string | number;
 }
 
-const NavMenu: FunctionComponent<customType & commonProps> = ({
-  lists,
-  ...rest
-}) => {
+const NavMenu: FC<customType & commonProps> = ({ lists, ...rest }) => {
   const { pathname } = useLocation();
   const listChildrenRefs = useRef<HTMLElement[]>([]);
   const selectedElRef = useRef<HTMLElement | null>(null);
@@ -65,7 +62,8 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
     [currentPathName]
   );
 
-  const pathNameIdx = Lists[0].url && getPathNameIdx(Lists);
+  const pathNameIdx =
+    Lists[0].url && (getPathNameIdx(Lists) < 0 ? 0 : getPathNameIdx(Lists));
   const activeLiPos =
     Number(pathNameIdx) * Number((100 / lists.length).toFixed(1));
 
@@ -80,7 +78,7 @@ const NavMenu: FunctionComponent<customType & commonProps> = ({
     (el: any) => listChildrenRefs.current.push(el),
     []
   );
-
+  console.log({ activeLiPos });
   return (
     <NavMenutWrap {...rest}>
       <ul>

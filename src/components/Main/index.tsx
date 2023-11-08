@@ -34,7 +34,7 @@ const Main = () => {
     <MainContainer>
       <section className="banner-video">
         <div className="video-wrap">
-          <video className="video" autoPlay loop muted>
+          <video className="video" width={800} autoPlay loop muted>
             <source src="/video/banner.mp4" />
           </video>
         </div>

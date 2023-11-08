@@ -1,6 +1,7 @@
+import axios from "axios";
 import { API_PATH } from "constants/api_path";
 import { CommonResponse, ILikeRequest, ILikeResponse } from "models/data";
-import api from "utils/axios";
+import api, { ResponseErrorType } from "utils/axios";
 import alertHandler from "utils/functions/alertHandler";
 
 const { LIKE_API } = API_PATH;
@@ -9,11 +10,15 @@ const addLike = async (insertData: ILikeRequest) => {
   try {
     const { data } = await api.post<CommonResponse>(`${LIKE_API}`, insertData);
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -25,11 +30,15 @@ const unLike = async (insertData: ILikeRequest) => {
       context
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
     throw error;
   }
 };
@@ -41,12 +50,16 @@ const getContentsLike = async (contentsId: string | null) => {
       `${LIKE_API}/contents/${contentsId}`
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
   }
 };
 // /like/users/6491db12d62b2e1abd051b97
@@ -57,12 +70,16 @@ const getMyContentsLike = async (userId: string | null) => {
       `${LIKE_API}/users/${userId}`
     );
     return data;
-  } catch (error: any) {
-    alertHandler.onToast({
-      msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-      icon: "error"
-    });
-    throw error.response;
+  } catch (error: unknown) {
+    if (axios.isAxiosError<ResponseErrorType>(error)) {
+      if (error.response?.status === 500) {
+        alertHandler.onToast({
+          msg: "서버 오류! 잠시후 다시 시작해주세요.",
+          icon: "error"
+        });
+      }
+    }
+    throw error;
   }
 };
 

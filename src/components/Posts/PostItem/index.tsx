@@ -2,7 +2,12 @@ import { memo } from "react";
 import Comments from "components/Comments";
 import PostHeader from "components/Posts/PostHeader";
 import PostStatus from "components/Posts/PostStatus";
-import { ICommentResponse, IContents, ILikeResponse } from "models/data";
+import {
+  ICommentResponse,
+  IContents,
+  ILikeResponse,
+  TMyInfo
+} from "models/data";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import { COMMENT_KEY, Like_key } from "constants/query_key";
 import { getAllComment } from "utils/apis/comment";
@@ -16,9 +21,15 @@ import {
 } from "components/Posts/styles";
 import { getContentsLike } from "utils/apis/like";
 
-const PostItem = (props: IContents) => {
-  const { _id, writer, content, imageName, imageUrl, isDeleted, createdAt } =
-    props;
+const PostItem = ({
+  _id,
+  writer,
+  content,
+  imageName,
+  imageUrl,
+  isDeleted,
+  createdAt
+}: IContents) => {
   const { data: contentsLike } = useAPIByIdQuery<ILikeResponse>(
     _id,
     Like_key,
@@ -34,8 +45,8 @@ const PostItem = (props: IContents) => {
     <PostItemWrap key={_id}>
       <PostHeader
         createdAt={createdAt}
-        writer={writer}
-        contentId={_id}
+        writer={writer as TMyInfo}
+        contentsId={_id}
         isDeleted={isDeleted}
       />
       {isDeleted ? (

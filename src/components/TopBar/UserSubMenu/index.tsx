@@ -17,7 +17,8 @@ interface IProps {
 const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const { MYPAGE, STORY } = ROUTER_PATH;
   const [, setIsLoggedIn] = useRecoilState(loginState);
-  const userInfo = useRecoilValue(userState);
+  const [userInfo, setUserInfo] = useRecoilState(userState); //현재 인증된 유저
+  // const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { removeStorage } = useStorage;
@@ -25,6 +26,17 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
     api.get("/api/v1/auth/logout", { withCredentials: true }).then(() => {
       removeStorage("accessToken");
       setIsLoggedIn(false);
+      setUserInfo({
+        _id: "",
+        email: "",
+        nickname: "",
+        aboutMe: "",
+        followers: [],
+        followings: [],
+        imageSrc: "",
+        createdAt: "",
+        updatedAt: ""
+      });
       queryClient.setQueryData([USER_KEY], false);
       navigate("/login", { replace: true });
     });

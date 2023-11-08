@@ -41,7 +41,7 @@ const Topbar = () => {
               </span>
             </button>
           </div>
-          <div className="page-title">
+          <div className="logo">
             <Link to="/">
               <img width={100} src="/images/logo.png" alt="logo-img" />
             </Link>

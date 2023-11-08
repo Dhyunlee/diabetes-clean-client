@@ -9,10 +9,7 @@ import {
 import { useRecoilValue } from "recoil";
 import Button from "components/Base/Button";
 import Textarea from "components/Base/Textarea";
-import {
-  useCreateCommentMutation,
-  useUpdateCommentMutation
-} from "hooks/service/mutator";
+import { useCreateComment, useUpdateComment } from "hooks/service/mutator";
 import { userState } from "store/userState";
 import alertHandler from "utils/functions/alertHandler";
 import { CommentsFormContainer } from "./styles";
@@ -35,8 +32,8 @@ const CommentForm = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { _id: userId } = useRecoilValue(userState);
   const [content, setContent] = useState("");
-  const createCommentMmutation = useCreateCommentMutation();
-  const updateCommentMutation = useUpdateCommentMutation();
+  const createComment = useCreateComment();
+  const updateComment = useUpdateComment();
 
   useEffect(() => {
     if (preContent) {
@@ -64,37 +61,33 @@ const CommentForm = ({
           contentsId,
           content
         };
-
         editMode
           ? (() => {
               if (commentId && preContent !== content) {
-                updateCommentMutation.mutate({ commentId, content });
+                updateComment.mutate({ commentId, content });
                 onClose && onClose();
               }
               onClose && onClose();
             })()
           : (() => {
-              createCommentMmutation.mutate(insertData);
+              createComment.mutate(insertData);
               onReset && onReset();
             })();
       } else {
-        alertHandler.onDefaultAlert({
-          msg: "댓글을 입력해주세요!",
-          pos: "top"
-        });
+        alertHandler.onToast({ msg: "댓글을 입력해주세요!", icon: "warning" });
       }
     },
     [
-      commentId,
       content,
+      userId,
       contentsId,
-      createCommentMmutation,
       editMode,
-      onClose,
-      onReset,
+      commentId,
       preContent,
-      updateCommentMutation,
-      userId
+      onClose,
+      updateComment,
+      createComment,
+      onReset
     ]
   );
   return (

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { checkemailApi } from "utils/apis/userApis";
 import { checkValidation } from "utils/functions/validation";
 import alertHandler from "utils/functions/alertHandler";
-import useCreateUserMutation from "hooks/service/mutator/user/useCreateUserMutation";
+import { useCreateUser } from "hooks/service/mutator";
 import {
   FormBtn,
   Container,
@@ -45,7 +45,7 @@ const SignUp = () => {
   const { email, password, passwordCheck, nickname } = inputs;
 
   useEffect(() => {
-    const result = Object.values(isComplete).every((item) => item === true);
+    const result = Object.values(isComplete).every((item) => !!item);
     setIsCompleteState(result);
   }, [isComplete]);
 
@@ -129,7 +129,7 @@ const SignUp = () => {
     }
   }, [inputs, isComplete, password, passwordCheck]);
 
-  const mutation = useCreateUserMutation();
+  const mutation = useCreateUser();
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
