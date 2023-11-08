@@ -3,7 +3,6 @@ import NavMenu from "components/Base/NavMenu";
 import ReportChart from "components/My/ReportChart";
 import { Title } from "components/My/styles";
 import { palette } from "libs/palette";
-
 const DiabetesReport = () => {
   const periods = useMemo(
     () => [

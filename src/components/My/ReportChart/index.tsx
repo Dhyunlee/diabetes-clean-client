@@ -1,4 +1,8 @@
-import { useMemo } from "react";
+import { DIABETES_KEY } from "constants/query_key";
+import dayjs from "dayjs";
+import { useAPIByIdQuery } from "hooks/service/queries";
+import { IDiabetesInfo, IDiabetesResponse } from "models/data";
+import { useEffect, useMemo, useState } from "react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -7,65 +11,61 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  Line
+  Line,
+  Bar
 } from "recharts";
+import { useRecoilValue } from "recoil";
+import { userState } from "store/userState";
+import { getDiabetes } from "utils/apis/diabetesApis";
 
 const ReportChart = () => {
-  const data = useMemo(
-    () => [
-      {
-        name: "공복",
-        수치: 300
-      },
-      {
-        name: "아침식전",
-        수치: 100
-      },
-      {
-        name: "아침식후",
-        수치: 110
-      },
-      {
-        name: "점심식전",
-        수치: 90
-      },
-      {
-        name: "점심식후",
-        수치: 120
-      },
-      {
-        name: "저녁식전",
-        수치: 120
-      },
-      {
-        name: "저녁식후",
-        수치: 140
-      },
-      {
-        name: "취침전",
-        수치: 142
-      }
-    ],
-    []
+  const [today] = useState(dayjs().format("YYYY-MM-DD"));
+  const { _id: userId } = useRecoilValue(userState);
+  const { data: diabetesData } = useAPIByIdQuery<IDiabetesResponse>(
+    userId,
+    DIABETES_KEY,
+    getDiabetes
   );
+  const data = diabetesData?.diabetesInfo as IDiabetesInfo[];
+  const todayData = useMemo(() => {
+    return data
+      ?.filter((item) => dayjs(item.createdAt).format("YYYY-MM-DD") === today)
+      .reverse();
+  }, [data, today]);
 
+  const weekData = useMemo(() => {
+    return data
+      ?.filter((item) => {
+        const startOfDate = dayjs(today)
+          .startOf("weeks")
+          .format("YYYY-MM-DD")
+          .split("-")
+          .join("");
+        const endOfDate = today.split("-").join("");
+
+        const fomattedCreatedAt = dayjs(item.createdAt).format("YYYY-MM-DD");
+        const date = parseInt(fomattedCreatedAt.split("-").join(""), 10);
+        if (Number(startOfDate) <= date && date <= Number(endOfDate)) {
+          return item;
+        }
+      })
+      .reverse();
+  }, [data, today]);
+  const month = 0;
+  const threeMonth = 0;
   return (
     <ResponsiveContainer height={400}>
-      <ComposedChart className="chart" data={data}>
+      <ComposedChart className="chart" data={todayData}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        {/* <XAxis dataKey="slot" /> */}
+        <XAxis dataKey="slot" />
         <YAxis
           domain={[0, (dataMax: number) => dataMax + 200]}
           label={{ value: "mg/dl", angle: -90, position: "insideLeft" }}
         />
         <Tooltip />
         <Legend verticalAlign="top" height={30} />
-        <Line
-          type="linear"
-          dataKey="수치"
-          stroke="#4990d2"
-          dot={{ fill: "#4990d2", strokeWidth: 5 }}
-        />
+        <Bar dataKey="sugar_level" name="당수치" barSize={20} fill="#5ea7d1" />
       </ComposedChart>
     </ResponsiveContainer>
   );
