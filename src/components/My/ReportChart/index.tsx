@@ -2,7 +2,7 @@ import { DIABETES_KEY } from "constants/query_key";
 import dayjs from "dayjs";
 import { useAPIByIdQuery } from "hooks/service/queries";
 import { IDiabetesInfo, IDiabetesResponse } from "models/data";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -11,7 +11,6 @@ import {
   YAxis,
   Tooltip,
   Legend,
-  Line,
   Bar
 } from "recharts";
 import { useRecoilValue } from "recoil";
@@ -32,6 +31,7 @@ const ReportChart = () => {
       ?.filter((item) => dayjs(item.createdAt).format("YYYY-MM-DD") === today)
       .reverse();
   }, [data, today]);
+  console.log(data, todayData);
 
   const weekData = useMemo(() => {
     return data

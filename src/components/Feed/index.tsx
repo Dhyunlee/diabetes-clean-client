@@ -21,7 +21,7 @@ const Feed = () => {
       },
       {
         id: 2,
-        path: `${STORY}/${userInfo.nickname}`,
+        path: `${STORY}/${userInfo?.nickname}`,
         label: "내피드"
       }
     ],

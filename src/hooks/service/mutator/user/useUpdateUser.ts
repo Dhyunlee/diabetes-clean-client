@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { COMMENT_KEY, USER_KEY } from "constants/query_key";
+import { USER_KEY } from "constants/query_key";
 import { CommonResponse, TUserUpdateRequest } from "models/data";
 import { updateUserApi } from "utils/apis/userApis";
 import alertHandler from "utils/functions/alertHandler";

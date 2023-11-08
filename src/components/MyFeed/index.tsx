@@ -41,7 +41,7 @@ const MyFeed = () => {
   const followMutate = useFollowMutation();
   const unFollowMutate = useUnFollowMutation();
 
-  const writer = useMemo(() => data?.contents.writer, [data]); //게시글 작성자
+  const writer = useMemo(() => data?.contents?.writer, [data]); //게시글 작성자
   const subMenus = useMemo(
     () => [
       {
@@ -139,7 +139,7 @@ const MyFeed = () => {
                   <li>
                     <span className="status-inner">
                       <span className="status">게시글</span>
-                      <span>{data?.contents.contentsCount}</span>
+                      <span>{data?.contents?.contentsCount}</span>
                     </span>
                   </li>
                 </ul>

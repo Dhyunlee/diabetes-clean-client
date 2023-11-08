@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { CONTENTS_KEY, FOLLOW_KEY, USER_KEY } from "constants/query_key";
+import { FOLLOW_KEY } from "constants/query_key";
 import { CommonResponse } from "models/data";
 import { unFollow } from "utils/apis/follow";
 import alertHandler from "utils/functions/alertHandler";

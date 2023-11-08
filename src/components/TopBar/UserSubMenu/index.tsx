@@ -54,7 +54,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
       },
       {
         id: 2,
-        path: `${STORY}/${userInfo.nickname}`,
+        path: `${STORY}/${userInfo?.nickname}`,
         label: "내피드"
       },
       {
@@ -64,7 +64,7 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
         handler: handleLogOut
       }
     ],
-    [MYPAGE, STORY, handleLogOut, userInfo.nickname]
+    [MYPAGE, STORY, handleLogOut, userInfo?.nickname]
   );
 
   return (

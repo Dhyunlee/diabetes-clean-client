@@ -1,10 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import useStorage from "utils/functions/useStorage";
 import alertHandler from "utils/functions/alertHandler";
-// const API_BASE_URL = process.env.REACT_APP_BASE_URL;
-const API_BASE_URL = "";
+import { URL_LIST } from "constants/url";
+const { DEV_API_URL, PROD_API_URL } = URL_LIST;
 const { getStorage } = useStorage;
-console.log({ API_BASE_URL });
 
 export interface ResponseErrorType {
   code: string;
@@ -14,7 +13,7 @@ export interface ResponseErrorType {
 }
 
 const api = axios.create({
-  baseURL: API_BASE_URL || "http://localhost:5000",
+  baseURL: PROD_API_URL || DEV_API_URL,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json"
