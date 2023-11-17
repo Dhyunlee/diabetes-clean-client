@@ -30,13 +30,17 @@ export const SubMenuItem = styled.li`
   cursor: pointer;
 
   a,
-  button {
+  button,
+  label {
     padding: 10px 8px;
     font-size: inherit;
     border: none;
     border-radius: 4px;
     background: transparent;
     cursor: pointer;
+  }
+  label {
+    display: block;
   }
   &:hover {
     background-color: ${palette.gray[1]};

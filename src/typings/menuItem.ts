@@ -1,6 +1,6 @@
 export interface MenuItemType {
   id: number;
   path: string | null;
-  label: string;
+  label: string | React.ReactNode;
   handler?: any;
 }

@@ -35,7 +35,11 @@ const SubMenu = ({ menuItem, showSubMenu, onCloseMenu, customCss }: Props) => {
               className="menu-list"
               onClick={menu.handler}
             >
-              <button onClick={onCloseMenu}>{menu.label}</button>
+              {typeof menu.label === "string" ? (
+                <button onClick={onCloseMenu}>{menu.label}</button>
+              ) : (
+                <>{menu.label}</>
+              )}
             </SubMenuItem>
           )
         )}

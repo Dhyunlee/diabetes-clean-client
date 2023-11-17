@@ -4,27 +4,39 @@ import { MdEdit } from "react-icons/md";
 import gravatar from "gravatar";
 import { useDeleteUser } from "hooks/service/mutator";
 import { userState } from "store/userState";
-import alertHandler, { alertMessage } from "utils/functions/alertHandler";
 import Avatar from "components/Base/Avatar";
 import Button from "components/Base/Button";
 import { Title } from "components/My/styles";
 import Textarea from "components/Base/Textarea";
+import SubMenu from "components/Base/SubMenu";
+import useUpdateUser from "hooks/service/mutator/user/useUpdateUser";
+import alertHandler, { alertMessage } from "utils/functions/alertHandler";
+import { uploadImage } from "utils/apis/image";
 import {
   ButtonGroup,
   ProfileBlock,
   ProfileContainer,
   UserInfo
 } from "./styles";
-import useUpdateUser from "hooks/service/mutator/user/useUpdateUser";
 
 const UserProfile = () => {
   const userInfo = useRecoilValue(userState);
   const deleteMutate = useDeleteUser();
   const updateMutate = useUpdateUser();
 
-  const [isEditMode, setisEditMode] = useState(false);
-  const [nickname, setNickname] = useState(userInfo.nickname);
-  const [aboutMe, setAboutMe] = useState(userInfo.aboutMe);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [nickname, setNickname] = useState(userInfo?.nickname);
+  const [aboutMe, setAboutMe] = useState(userInfo?.aboutMe);
+  const [showProfileSubMenu, setShowProfileSubMenu] = useState(false);
+  const [thumbnail, setThumbnail] = useState<string | null>("");
+
+  const onShowProfileSubMenu = useCallback(() => {
+    setShowProfileSubMenu((prev) => !prev);
+  }, []);
+
+  const onCloseMenu = useCallback(() => {
+    setShowProfileSubMenu(false);
+  }, []);
 
   const onChangeNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -34,7 +46,7 @@ const UserProfile = () => {
     setAboutMe(e.target.value);
   };
   const onToggleEditMode = () => {
-    setisEditMode((prev) => !prev);
+    setIsEditMode((prev) => !prev);
     if (nickname || aboutMe) {
       setNickname("");
       setAboutMe("");
@@ -62,23 +74,48 @@ const UserProfile = () => {
       });
   }, [deleteMutate, userInfo?._id]);
 
+  const onChangeImg = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      // TODO: 이미지 업로드 로직 추가하기.
+      const formData = new FormData();
+      const file = (e.currentTarget.files as FileList)[0];
+      formData.append("profileImg", file);
+      const { data } = await uploadImage(formData);
+
+      setThumbnail(data.imgPath);
+      setIsEditMode(true);
+      setShowProfileSubMenu(false);
+    },
+    []
+  );
+
+  const onDeleteImg = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO: 이미지 삭제 로직 추가하기.
+    console.log(e.target);
+  }, []);
+
   const onUpdateUser = useCallback(() => {
-    if (nickname || aboutMe) {
+    if (nickname || aboutMe || thumbnail) {
+      console.log({ thumbnail });
       const insertData = {
-        nickname: nickname || userInfo.nickname,
-        aboutMe: aboutMe || userInfo.aboutMe
+        nickname: nickname || userInfo?.nickname,
+        aboutMe: aboutMe || userInfo?.aboutMe,
+        imageSrc: thumbnail || userInfo?.imageSrc
       };
       console.log(insertData);
+      console.log(thumbnail);
       updateMutate.mutate({ userId: userInfo?._id, userData: insertData });
     }
-    setisEditMode((prev) => !prev);
+    setIsEditMode((prev) => !prev);
   }, [
     aboutMe,
     nickname,
+    thumbnail,
     updateMutate,
     userInfo?._id,
-    userInfo.aboutMe,
-    userInfo.nickname
+    userInfo?.aboutMe,
+    userInfo?.imageSrc,
+    userInfo?.nickname
   ]);
 
   return (
@@ -89,21 +126,56 @@ const UserProfile = () => {
           <div className="profile-img">
             <button
               className="prof_btn"
-              onClick={() => console.log("프로필 이미지 변경")}
+              onClick={onShowProfileSubMenu}
+              onMouseDown={(e) => e.stopPropagation()}
             >
               <MdEdit color="#232" />
             </button>
+            <input
+              type="file"
+              id="image"
+              accept="image/jpg,image/png,image/jpeg,image/gif"
+              style={{ display: "none" }}
+              onChange={onChangeImg}
+            />
             <Avatar
               size={160}
               imgUrl={
                 userInfo?.imageSrc
-                  ? userInfo?.imageSrc
+                  ? `http://localhost:5000/${
+                      thumbnail ? thumbnail : userInfo?.imageSrc
+                    }`
+                  : thumbnail
+                  ? `http://localhost:5000/${thumbnail}`
                   : gravatar.url(userInfo?.email, {
                       s: "170px",
                       d: "retro"
                     })
               }
             />
+            {showProfileSubMenu && (
+              <SubMenu
+                menuItem={[
+                  {
+                    id: 1,
+                    path: null,
+                    label: <label htmlFor="image">이미지 수정</label>
+                  },
+                  {
+                    id: 2,
+                    path: null,
+                    label: "이미지 삭제",
+                    handler: () => console.log("이미지 삭제")
+                  }
+                ]}
+                showSubMenu={showProfileSubMenu}
+                onCloseMenu={onCloseMenu}
+                customCss={{
+                  posX: "0px",
+                  posY: "135px"
+                }}
+              />
+            )}
           </div>
           <UserInfo>
             <div className="Info_block">
@@ -111,12 +183,12 @@ const UserProfile = () => {
               {isEditMode ? (
                 <input
                   className="info_cont edit_mode"
-                  placeholder={userInfo.nickname}
+                  placeholder={userInfo?.nickname}
                   value={nickname}
                   onChange={onChangeNickName}
                 />
               ) : (
-                <div className="info_cont">{userInfo.nickname}</div>
+                <div className="info_cont">{userInfo?.nickname}</div>
               )}
             </div>
             <div className="Info_block">
@@ -125,12 +197,12 @@ const UserProfile = () => {
                 <Textarea
                   rows={11}
                   className="info_cont about_me edit_mode"
-                  placeholder={userInfo.aboutMe}
+                  placeholder={userInfo?.aboutMe}
                   defaultValue={aboutMe}
                   onChange={onChangeAboutMe}
                 />
               ) : (
-                <div className="info_cont about_me">{userInfo.aboutMe}</div>
+                <div className="info_cont about_me">{userInfo?.aboutMe}</div>
               )}
             </div>
           </UserInfo>
