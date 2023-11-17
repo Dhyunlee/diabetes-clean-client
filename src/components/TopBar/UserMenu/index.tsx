@@ -20,7 +20,9 @@ const UserMenu = () => {
   const [isLoggedIn] = useRecoilState(loginState);
   const { LOGIN, SIGNUP } = ROUTER_PATH;
 
+  // 유저 인증 상태
   const { data: me } = useAPIQuery<IUserResponse>(USER_KEY, getUserIdByToken);
+
   const [showUserSubMenu, setShowUserSubMenu] = useState(false);
   const onShowUserSubMenu = useCallback(() => {
     setShowUserSubMenu(!showUserSubMenu);
@@ -63,8 +65,8 @@ const UserMenu = () => {
                       size={40}
                       imgUrl={
                         me?.userInfo?.imageSrc
-                          ? me?.userInfo?.imageSrc
-                          : gravatar.url(me?.userInfo?.nickname, {
+                          ? `http://localhost:5000/${me?.userInfo?.imageSrc}`
+                          : gravatar.url(me?.userInfo?.email, {
                               s: "40px",
                               d: "retro"
                             })

@@ -42,7 +42,7 @@ const Posts = ({ params, queryKey, fetcher }: IProps) => {
   const renderContext = () => {
     if (isSuccess) {
       return data.pages.map((page) =>
-        page.contents.map((post, idx) => {
+        page.contents.map((post) => {
           return (
             <div key={post._id}>
               <PostCardWrap

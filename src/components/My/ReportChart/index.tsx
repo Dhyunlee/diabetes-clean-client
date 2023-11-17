@@ -31,7 +31,7 @@ const ReportChart = () => {
       ?.filter((item) => dayjs(item.createdAt).format("YYYY-MM-DD") === today)
       .reverse();
   }, [data, today]);
-  console.log(data, todayData);
+  // console.log(data, todayData);
 
   const weekData = useMemo(() => {
     return data

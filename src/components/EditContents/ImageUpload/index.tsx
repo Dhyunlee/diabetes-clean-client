@@ -26,7 +26,6 @@ const ImageUpload = ({ imageUrl, setImgUrl, setImgFileName }: IProps) => {
       fileReader.addEventListener("loadend", (e: ProgressEvent<FileReader>) => {
         const { result } = e.currentTarget as FileReader;
         setThumbnail(result as string);
-        // TODO: 이미지 업로드 로직(함수) 불러오기
       });
     }
   }, []);

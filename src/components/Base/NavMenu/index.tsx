@@ -78,7 +78,6 @@ const NavMenu: FC<customType & commonProps> = ({ lists, ...rest }) => {
     (el: any) => listChildrenRefs.current.push(el),
     []
   );
-  console.log({ activeLiPos });
   return (
     <NavMenutWrap {...rest}>
       <ul>

@@ -18,7 +18,6 @@ const UserSubMenu = ({ showSubMenu, onCloseMenu }: IProps) => {
   const { MYPAGE, STORY } = ROUTER_PATH;
   const [, setIsLoggedIn] = useRecoilState(loginState);
   const [userInfo, setUserInfo] = useRecoilState(userState); //현재 인증된 유저
-  // const userInfo = useRecoilValue(userState);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { removeStorage } = useStorage;
