@@ -1,4 +1,4 @@
-import {
+import React, {
   forwardRef,
   ForwardedRef,
   DetailedHTMLProps,
@@ -21,4 +21,4 @@ const Textarea = (
   return <TextareaInterface ref={ref} {...rest} />;
 };
 
-export default forwardRef(Textarea);
+export default React.memo(forwardRef(Textarea));

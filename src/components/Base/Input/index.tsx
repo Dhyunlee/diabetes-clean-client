@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
+import React, { DetailedHTMLProps, FC, InputHTMLAttributes } from "react";
 import { InputInterface } from "./styles";
 
 type commonInputProps = DetailedHTMLProps<
@@ -10,4 +10,4 @@ const Input: FC<commonInputProps> = ({ ...rest }) => {
   return <InputInterface {...rest} />;
 };
 
-export default Input;
+export default React.memo(Input);
