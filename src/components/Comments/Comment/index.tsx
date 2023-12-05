@@ -105,7 +105,7 @@ const Comment = ({ comment }: Iprops) => {
           createdAt={createdAt}
           imgUrl={
             writer?.imageSrc
-              ? writer?.imageSrc
+              ? `${process.env.REACT_APP_BASE_URL}/${writer?.imageSrc}`
               : gravatar.url(writer?.nickname, {
                   s: "32px",
                   d: "retro"

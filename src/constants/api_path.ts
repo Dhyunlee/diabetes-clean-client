@@ -16,7 +16,10 @@ export const API_PATH = {
   // Comment
   COMMENT_API: "/api/v1/comment",
   //Like
-  LIKE_API: "/api/v1/like"
+  LIKE_API: "/api/v1/like",
+  //Image
+  PROFILE_IMAGE_API: "/api/v1/image/uimg",
+  CONTENTS_IMAGE_API: "/api/v1/image/pimg"
 };
 
 Object.freeze(API_PATH);

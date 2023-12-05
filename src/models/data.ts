@@ -39,7 +39,10 @@ export type TMyInfo = Pick<
 
 export type TBriefWriter = Pick<TMyInfo, "_id" | "nickname" | "imageSrc">;
 
-export type TUserUpdateRequest = Pick<TMyInfo, "nickname" | "aboutMe">;
+export type TUserUpdateRequest = Pick<
+  TMyInfo,
+  "nickname" | "aboutMe" | "imageSrc"
+>;
 
 export interface IUserResponse {
   isOk: boolean;

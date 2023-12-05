@@ -9,7 +9,6 @@ import {
 } from "models/data";
 import { API_PATH } from "constants/api_path";
 import alertHandler from "utils/functions/alertHandler";
-
 const { AUTH, USER_API, CHECK_MEAIL, LOG_IN } = API_PATH;
 
 // 로그인
@@ -138,8 +137,12 @@ const getUserIdByToken = async () => {
     if (axios.isAxiosError<ResponseErrorType>(error)) {
       if (error.response?.status === 401) {
         setStorage("isAuth", JSON.stringify({ loginState: false }));
+        console.error("인증 필요");
       } else if (error.response?.status === 403) {
+        setStorage("isAuth", JSON.stringify({ loginState: false }));
         removeStorage("accessToken");
+        window.location.reload();
+        console.error("토큰이 유효하지 않아 로그아웃합니다.");
       } else {
         alertHandler.onToast({
           msg: "서버 오류! 잠시후 다시 시작해주세요.",
