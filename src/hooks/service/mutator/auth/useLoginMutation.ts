@@ -29,14 +29,7 @@ const useLoginMutation = () => {
         queryClient.refetchQueries({ queryKey: [USER_KEY] });
       },
       onError(error: any) {
-        if (error.status === 401) {
-          alertHandler.onToast({ msg: error.data.msg, icon: "error" });
-        } else if (error.status === 500) {
-          alertHandler.onToast({
-            msg: error.data.msg || "서버 오류, 관리자에게 문의해주세요!",
-            icon: "error"
-          });
-        }
+        alertHandler.onToast({ msg: error.response.data.msg, icon: "error" });
       }
     }
   );

@@ -9,8 +9,7 @@ import {
   InputWrap,
   FrmBtnContainer
 } from "pages/SignUp/styles";
-import useLoginMutation from "hooks/service/mutator/auth/useLoginMutation";
-
+import { useLoginMutation } from "hooks/service/mutator";
 const Login = () => {
   const [inputs, setInputs] = useState({
     email: "",
